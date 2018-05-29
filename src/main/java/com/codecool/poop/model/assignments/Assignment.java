@@ -1,4 +1,6 @@
-package com.codecool.poop.model;
+package com.codecool.poop.model.assignments;
+
+import com.codecool.poop.model.Skills;
 
 import java.time.LocalDateTime;
 import java.util.Map;
