@@ -1,4 +1,4 @@
-package com.codecool.poop.model.coding;
+package com.codecool.poop.model.assignments.coding;
 
 import java.util.ArrayList;
 import java.util.List;

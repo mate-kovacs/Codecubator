@@ -1,6 +1,4 @@
-package com.codecool.poop.model.coding;
-
-import java.util.List;
+package com.codecool.poop.model.assignments.coding;
 
 public class CodingQuestion {
 

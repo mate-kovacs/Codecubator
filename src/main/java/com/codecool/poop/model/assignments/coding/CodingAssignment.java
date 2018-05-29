@@ -1,9 +1,8 @@
-package com.codecool.poop.model.coding;
+package com.codecool.poop.model.assignments.coding;
 
 import com.codecool.poop.model.Assignment;
 import com.codecool.poop.model.Skills;
 
-import java.util.List;
 import java.util.Map;
 
 public class CodingAssignment extends Assignment{

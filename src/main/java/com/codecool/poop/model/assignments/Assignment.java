@@ -1,4 +1,6 @@
-package com.codecool.poop.model;
+package com.codecool.poop.model.assignments;
+
+import com.codecool.poop.model.Skills;
 
 import java.time.LocalDateTime;
 import java.util.Map;
@@ -11,6 +13,9 @@ public abstract class Assignment {
     private LocalDateTime creationDate;
 
     public Assignment(String name, String description, Map<Skills, Integer> expRewards, Integer codeCoinReward) {
+        if (!isValidexpRewards(expRewards)) {
+            throw new IllegalArgumentException("Invalid reward map");
+        }
         this.name = name;
         this.description = description;
         this.expRewards = expRewards;
@@ -52,6 +57,17 @@ public abstract class Assignment {
 
     public LocalDateTime getCreationDate() {
         return creationDate;
+    }
+
+    private boolean isValidexpRewards(Map<Skills, Integer> expRewards) {
+        return expRewards != null && expRewards.size() > 0 && isNoNegativeInRewardsMap(expRewards);
+    }
+
+    private boolean isNoNegativeInRewardsMap(Map<Skills, Integer> expRewards) {
+        for (Integer value : expRewards.values()) {
+            if (value < 0) return false;
+        }
+        return true;
     }
 
     @Override

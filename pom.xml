@@ -7,6 +7,14 @@
    <groupId>com.codecool.javaee</groupId>
    <artifactId>enterprise-project</artifactId>
    <version>1.0-SNAPSHOT</version>
+    <dependencies>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>5.0.1</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 
    <properties>
        <!--<maven.compiler.source>1.8</maven.compiler.source>-->
@@ -78,8 +86,8 @@
                 <version>${version.maven.compiler.plugin}</version>
                 <inherited>true</inherited>
                 <configuration>
-                    <source>${version.java}</source>
-                    <target>${version.java}</target>
+                    <source>8</source>
+                    <target>8</target>
                     <compilerArgument>-Xlint:all</compilerArgument>
                     <showWarnings>true</showWarnings>
                     <showDeprecation>true</showDeprecation>
