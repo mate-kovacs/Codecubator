@@ -1,27 +1,15 @@
 package com.codecool.poop.ORM;
 
-
-import com.codecool.poop.model.TestUser;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
+import com.codecool.poop.model.User;
 
 public class TestHibernate {
 
     public static void main(String[] args) {
-        TestUser testUser = new TestUser("valaki");
 
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("testPU");
-        EntityManager em = emf.createEntityManager();
-        EntityTransaction transaction = em.getTransaction();
-        transaction.begin();
+        // Example for test the database
+        User user = new User("valaki", "pass", "email");
+        DataHandler db = DataHandler.getInstance();
+        db.addItemToDB(user);
 
-        em.persist(testUser);
-
-        transaction.commit();
-        em.close();
-        emf.close();
     }
 }
