@@ -13,11 +13,12 @@ public class QuizQuestion {
         if (isAnswersValid(quizAnswers)) {
             this.quizAnswers = quizAnswers;
         } else {
-            throw new IllegalArgumentException("There is now valid answer in the list");
+            throw new IllegalArgumentException("Invalid answers");
         }
     }
 
     private Boolean isAnswersValid(List<QuizAnswer> answers) {
+        if (answers == null || answers.size() < 2) return false;
         for (QuizAnswer answer : answers) {
             if (answer.getAnswerValidity()) return true;
         }
