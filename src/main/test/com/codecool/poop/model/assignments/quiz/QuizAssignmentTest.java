@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class QuizAssignmentTest {
 
-    static List<QuizQuestion> questions = new ArrayList<>();
+    private static List<QuizQuestion> questions = new ArrayList<>();
 
     @BeforeAll
     private static void createQuestion() {
