@@ -21,4 +21,10 @@ public class Registration extends HttpServlet {
         engine.process("registration.html", context, response.getWriter());
     }
 
+    @Override
+    protected void doPost (HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String name = request.getParameter("name");
+        String password = request.getParameter("password");
+    }
+
 }

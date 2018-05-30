@@ -22,6 +22,12 @@ public class Login extends HttpServlet {
         engine.process("login.html", context, response.getWriter());
     }
 
+    @Override
+    protected void doPost (HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String name = request.getParameter("name");
+        String password = request.getParameter("password");
+    }
+
 }
 
 
