@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 @WebServlet(urlPatterns = {"/registration"})
 public class Registration extends HttpServlet {
 
@@ -24,12 +26,17 @@ public class Registration extends HttpServlet {
     }
 
     @Override
-    protected void doPost (HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String name = request.getParameter("name");
         String password = request.getParameter("password");
+        String hashPW = BCrypt.hashpw(password, BCrypt.gensalt(12));
         String email = request.getParameter("email");
-        User user = new User(name, password, email);
+        User user = new User(name, hashPW, email);
         UserManager userManager = new UserManager();
-        userManager.addUser(user);
+        if (userManager.registerUser(user)) {
+            System.out.println("User registered");
+        } else {
+            System.out.println("Name or email already in use");
+        }
     }
 }
