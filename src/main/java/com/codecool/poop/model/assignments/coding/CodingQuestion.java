@@ -51,6 +51,10 @@ public class CodingQuestion {
         this.assignment = assignment;
     }
 
+    public int getId() {
+        return id;
+    }
+
     @Override
     public String toString() {
         return getQuestions();

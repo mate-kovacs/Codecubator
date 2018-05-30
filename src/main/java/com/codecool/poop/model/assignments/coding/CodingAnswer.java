@@ -61,4 +61,8 @@ public class CodingAnswer {
     public void setQuestion(CodingQuestion question) {
         this.question = question;
     }
+
+    public int getId() {
+        return id;
+    }
 }
