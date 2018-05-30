@@ -7,9 +7,11 @@ import javax.persistence.*;
 public class QuizAnswer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int answerId;
+    private int id;
     private String answerText;
     private Boolean answerValidity;
+    @ManyToOne
+    private QuizQuestion question;
 
     public QuizAnswer(String answerText, Boolean answerValidity) {
         this.answerText = answerText;
@@ -32,5 +34,13 @@ public class QuizAnswer {
 
     public void setAnswerValidity(Boolean answerValidity) {
         this.answerValidity = answerValidity;
+    }
+
+    public QuizQuestion getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(QuizQuestion question) {
+        this.question = question;
     }
 }

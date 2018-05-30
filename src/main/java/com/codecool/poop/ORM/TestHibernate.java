@@ -32,15 +32,18 @@ public class TestHibernate {
         answers1.add(new QuizAnswer("Cat", true));
         answers1.add(new QuizAnswer("Tiger", true));
         answers1.add(new QuizAnswer("Bear", false));
-        QuizQuestion question01 = new QuizQuestion("Question 01", answers1);
+        QuizQuestion question01 = new QuizQuestion("Question 01");
+        question01.setQuizAnswers(answers1);
         questions.add(question01);
+
 
         List<QuizAnswer> answers2 = new ArrayList<>();
         answers2.add(new QuizAnswer("Dog", false));
         answers2.add(new QuizAnswer("Cat", true));
         answers2.add(new QuizAnswer("Tiger", false));
         answers2.add(new QuizAnswer("Bear", false));
-        QuizQuestion question02 = new QuizQuestion("Question 02", answers2);
+        QuizQuestion question02 = new QuizQuestion("Question 02");
+        question02.setQuizAnswers(answers2);
         questions.add(question02);
 
         Map<Skills, Integer> skillMap = new HashMap<>();

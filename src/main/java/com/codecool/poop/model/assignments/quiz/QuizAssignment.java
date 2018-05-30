@@ -12,7 +12,7 @@ import java.util.Map;
 public class QuizAssignment extends Assignment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int assigmentId;
+    private int id;
     @ManyToMany
     private List<QuizQuestion> questions;
 

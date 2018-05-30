@@ -1,10 +1,6 @@
 package com.codecool.poop.model;
 
-import javax.persistence.*;
-import javax.persistence.Id;
-
-@Entity
-public class Skills {
+public enum Skills {
     PYTHON_BASIC (1, "Python basic", "Python basic language knowledge"),
     JAVA_BASIC (2, "Java basic", "Java basic language knowledge"),
     JAVASCRIPT_BASIC(3, "Javascript basic", "Javascript basic language knowledge"),
@@ -16,40 +12,11 @@ public class Skills {
     PATTERNS (9, "Patterns", "Programming patterns knowledge"),
     DATA_STRUCTURES (10, "Data structures", "Data structures knowledge");
 
-    @Id
-    private int skillId;
     public String name;
     public String description;
 
-    Skills() {}
-
     Skills(int id, String name, String description) {
-        this.skillId = id;
         this.name = name;
-        this.description = description;
-    }
-
-    public int getSkillId() {
-        return skillId;
-    }
-
-    public void setSkillId(int skillId) {
-        this.skillId = skillId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
         this.description = description;
     }
 }
