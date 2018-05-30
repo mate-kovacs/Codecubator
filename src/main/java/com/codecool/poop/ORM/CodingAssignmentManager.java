@@ -20,13 +20,28 @@ public class CodingAssignmentManager extends DataManager {
     public void addCodingAssignmentToDB(CodingAssignment assignment,
                                     CodingQuestion question,
                                     CodingAnswer answer){
-        EntityManager em = getEntityManagerFactory().createEntityManager();
-        EntityTransaction transaction = em.getTransaction();
+        EntityManager entityManager = getEntityManagerFactory().createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
-        em.persist(answer);
-        em.persist(question);
-        em.persist(assignment);
+
+        entityManager.persist(answer);
+        entityManager.persist(question);
+        entityManager.persist(assignment);
+
         transaction.commit();
-        em.close();
+        entityManager.close();
+    }
+
+    public CodingAssignment getCodingAssignemntByID(Integer id){
+        EntityManager entityManager = getEntityManagerFactory().createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+
+        CodingAssignment assignment = entityManager.find(CodingAssignment.class, id);
+
+        transaction.commit();
+        entityManager.close();
+
+        return assignment;
     }
 }
