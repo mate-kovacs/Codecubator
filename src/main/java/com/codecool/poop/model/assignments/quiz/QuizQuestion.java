@@ -1,20 +1,23 @@
 package com.codecool.poop.model.assignments.quiz;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Table(name = "quiz_questions")
 public class QuizQuestion {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
     private String questionText;
+    @OneToMany(mappedBy = "question")
     private List<QuizAnswer> quizAnswers = new ArrayList<>();
 
-    public QuizQuestion(String questionText, List<QuizAnswer> quizAnswers) {
+    protected QuizQuestion() {}
+
+    public QuizQuestion(String questionText) {
         this.questionText = questionText;
-        if (isAnswersValid(quizAnswers)) {
-            this.quizAnswers = quizAnswers;
-        } else {
-            throw new IllegalArgumentException("Invalid answers");
-        }
     }
 
     private Boolean isAnswersValid(List<QuizAnswer> answers) {
@@ -38,7 +41,14 @@ public class QuizQuestion {
     }
 
     public void setQuizAnswers(List<QuizAnswer> quizAnswers) {
-        this.quizAnswers = quizAnswers;
+        if (isAnswersValid(quizAnswers)) {
+            this.quizAnswers = quizAnswers;
+            for (QuizAnswer answer : quizAnswers) {
+                answer.setQuestion(this);
+            }
+        } else {
+            throw new IllegalArgumentException("Invalid answers");
+        }
     }
 
     public int getMaxPoints() {
@@ -46,4 +56,6 @@ public class QuizQuestion {
                 .filter(QuizAnswer::getAnswerValidity)
                 .count();
     }
+
+
 }
