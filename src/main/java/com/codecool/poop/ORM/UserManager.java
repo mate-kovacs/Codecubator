@@ -1,5 +1,6 @@
 package com.codecool.poop.ORM;
 
+import com.codecool.poop.model.Skills;
 import com.codecool.poop.model.User;
 import org.hibernate.exception.ConstraintViolationException;
 
@@ -30,5 +31,12 @@ public class UserManager extends DataManager {
         TypedQuery<User> query = em.createQuery(sql, User.class);
         query.setParameter("name", name);
         return query.getResultList().get(0);
+    }
+
+
+    public static void main(String[] args) {
+        User user = new User("valaki", "pass", "email");
+        UserManager userManager = new UserManager();
+        userManager.addUser(user);
     }
 }
