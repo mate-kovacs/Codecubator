@@ -1,14 +1,30 @@
 package com.codecool.poop.model.assignments.coding;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "coding_question")
 public class CodingQuestion {
 
-    private String instruction;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @Column(name = "question_text", nullable = false)
     private String question;
+
+    @OneToOne(mappedBy = "question")
     private CodingAnswer answer;
 
-    public CodingQuestion(String instruction, String question) {
-        this.instruction = instruction;
+    @OneToOne
+    @JoinColumn(name = "assignment_id")
+    private CodingAssignment assignment;
+
+    public CodingQuestion(String question) {
         this.question = question;
+    }
+
+    public CodingQuestion(){
     }
 
     public Integer correctSolutions(CodingAnswer currentAnswer){
@@ -27,17 +43,16 @@ public class CodingQuestion {
         this.answer = answer;
     }
 
-    public String getInstruction() {
-        return instruction;
-    }
-
     public String getQuestions() {
         return question;
     }
 
+    public void setAssignment(CodingAssignment assignment) {
+        this.assignment = assignment;
+    }
+
     @Override
     public String toString() {
-        return "Your task: " + instruction +
-                "\n" + question;
+        return getQuestions();
     }
 }

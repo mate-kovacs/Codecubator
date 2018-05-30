@@ -10,7 +10,9 @@ import java.util.Map;
 public abstract class Assignment {
     private String name;
     private String description;
+
     @ElementCollection
+    @CollectionTable(name = "exp_rewards")
     @MapKeyEnumerated(EnumType.STRING)
     private Map<Skills,Integer> expRewards;
     private Integer codeCoinReward;
