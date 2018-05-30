@@ -24,48 +24,38 @@ public class CodingAssignmentManager extends DataManager {
     public void addCodingAssignmentToDB(CodingAssignment assignment,
                                     CodingQuestion question,
                                     CodingAnswer answer){
-        EntityManager entityManager = getEntityManagerFactory().createEntityManager();
+        EntityManager entityManager = getEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
-        transaction.begin();
 
         entityManager.persist(answer);
         entityManager.persist(question);
         entityManager.persist(assignment);
-
-        transaction.commit();
-        entityManager.close();
     }
 
     public CodingAssignment getCodingAssignemntByID(Integer id){
-        EntityManager entityManager = getEntityManagerFactory().createEntityManager();
+        EntityManager entityManager = getEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
 
         CodingAssignment assignment = entityManager.find(CodingAssignment.class, id);
-
-        entityManager.close();
 
         return assignment;
     }
 
     public CodingQuestion getCodingQuestionByID(Integer id){
-        EntityManager entityManager = getEntityManagerFactory().createEntityManager();
+        EntityManager entityManager = getEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
 
         CodingAssignment assignment = entityManager.find(CodingAssignment.class, id);
-
-        entityManager.close();
 
         return assignment.getQuestion();
     }
 
     public CodingAnswer getCodingAnswerByID(Integer id){
-        EntityManager entityManager = getEntityManagerFactory().createEntityManager();
+        EntityManager entityManager = getEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
 
         CodingAssignment assignment = entityManager.find(CodingAssignment.class, id);
         CodingAnswer result = assignment.getQuestion().getAnswer();
-
-       // entityManager.close();
 
         return result;
     }
