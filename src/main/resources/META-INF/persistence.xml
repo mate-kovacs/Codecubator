@@ -7,7 +7,7 @@
 
     <persistence-unit name="codecubatorPU" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-        <class>com.codecool.poop.model.User</class>
+        <!--<class>com.codecool.poop.model.User</class>-->
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL94Dialect"/>
             <property name="hibernate.hbm2dll.auto" value="create-drop"/>
