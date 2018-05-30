@@ -25,9 +25,10 @@ public class User {
     private Date lastLogin;
     private LocalDateTime registrationDate;
 
-//    @CollectionTable(name = "skills")
-//    @ElementCollection
-//    private List<Skills> skills = new ArrayList<>();
+    @CollectionTable(name = "users_skills")
+    @ElementCollection
+    @MapKeyEnumerated(EnumType.STRING)
+    private Map<Skills,Integer> experiences = new HashMap<>();
 
     @ManyToMany(mappedBy = "users", cascade = CascadeType.ALL)
     private Set<Achievement> achievements = new HashSet<>();
@@ -41,6 +42,7 @@ public class User {
         this.password = password;
         this.email = email;
         registrationDate = LocalDateTime.now();
+        this.initExperiences();
     }
 
     public long getId() {
@@ -99,17 +101,17 @@ public class User {
         this.registrationDate = registrationDate;
     }
 
-//    public List<Skills> getSkills() {
-//        return skills;
-//    }
-//
-//    public void setSkills(List<Skills> skills) {
-//        this.skills = skills;
-//    }
-//
-//    public void addSkill(Skills skill) {
-//        this.skills.add(skill);
-//    }
+    public Map<Skills, Integer> getExperiences() {
+        return experiences;
+    }
+
+    public void setExperiences(Map<Skills, Integer> skills) {
+        experiences = skills;
+    }
+
+    public void addXpValueToSkill(Skills skill, Integer value) {
+        experiences.put(skill, experiences.get(skill) + value);
+    }
 
     public Set<Achievement> getAchievements() {
         return achievements;
@@ -121,5 +123,11 @@ public class User {
 
     public void addAchievement(Achievement achievement) {
         this.achievements.add(achievement);
+    }
+
+    private void initExperiences() {
+        for (Skills skill : Skills.values()) {
+            experiences.put(skill, 0);
+        }
     }
 }
