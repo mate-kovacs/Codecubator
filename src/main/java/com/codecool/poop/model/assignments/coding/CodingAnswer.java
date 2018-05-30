@@ -1,11 +1,24 @@
 package com.codecool.poop.model.assignments.coding;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Table(name = "coding_answer")
 public class CodingAnswer {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @ElementCollection
+    @CollectionTable(name = "coding_asnwer_parts")
     private List<String> answers;
+
+    @OneToOne
+    @JoinColumn(name = "question_id")
+    private CodingQuestion question;
 
     public CodingAnswer() {
     }
@@ -45,4 +58,7 @@ public class CodingAnswer {
         this.answers = validateAnswers(answers);
     }
 
+    public void setQuestion(CodingQuestion question) {
+        this.question = question;
+    }
 }

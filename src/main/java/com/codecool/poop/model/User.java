@@ -2,9 +2,7 @@ package com.codecool.poop.model;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Table(name = "users")
@@ -27,13 +25,12 @@ public class User {
     private Date lastLogin;
     private LocalDateTime registrationDate;
 
-    @CollectionTable(name = "skills")
-    @ElementCollection
-    private List<Skills> skills = new ArrayList<>();
+//    @CollectionTable(name = "skills")
+//    @ElementCollection
+//    private List<Skills> skills = new ArrayList<>();
 
-    @CollectionTable(name = "achievements")
-    @ElementCollection
-    private List<Achievement> achievements = new ArrayList<>();
+    @ManyToMany(mappedBy = "users", cascade = CascadeType.ALL)
+    private Set<Achievement> achievements = new HashSet<>();
 
 
     public User() {
@@ -44,6 +41,14 @@ public class User {
         this.password = password;
         this.email = email;
         registrationDate = LocalDateTime.now();
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getUsername() {
@@ -105,16 +110,16 @@ public class User {
 //    public void addSkill(Skills skill) {
 //        this.skills.add(skill);
 //    }
-//
-//    public List<Achievement> getAchievements() {
-//        return achievements;
-//    }
-//
-//    public void setAchievements(List<Achievement> achievements) {
-//        this.achievements = achievements;
-//    }
-//
-//    public void addAchievement(Achievement achievement) {
-//        this.achievements.add(achievement);
-//    }
+
+    public Set<Achievement> getAchievements() {
+        return achievements;
+    }
+
+    public void setAchievements(Set<Achievement> achievements) {
+        this.achievements = achievements;
+    }
+
+    public void addAchievement(Achievement achievement) {
+        this.achievements.add(achievement);
+    }
 }

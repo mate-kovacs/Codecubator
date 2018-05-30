@@ -1,10 +1,27 @@
 package com.codecool.poop.model;
 
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
+
+@Entity
 public class Achievement {
+
+    @Id
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    private long id;
+
+    @Column(unique = true)
     private String name;
+
+    @ManyToMany
+    private Set<User> users = new HashSet<>();
+
     private String description;
     private int codeCoinReward;
 
+    protected Achievement() {
+    }
 
     public Achievement(String name, String description) {
         this.name = name;
@@ -15,6 +32,14 @@ public class Achievement {
         this.name = name;
         this.description = description;
         this.codeCoinReward = codeCoinReward;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -39,5 +64,17 @@ public class Achievement {
 
     public void setCodeCoinReward(int codeCoinReward) {
         this.codeCoinReward = codeCoinReward;
+    }
+
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
+    }
+
+    public void addUser(User user) {
+        users.add(user);
     }
 }
