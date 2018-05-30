@@ -31,22 +31,32 @@ class QuizQuestionTest {
 
     @Test
     void Should_ThrowIllegalArgumentEx_When_LessThan2Answers() {
-        assertThrows(IllegalArgumentException.class, () -> new QuizQuestion("Which one is dog", allFalseAnswers));
+        QuizQuestion question = new QuizQuestion("Which one is dog?");
+        assertThrows(IllegalArgumentException.class, () -> question.setQuizAnswers(notEnoughAnswers));
     }
 
     @Test
     void Should_ThrowIllegalArgumentEx_When_NoTrueInAnswers() {
-        assertThrows(IllegalArgumentException.class, () -> new QuizQuestion("Which one is/are plant?", allFalseAnswers));
+        QuizQuestion question = new QuizQuestion("Which one is dragon?");
+        assertThrows(IllegalArgumentException.class, () -> question.setQuizAnswers(allFalseAnswers));
     }
 
     @Test
-    void Should_CreateQuizQuestionObject_When_ThereIsAtLeastOneTrueAnswer() {
-        QuizQuestion question = new QuizQuestion("Which one is/are plant?", validAnswers);
+    void Should_AbleToSetAnswers_When_ThereIsAtLeastOneTrueAnswer() {
+        QuizQuestion question = new QuizQuestion("Which one is dog?");
+        question.setQuizAnswers(validAnswers);
+    }
+
+    @Test
+    void Should_Return0_When_NoAnswers() {
+        QuizQuestion question = new QuizQuestion("Which one is cat?");
+        assertEquals(0, question.getMaxPoints());
     }
 
     @Test
     void Should_ReturnNumberOfTrueAnswers_When_ValidAnswers() {
-        QuizQuestion question = new QuizQuestion("Which one is/are plant?", validAnswers);
+        QuizQuestion question = new QuizQuestion("Which one is cat?");
+        question.setQuizAnswers(validAnswers);
         assertEquals(2, question.getMaxPoints());
     }
 }

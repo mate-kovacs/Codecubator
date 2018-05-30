@@ -1,8 +1,6 @@
 package com.codecool.poop.model.assignments;
 
 import com.codecool.poop.model.Skills;
-import org.eclipse.persistence.annotations.MapKeyConvert;
-import org.hibernate.annotations.MapKeyType;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -20,6 +18,8 @@ public abstract class Assignment {
     private Integer codeCoinReward;
     private LocalDateTime creationDate;
 
+    protected Assignment() {}
+
     public Assignment(String name, String description, Map<Skills, Integer> expRewards, Integer codeCoinReward) {
         if (!isValidexpRewards(expRewards)) {
             throw new IllegalArgumentException("Invalid reward map");
@@ -29,9 +29,6 @@ public abstract class Assignment {
         this.expRewards = expRewards;
         this.codeCoinReward = codeCoinReward;
         this.creationDate = LocalDateTime.now();
-    }
-
-    public Assignment(){
     }
 
     public String getName() {
