@@ -1,13 +1,21 @@
 package com.codecool.poop.model.assignments;
 
 import com.codecool.poop.model.Skills;
+import org.eclipse.persistence.annotations.MapKeyConvert;
+import org.hibernate.annotations.MapKeyType;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Map;
 
+@MappedSuperclass
 public abstract class Assignment {
     private String name;
     private String description;
+
+    @ElementCollection
+    @CollectionTable(name = "exp_rewards")
+    @MapKeyEnumerated(EnumType.STRING)
     private Map<Skills,Integer> expRewards;
     private Integer codeCoinReward;
     private LocalDateTime creationDate;
@@ -21,6 +29,9 @@ public abstract class Assignment {
         this.expRewards = expRewards;
         this.codeCoinReward = codeCoinReward;
         this.creationDate = LocalDateTime.now();
+    }
+
+    public Assignment(){
     }
 
     public String getName() {
