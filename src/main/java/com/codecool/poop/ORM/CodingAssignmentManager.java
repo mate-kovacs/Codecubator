@@ -44,4 +44,17 @@ public class CodingAssignmentManager extends DataManager {
 
         return assignment;
     }
+
+    public CodingQuestion getCodingQUestionByID(Integer id){
+        EntityManager entityManager = getEntityManagerFactory().createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+
+        CodingAssignment assignment = entityManager.find(CodingAssignment.class, id);
+
+        transaction.commit();
+        entityManager.close();
+
+        return assignment.getQuestion();
+    }
 }
