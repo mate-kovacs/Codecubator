@@ -107,6 +107,7 @@ buildNumber.properties
 
 src/main/resources/META-INF/create-schema.ddl
 src/main/resources/META-INF/drop-schema.ddl
+.DS_Store
 
 
 # End of https://www.gitignore.io/api/java,maven,intellij
