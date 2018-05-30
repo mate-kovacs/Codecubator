@@ -1,7 +1,10 @@
 package com.codecool.poop.controller;
 
+import com.codecool.poop.ORM.UserManager;
 import com.codecool.poop.config.TemplateEngineUtil;
 
+import com.codecool.poop.model.User;
+import org.mindrot.jbcrypt.BCrypt;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -26,8 +29,13 @@ public class Login extends HttpServlet {
     protected void doPost (HttpServletRequest request, HttpServletResponse response) throws IOException {
         String name = request.getParameter("name");
         String password = request.getParameter("password");
+        UserManager userManager = new UserManager();
+        User user = userManager.getUserByName(name);
+        if (BCrypt.checkpw(password, user.getPassword()))
+            System.out.println("It matches");
+        else
+            System.out.println("It does not match");
     }
-
 }
 
 
