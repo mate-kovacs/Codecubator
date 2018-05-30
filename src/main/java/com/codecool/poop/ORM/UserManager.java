@@ -4,6 +4,7 @@ import com.codecool.poop.model.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.Query;
 
 public class UserManager extends DataManager {
 
@@ -24,5 +25,14 @@ public class UserManager extends DataManager {
         transaction.commit();
         em.close();
         return user;
+    }
+
+    public int isUserInTable(String name) {
+        EntityManager em = getEntityManagerFactory().createEntityManager();
+        String sql = "SELECT 1 from  User u where username = :name";
+        Query query = em.createQuery(sql);
+        query.setParameter("name", name);
+        em.close();
+        return query.getFirstResult();
     }
 }
