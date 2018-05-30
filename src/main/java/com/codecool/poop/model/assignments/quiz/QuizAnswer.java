@@ -1,6 +1,13 @@
 package com.codecool.poop.model.assignments.quiz;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "quiz_answers")
 public class QuizAnswer {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int answerId;
     private String answerText;
     private Boolean answerValidity;
 
@@ -8,6 +15,8 @@ public class QuizAnswer {
         this.answerText = answerText;
         this.answerValidity = answerValidity;
     }
+
+    protected QuizAnswer() {}
 
     public String getAnswerText() {
         return answerText;

@@ -2,15 +2,21 @@ package com.codecool.poop.model.assignments;
 
 import com.codecool.poop.model.Skills;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Map;
 
+@MappedSuperclass
 public abstract class Assignment {
     private String name;
     private String description;
+    @ElementCollection
+    @MapKeyEnumerated(EnumType.STRING)
     private Map<Skills,Integer> expRewards;
     private Integer codeCoinReward;
     private LocalDateTime creationDate;
+
+    protected Assignment() {}
 
     public Assignment(String name, String description, Map<Skills, Integer> expRewards, Integer codeCoinReward) {
         if (!isValidexpRewards(expRewards)) {

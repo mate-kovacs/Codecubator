@@ -1,12 +1,20 @@
 package com.codecool.poop.model.assignments.quiz;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Table(name = "quiz_questions")
 public class QuizQuestion {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int quizQuestionId;
     private String questionText;
+    @OneToMany
     private List<QuizAnswer> quizAnswers = new ArrayList<>();
+
+    protected QuizQuestion() {}
 
     public QuizQuestion(String questionText, List<QuizAnswer> quizAnswers) {
         this.questionText = questionText;

@@ -1,6 +1,6 @@
 package com.codecool.poop.model.assignments.coding;
 
-import com.codecool.poop.model.Assignment;
+import com.codecool.poop.model.assignments.Assignment;
 import com.codecool.poop.model.Skills;
 
 import java.util.Map;
