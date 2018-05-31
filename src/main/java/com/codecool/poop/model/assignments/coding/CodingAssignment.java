@@ -8,13 +8,9 @@ import java.util.List;
 import java.util.Map;
 
 @Entity
-@Table(name = "coding_assignments")
+@DiscriminatorValue("CODING")
 public class CodingAssignment extends Assignment{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int assignmentID;
 
     @OneToMany(mappedBy = "assignment")
     private List<CodingQuestion> questions;
@@ -40,9 +36,5 @@ public class CodingAssignment extends Assignment{
 
     public void setQuestions(List<CodingQuestion> questions) {
         this.questions = questions;
-    }
-
-    public int getAssignmentID() {
-        return assignmentID;
     }
 }

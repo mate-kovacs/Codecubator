@@ -8,11 +8,9 @@ import java.util.List;
 import java.util.Map;
 
 @Entity
-@Table(name = "quiz_assignment")
+@DiscriminatorValue("QUIZ")
 public class QuizAssignment extends Assignment {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+
     @ManyToMany
     private List<QuizQuestion> questions;
 

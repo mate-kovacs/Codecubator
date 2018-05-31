@@ -6,8 +6,15 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Map;
 
-@MappedSuperclass
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="assignment_type",
+        discriminatorType = DiscriminatorType.STRING)
+@Table(name = "assigments")
 public abstract class Assignment {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
     private String name;
     private String description;
 
@@ -65,6 +72,10 @@ public abstract class Assignment {
 
     public LocalDateTime getCreationDate() {
         return creationDate;
+    }
+
+    public int getId() {
+        return id;
     }
 
     private boolean isValidexpRewards(Map<Skills, Integer> expRewards) {
