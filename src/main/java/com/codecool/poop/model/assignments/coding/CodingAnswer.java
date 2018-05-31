@@ -22,7 +22,7 @@ public class CodingAnswer {
     }
 
     public CodingAnswer(String answer, CodingQuestion question) {
-        this.answer = answer;
+        this.answer = formatAnswer(answer);
         this.question = question;
         setCodingQuestionReference();
     }
