@@ -37,6 +37,6 @@ public class UserManager extends DataManager {
     public static void main(String[] args) {
         User user = new User("valaki", "pass", "email");
         UserManager userManager = new UserManager();
-        userManager.addUser(user);
+        //userManager.addUser(user);
     }
 }
