@@ -1,6 +1,7 @@
 package com.codecool.poop.model.assignments.coding;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -18,7 +19,7 @@ public class CodingQuestion {
     private String question;
 
     @OneToMany(mappedBy = "question")
-    private List<CodingAnswer> answers;
+    private List<CodingAnswer> answers = new ArrayList<>();
 
     @ManyToMany
     @JoinColumn(name = "assignment_id")
