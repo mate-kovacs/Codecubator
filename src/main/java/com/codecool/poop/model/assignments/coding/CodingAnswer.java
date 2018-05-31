@@ -24,6 +24,11 @@ public class CodingAnswer {
     public CodingAnswer(String answer, CodingQuestion question) {
         this.answer = answer;
         this.question = question;
+        setCodingQuestionReference();
+    }
+
+    private void setCodingQuestionReference(){
+        question.addAnswer(this);
     }
 
     private String formatAnswer(String answer) {
