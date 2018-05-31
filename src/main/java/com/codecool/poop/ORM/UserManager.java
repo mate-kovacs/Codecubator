@@ -32,11 +32,4 @@ public class UserManager extends DataManager {
         query.setParameter("name", name);
         return query.getResultList().get(0);
     }
-
-
-//    public static void main(String[] args) {
-//        User user = new User("valaki", "pass", "email");
-//        UserManager userManager = new UserManager();
-//        userManager.addUser(user);
-//    }
 }
