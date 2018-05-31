@@ -377,7 +377,7 @@ body {
     transition: 1s;
 }
 
-.css_grid_wrapper {
+.login_css_grid_wrapper {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr;
@@ -388,4 +388,11 @@ body {
     grid-column: 2/3;
     grid-row: 2/3;
     text-align: center;
+}
+
+.registration_css_grid_wrapper {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-rows: 1fr 2fr 1fr;
+    height: 100vh;
 }
