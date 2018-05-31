@@ -1,7 +1,9 @@
 package com.codecool.poop.model.assignments.coding;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "coding_question")
@@ -18,9 +20,9 @@ public class CodingQuestion {
     @OneToMany(mappedBy = "question")
     private List<CodingAnswer> answers;
 
-    @ManyToOne
+    @ManyToMany
     @JoinColumn(name = "assignment_id")
-    private CodingAssignment assignment;
+    private Set<CodingAssignment> assignments = new HashSet<>();
 
     public CodingQuestion(String question) {
         this.question = question;
@@ -56,8 +58,12 @@ public class CodingQuestion {
         return question;
     }
 
-    public void setAssignment(CodingAssignment assignment) {
-        this.assignment = assignment;
+    public void addAssignment(CodingAssignment assignment) {
+        this.assignments.add(assignment);
+    }
+
+    public void removeAssignment(CodingAssignment assignment){
+        this.assignments.remove(assignment);
     }
 
     public int getId() {
