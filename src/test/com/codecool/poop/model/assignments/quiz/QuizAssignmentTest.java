@@ -17,22 +17,22 @@ class QuizAssignmentTest {
 
     @BeforeAll
     private static void createQuestion() {
-        List<QuizAnswer> answers1 = new ArrayList<>();
-        answers1.add(new QuizAnswer("Dog", false));
-        answers1.add(new QuizAnswer("Cat", true));
-        answers1.add(new QuizAnswer("Tiger", true));
-        answers1.add(new QuizAnswer("Bear", false));
         QuizQuestion question01 = new QuizQuestion("Question 01");
-        question01.setQuizAnswers(answers1);
+
+        new QuizAnswer("Dog", false, question01);
+        new QuizAnswer("Cat", true, question01);
+        new QuizAnswer("Tiger", true, question01);
+        new QuizAnswer("Bear", false, question01);
+
         questions.add(question01);
 
-        List<QuizAnswer> answers2 = new ArrayList<>();
-        answers2.add(new QuizAnswer("Dog", false));
-        answers2.add(new QuizAnswer("Cat", true));
-        answers2.add(new QuizAnswer("Tiger", false));
-        answers2.add(new QuizAnswer("Bear", false));
         QuizQuestion question02 = new QuizQuestion("Question 02");
-        question02.setQuizAnswers(answers2);
+
+        new QuizAnswer("Dog", false, question02);
+        new QuizAnswer("Cat", true, question02);
+        new QuizAnswer("Tiger", false, question02);
+        new QuizAnswer("Bear", false, question02);
+
         questions.add(question02);
     }
 

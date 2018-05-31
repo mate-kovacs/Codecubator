@@ -4,6 +4,7 @@ import com.codecool.poop.ORM.UserManager;
 import com.codecool.poop.config.TemplateEngineUtil;
 
 import com.codecool.poop.model.User;
+import org.json.JSONObject;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -28,15 +29,21 @@ public class Registration extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String name = request.getParameter("name");
+        String email = request.getParameter("email");
         String password = request.getParameter("password");
         String hashPW = BCrypt.hashpw(password, BCrypt.gensalt(12));
-        String email = request.getParameter("email");
+
         User user = new User(name, hashPW, email);
         UserManager userManager = new UserManager();
+        JSONObject json = new JSONObject();
+        response.setContentType("application/json");
+
         if (userManager.registerUser(user)) {
-            System.out.println("User registered");
+            json.put("isNameAddedToDB", true);
         } else {
-            System.out.println("Name or email already in use");
+            json.put("isNameAddedToDB", false);
+            System.out.println("name already in use");
         }
+        response.getWriter().print(json);
     }
 }

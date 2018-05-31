@@ -2,7 +2,9 @@ package com.codecool.poop.model.assignments.quiz;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "quiz_questions")
@@ -11,6 +13,8 @@ public class QuizQuestion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String questionText;
+    @ManyToMany
+    private Set<QuizAssignment> assignments = new HashSet<>();
     @OneToMany(mappedBy = "question")
     private List<QuizAnswer> quizAnswers = new ArrayList<>();
 
@@ -40,15 +44,30 @@ public class QuizQuestion {
         return quizAnswers;
     }
 
-    public void setQuizAnswers(List<QuizAnswer> quizAnswers) {
-        if (isAnswersValid(quizAnswers)) {
-            this.quizAnswers = quizAnswers;
-            for (QuizAnswer answer : quizAnswers) {
-                answer.setQuestion(this);
-            }
-        } else {
-            throw new IllegalArgumentException("Invalid answers");
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void addAnswer(QuizAnswer answer) {
+        if (!quizAnswers.contains(answer)){
+            quizAnswers.add(answer);
         }
+    }
+
+    public void addAssigment(QuizAssignment assignment){
+        assignments.add(assignment);
+    }
+
+    public void removeAssigment(QuizAssignment assignment){
+        assignments.remove(assignment);
+    }
+
+    public Boolean isQuestionValid() {
+        return isAnswersValid(quizAnswers);
     }
 
     public int getMaxPoints() {

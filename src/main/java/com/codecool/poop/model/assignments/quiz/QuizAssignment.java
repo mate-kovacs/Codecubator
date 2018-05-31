@@ -19,10 +19,17 @@ public class QuizAssignment extends Assignment {
     public QuizAssignment(String name, String description, Map<Skills, Integer> expRewards, Integer codeCoinReward, List<QuizQuestion> questions) {
         super(name, description, expRewards, codeCoinReward);
         this.questions = questions;
+        setQuestionReferences();
     }
 
     public List<QuizQuestion> getQuestions() {
         return questions;
+    }
+
+    private void setQuestionReferences(){
+        for (QuizQuestion question : questions){
+            question.addAssigment(this);
+        }
     }
 
     public void setQuestions(List<QuizQuestion> questions) {
