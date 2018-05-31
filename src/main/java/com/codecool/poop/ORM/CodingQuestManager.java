@@ -51,10 +51,16 @@ public class CodingQuestManager extends DataManager{
         return assignments;
     }
 
+    public List<CodingQuestion> getAllCodingQuestions(){
+        EntityManager entityManager = getEntityManager();
+        List<CodingQuestion> questions = entityManager.createQuery("SELECT question " +
+                "FROM CodingQuestion as question").getResultList();
+        return questions;
+    }
+
     public CodingAssignment getCodingAssignemntByID(Integer id){
         EntityManager entityManager = getEntityManager();
-        CodingAssignment temp = entityManager.find(CodingAssignment.class, id);
-        return temp;
+        return entityManager.find(CodingAssignment.class, id);
     }
 
     public CodingQuestion getCodingQuestionByID(Integer id){
