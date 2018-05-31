@@ -366,7 +366,17 @@ body {
 }
 
 .wrapper {
-    width: 100%;
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
+    height: 100vh;
+}
+
+#welcome_text {
+    text-align: center;
+    grid-column: 2/3;
+    grid-row: 2/3;
+    align-self: center;
 }
 
 .tbc_arrow {

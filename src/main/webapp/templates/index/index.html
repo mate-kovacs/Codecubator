@@ -6,7 +6,10 @@
 </head>
 <body class="lots-main-page-body">
 <div class="wrapper">
-    <img id="tbc" class="tbc_arrow" src="/static/img/tbc_arrow.png">
+    <div id="welcome_text">
+        <h1 id="welcome_h1" th:text="'Hello ' + ${user_name} + ' !'">Hello User</h1>
+    </div>
 </div>
+    <img id="tbc" class="tbc_arrow" src="/static/img/tbc_arrow.png">
 </body>
 </html>
