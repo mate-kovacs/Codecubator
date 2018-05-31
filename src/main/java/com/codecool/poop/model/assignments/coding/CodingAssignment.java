@@ -22,9 +22,16 @@ public class CodingAssignment extends Assignment{
                             List<CodingQuestion> questions) {
         super(name, description, expRewards, codeCoinReward);
         this.questions = questions;
+        setCodingQuestionReferences();
     }
 
     public CodingAssignment(){
+    }
+
+    private void setCodingQuestionReferences(){
+        for (CodingQuestion question: questions) {
+            question.setAssignment(this);
+        }
     }
 
     public int getMaxPoints(){
