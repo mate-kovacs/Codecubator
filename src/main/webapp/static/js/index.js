@@ -1,15 +1,17 @@
 index = {
     init: function () {
-        this.tbcArrowSlide();
         this.changeColorOfUsername();
+        this.tbcArrowSlide();
     },
 
     tbcArrowSlide: function () {
+        let music = document.getElementById("music");
+        music.play();
         let tbc_image = document.getElementById("tbc");
-        window.onload = function () {
+        setTimeout(function () {
             tbc_image.style.opacity = "1";
             tbc_image.style.marginRight = "68%";
-        };
+        }, 3500);
     },
 
     changeColorOfUsername: function () {
@@ -23,4 +25,5 @@ index = {
     }
 };
 
-index.init();
+
+window.onload(index.init());
