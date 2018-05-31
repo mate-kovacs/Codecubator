@@ -25,7 +25,7 @@ function registrationListener() {
                         document.location.href = "/";
                     } else {
                         message.style.display = "inline-block";
-                        message.innerHTML = "Name already in use!";
+                        message.innerHTML = "Name or email already in use!";
                     }
                 },
             });
