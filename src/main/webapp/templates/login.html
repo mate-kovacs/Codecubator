@@ -6,15 +6,24 @@
     <script></script>
 </head>
 
-<body>
-<form action="#" method="post">
-    <h2>Log in</h2>
-    <label for="name" class="floatLabel">Name</label>
-    <input id="name" name="name" type="text">
-    <label for="password" class="floatLabel">Password</label>
-    <input id="password" name="password" type="password">
-    <input type="submit" value="Log in" id="submit">
-    <p>Not registered? <a href="/registration">Create an account</a></p>
-</form>
+<body class="lots-main-page-body">
+<div class="container lots-font-color-white">
+    <form action="#" method="post">
+        <h2>Log in</h2>
+        <div class="form-group">
+            <label for="name" class="floatLabel">Name</label>
+            <input id="name" class="form-control lots-input-field" name="name" type="text" placeholder="Name">
+        </div>
+        <div class="form-group">
+            <label for="password" class="floatLabel">Password</label>
+            <input id="password" class="form-control lots-input-field" name="password" type="password"
+                   placeholder="Password">
+        </div>
+        <div class="form-group">
+            <input type="submit" class="btn btn-dark" value="Log in" id="submit">
+            <p>Not registered? <a href="/registration">Create an account</a></p>
+        </div>
+    </form>
+</div>
 </body>
 </html>
