@@ -8,11 +8,9 @@ import java.util.List;
 import java.util.Map;
 
 @Entity
-@Table(name = "quiz_assignment")
+@DiscriminatorValue("QUIZ")
 public class QuizAssignment extends Assignment {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+
     @ManyToMany
     private List<QuizQuestion> questions;
 
@@ -21,10 +19,17 @@ public class QuizAssignment extends Assignment {
     public QuizAssignment(String name, String description, Map<Skills, Integer> expRewards, Integer codeCoinReward, List<QuizQuestion> questions) {
         super(name, description, expRewards, codeCoinReward);
         this.questions = questions;
+        setQuestionReferences();
     }
 
     public List<QuizQuestion> getQuestions() {
         return questions;
+    }
+
+    private void setQuestionReferences(){
+        for (QuizQuestion question : questions){
+            question.addAssigment(this);
+        }
     }
 
     public void setQuestions(List<QuizQuestion> questions) {

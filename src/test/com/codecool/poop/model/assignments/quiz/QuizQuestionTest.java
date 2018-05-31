@@ -1,6 +1,7 @@
 package com.codecool.poop.model.assignments.quiz;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -9,54 +10,43 @@ import java.util.List;
 
 class QuizQuestionTest {
 
-    static List<QuizAnswer> validAnswers = new ArrayList<>();
-    static List<QuizAnswer> allFalseAnswers = new ArrayList<>();
-    static List<QuizAnswer> nullAnswers = null;
-    static List<QuizAnswer> notEnoughAnswers = new ArrayList<>();
+    QuizQuestion question;
 
-    @BeforeAll
-    private static void createQuestion() {
-        validAnswers.add(new QuizAnswer("Dog", false));
-        validAnswers.add(new QuizAnswer("Cat", true));
-        validAnswers.add(new QuizAnswer("Tiger", true));
-        validAnswers.add(new QuizAnswer("Bear", false));
 
-        allFalseAnswers.add(new QuizAnswer("Dog", false));
-        allFalseAnswers.add(new QuizAnswer("Cat", false));
-        allFalseAnswers.add(new QuizAnswer("Tiger", false));
-        allFalseAnswers.add(new QuizAnswer("Bear", false));
-
-        notEnoughAnswers.add(new QuizAnswer("Dog", false));
+    @BeforeEach
+    private void createQuestion() {
+        question = new QuizQuestion("Which one is dog?");
     }
 
     @Test
     void Should_ThrowIllegalArgumentEx_When_LessThan2Answers() {
-        QuizQuestion question = new QuizQuestion("Which one is dog?");
-        assertThrows(IllegalArgumentException.class, () -> question.setQuizAnswers(notEnoughAnswers));
+        new QuizAnswer("Dog", true, question);
+        assertFalse(question.isQuestionValid());
     }
 
     @Test
     void Should_ThrowIllegalArgumentEx_When_NoTrueInAnswers() {
-        QuizQuestion question = new QuizQuestion("Which one is dragon?");
-        assertThrows(IllegalArgumentException.class, () -> question.setQuizAnswers(allFalseAnswers));
+        new QuizAnswer("Cat", false, question);
+        assertFalse(question.isQuestionValid());
     }
 
     @Test
     void Should_AbleToSetAnswers_When_ThereIsAtLeastOneTrueAnswer() {
-        QuizQuestion question = new QuizQuestion("Which one is dog?");
-        question.setQuizAnswers(validAnswers);
+        new QuizAnswer("Cat", false, question);
+        new QuizAnswer("Dog", true, question);
+        assertTrue(question.isQuestionValid());
     }
 
     @Test
     void Should_Return0_When_NoAnswers() {
-        QuizQuestion question = new QuizQuestion("Which one is cat?");
         assertEquals(0, question.getMaxPoints());
     }
 
     @Test
     void Should_ReturnNumberOfTrueAnswers_When_ValidAnswers() {
-        QuizQuestion question = new QuizQuestion("Which one is cat?");
-        question.setQuizAnswers(validAnswers);
+        new QuizAnswer("Cat", false, question);
+        new QuizAnswer("Dog", true, question);
+        new QuizAnswer("Dog2", true, question);
         assertEquals(2, question.getMaxPoints());
     }
 }
