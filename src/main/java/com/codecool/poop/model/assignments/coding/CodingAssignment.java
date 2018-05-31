@@ -15,8 +15,13 @@ public class CodingAssignment extends Assignment{
     @OneToMany(mappedBy = "assignment")
     private List<CodingQuestion> questions;
 
-    public CodingAssignment(String name, String description, Map<Skills, Integer> expRewards, Integer codeCoinReward) {
+    public CodingAssignment(String name,
+                            String description,
+                            Map<Skills, Integer> expRewards,
+                            Integer codeCoinReward,
+                            List<CodingQuestion> questions) {
         super(name, description, expRewards, codeCoinReward);
+        this.questions = questions;
     }
 
     public CodingAssignment(){
