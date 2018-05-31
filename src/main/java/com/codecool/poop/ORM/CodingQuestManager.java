@@ -20,28 +20,31 @@ public class CodingQuestManager extends DataManager{
     private CodingQuestManager() {
     }
 
-    public void addCodingAssignmentToDB(CodingAssignment assignment){
+    public int addCodingAssignmentToDB(CodingAssignment assignment){
         EntityManager entityManager = getEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         entityManager.persist(assignment);
         transaction.commit();
+        return assignment.getId();
     }
 
-    public void addCodingQuestionToDB(CodingQuestion question){
+    public int addCodingQuestionToDB(CodingQuestion question){
         EntityManager entityManager = getEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         entityManager.persist(question);
         transaction.commit();
+        return question.getId();
     }
 
-    public void addCodingAnswerToDB(CodingAnswer answer){
+    public int addCodingAnswerToDB(CodingAnswer answer){
         EntityManager entityManager = getEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         entityManager.persist(answer);
         transaction.commit();
+        return answer.getId();
     }
 
     public List<CodingAssignment> getAllCodingAssignments(){
