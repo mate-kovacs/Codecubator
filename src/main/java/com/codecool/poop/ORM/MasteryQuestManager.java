@@ -16,14 +16,15 @@ public class MasteryQuestManager extends DataManager{
     private MasteryQuestManager(){
     }
 
-    public void addMasteryAssignmentToDB(MasteryAssignment assignment){
+    public int addMasteryAssignmentToDB(MasteryAssignment assignment){
         EntityManager entityManager = getEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         entityManager.persist(assignment);
         transaction.commit();
+        return assignment.getId();
     }
-    
+
     public MasteryAssignment getMasteryAssignemntByID(Integer id){
         EntityManager entityManager = getEntityManager();
         return entityManager.find(MasteryAssignment.class, id);
