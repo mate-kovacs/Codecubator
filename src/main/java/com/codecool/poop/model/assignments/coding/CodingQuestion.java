@@ -50,8 +50,8 @@ public class CodingQuestion {
         return answers;
     }
 
-    public void setAnswers(List<CodingAnswer> answers) {
-        this.answers = answers;
+    public void addAnswer(CodingAnswer answer) {
+        this.answers.add(answer);
     }
 
     public String getQuestion() {
