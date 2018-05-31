@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet(urlPatterns = {"/index"})
@@ -15,9 +16,15 @@ public class Index extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        HttpSession session;
+        session = request.getSession();
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(request.getServletContext());
         WebContext context = new WebContext(request, response, request.getServletContext());
-        engine.process("index/index.html", context, response.getWriter());
+        if (session.getAttribute("user") != null) {
+            engine.process("index/index.html", context, response.getWriter());
+        } else {
+            response.sendRedirect("/");
+        }
     }
 
     @Override

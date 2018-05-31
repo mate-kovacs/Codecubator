@@ -12,7 +12,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 
 @WebServlet(urlPatterns = {"/"})
@@ -31,8 +34,16 @@ public class Login extends HttpServlet {
         String password = request.getParameter("password");
         UserManager userManager = new UserManager();
         User user = userManager.getUserByName(name);
-        if (BCrypt.checkpw(password, user.getPassword()))
-            System.out.println("It matches");
+        HttpSession session;
+        session = request.getSession();
+        Map<String, Object> userMap = new HashMap<>();
+        userMap.put("user_name", user.getUsername());
+        userMap.put("user_id", user.getId());
+        if (BCrypt.checkpw(password, user.getPassword())) {
+            session.setAttribute("user", userMap);
+            System.out.println("User logged in!");
+            response.sendRedirect("/index");
+        }
         else
             System.out.println("It does not match");
     }
