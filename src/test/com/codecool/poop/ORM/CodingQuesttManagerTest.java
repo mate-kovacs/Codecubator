@@ -138,11 +138,18 @@ class CodingQuesttManagerTest {
         assertThrows(NullPointerException.class, () -> manager.getCodingAnswerByID(0).toString());
     }
 
-//    @Test
-//    void test_get_all_coding_assignments_heppy_path(){
-//
-//        CodingQuestManager manager = CodingQuestManager.getInstance();
-//        assertEquals(2, manager.getAllCodingAssignments().size());
-//    }
+    @Test
+    void test_get_all_coding_assignments_happy_path(){
+
+        CodingQuestManager manager = CodingQuestManager.getInstance();
+        assertEquals(2, manager.getAllCodingAssignments().size());
+    }
+
+    @Test
+    void test_get_all_coding_questions_happy_path(){
+
+        CodingQuestManager manager = CodingQuestManager.getInstance();
+        assertEquals(4, manager.getAllCodingQuestions().size());
+    }
 
 }
