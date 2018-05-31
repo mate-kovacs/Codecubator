@@ -51,7 +51,7 @@ class QuizQuestManagerTest {
     }
 
     @Test
-    public void Should_AbleToFindAssigment_When_AddingAssigmentWithOneQuestion() {
+    public void Should_AbleToFindAssignment_When_AddingAssignmentWithOneQuestion() {
         QuizQuestion question01 = new QuizQuestion("Question 1 for assignment?");
         qam.addQuizQuestionToDB(question01);
         QuizQuestion question02 = new QuizQuestion("Question 2 for assignment?");
