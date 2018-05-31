@@ -4,12 +4,12 @@
 <head th:replace="common_head.html :: common_head(~{::title}, ~{::script})">
     <meta charset="UTF-8">
     <title>Sign Up</title>
-    <script></script>
+    <script src="/static/js/registration.js" defer></script>
 </head>
 
 <body class="lots-main-page-body">
 <div class="container lots-font-color-white">
-    <form action="#" method="post">
+    <form>
         <h2>Sign Up</h2>
         <div class="form-group">
             <label for="name" class="floatLabel">UserName</label>
@@ -17,19 +17,25 @@
         </div>
         <div class="form-group">
             <label for="email" class="floatLabel">Email</label>
-            <input id="email" class="form-control lots-input-field" name="email" type="email" placeholder="Email address">
+            <input id="email" class="form-control lots-input-field" name="email" type="email"
+                   placeholder="Email address">
         </div>
         <div class="form-group">
             <label for="password" class="floatLabel">Password (longer than 8 characters)</label>
-            <input id="password" class="form-control lots-input-field" name="password" type="password" placeholder="Password">
+            <input id="password" class="form-control lots-input-field" name="password" type="password"
+                   placeholder="Password">
         </div>
         <div class="form-group">
-            <label for="password2" class="floatLabel">Confirm your password</label>
-            <input id="password2" class="form-control lots-input-field" name="password2" type="password" placeholder="Confirm password">
+            <label for="confirmPassword" class="floatLabel">Confirm your password</label>
+            <input id="confirmPassword" class="form-control lots-input-field" name="confirmPassword" type="password"
+                   placeholder="Confirm password">
         </div>
+        <div class="alert alert-danger" role="alert" id="alertMessage" style="display: none"></div>
         <!--<meter max="4" id="password-strength-meter"></meter>-->
         <!--<p id="password-strength-text"></p>-->
-        <input type="submit" class="btn btn-dark" value="Create My Account" id="submit">
+        <div class="form-group">
+            <button type="button" class="btn btn-dark" value="Create My Account" id="submit">Create my account</button>
+        </div>
     </form>
 </div>
 </body>

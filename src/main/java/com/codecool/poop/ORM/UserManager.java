@@ -3,6 +3,7 @@ package com.codecool.poop.ORM;
 import com.codecool.poop.model.Skills;
 import com.codecool.poop.model.User;
 import org.hibernate.exception.ConstraintViolationException;
+import org.postgresql.util.PSQLException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -15,13 +16,13 @@ public class UserManager extends DataManager {
     public boolean registerUser(User user) {
         EntityManager em = getEntityManager();
         EntityTransaction transaction = em.getTransaction();
-        transaction.begin();
         try {
+            transaction.begin();
             em.persist(user);
-        } catch (ConstraintViolationException e) {
+            transaction.commit();
+        } catch (Exception e) {
             return false;
         }
-        transaction.commit();
         return true;
     }
 
