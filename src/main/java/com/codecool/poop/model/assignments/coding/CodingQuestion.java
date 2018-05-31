@@ -48,7 +48,7 @@ public class CodingQuestion {
         return answers;
     }
 
-    public void setAnswer(List<CodingAnswer> answers) {
+    public void setAnswers(List<CodingAnswer> answers) {
         this.answers = answers;
     }
 
