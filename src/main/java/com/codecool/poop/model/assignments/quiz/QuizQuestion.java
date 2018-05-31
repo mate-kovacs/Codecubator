@@ -1,5 +1,7 @@
 package com.codecool.poop.model.assignments.quiz;
 
+import com.codecool.poop.model.assignments.Assignment;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -14,7 +16,7 @@ public class QuizQuestion {
     private int id;
     private String questionText;
     @ManyToMany
-    private Set<QuizAssignment> assignments = new HashSet<>();
+    private Set<Assignment> assignments = new HashSet<>();
     @OneToMany(mappedBy = "question")
     private List<QuizAnswer> quizAnswers = new ArrayList<>();
 
@@ -58,11 +60,11 @@ public class QuizQuestion {
         }
     }
 
-    public void addAssigment(QuizAssignment assignment){
+    public void addAssigment(Assignment assignment){
         assignments.add(assignment);
     }
 
-    public void removeAssigment(QuizAssignment assignment){
+    public void removeAssigment(Assignment assignment){
         assignments.remove(assignment);
     }
 
