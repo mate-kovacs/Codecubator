@@ -21,6 +21,11 @@ public class CodingAnswer {
     public CodingAnswer() {
     }
 
+    public CodingAnswer(String answer, CodingQuestion question) {
+        this.answer = answer;
+        this.question = question;
+    }
+
     private String formatAnswer(String answer) {
         String[] answerParts = answer.split("[\\s]+");
         String goodAnswer = "";
