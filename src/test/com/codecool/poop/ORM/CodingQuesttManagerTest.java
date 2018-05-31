@@ -54,7 +54,7 @@ class CodingQuesttManagerTest {
         CodingAssignment assignment2 = new CodingAssignment("Number two",
                 "Other",
                 reward,
-                3,
+                2,
                 questions);
         for (CodingQuestion question : questions2) {
             question.addAssignment(assignment2);
@@ -70,8 +70,8 @@ class CodingQuesttManagerTest {
         }
         for (CodingQuestion question : questions2) {
             manager.addCodingQuestionToDB(question);
-
         }
+
         for (CodingAnswer answer : answers11) {
             manager.addCodingAnswerToDB(answer);
         }
@@ -114,8 +114,6 @@ class CodingQuesttManagerTest {
 
     @Test
     void test_get_coding_question_invalid_id() {
-
-        setup();
 
         CodingQuestManager manager = CodingQuestManager.getInstance();
         assertThrows(NullPointerException.class, () -> manager.getCodingQuestionByID(0).toString());
