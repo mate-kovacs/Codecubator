@@ -4,6 +4,7 @@ import com.codecool.poop.model.assignments.Assignment;
 import com.codecool.poop.model.Skills;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Map;
 
 @Entity
@@ -12,10 +13,11 @@ public class CodingAssignment extends Assignment{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int assignmentID;
 
-    @OneToOne(mappedBy = "assignment")
-    private CodingQuestion question;
+    @OneToMany(mappedBy = "assignment")
+    private List<CodingQuestion> questions;
 
     public CodingAssignment(String name, String description, Map<Skills, Integer> expRewards, Integer codeCoinReward) {
         super(name, description, expRewards, codeCoinReward);
@@ -24,21 +26,20 @@ public class CodingAssignment extends Assignment{
     public CodingAssignment(){
     }
 
-    public void evaluateAnswer(CodingAnswer answer){
-        int numberOfCorrectSolutions = question.correctSolutions(answer);
-        //TODO
-    }
-
     public int getMaxPoints(){
-        return question.getMaxPoints();
+        int points = 0;
+        for (CodingQuestion question: questions) {
+            points += question.getMaxPoints();
+        }
+        return points;
     }
 
-    public CodingQuestion getQuestion(){
-        return question;
+    public List<CodingQuestion> getQuestions(){
+        return questions;
     }
 
-    public void setQuestion(CodingQuestion question) {
-        this.question = question;
+    public void setQuestions(List<CodingQuestion> questions) {
+        this.questions = questions;
     }
 
     public int getAssignmentID() {
