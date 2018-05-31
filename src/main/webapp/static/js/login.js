@@ -1,5 +1,3 @@
-
-
 function loginListener() {
     let button = document.getElementById("submit");
     button.addEventListener("click", function () {
@@ -23,5 +21,7 @@ function loginListener() {
     })
 }
 
-
-loginListener();
+$(document).ready(function () {
+    loginListener();
+    $('#privacy-policy-modal').modal('show')
+});
