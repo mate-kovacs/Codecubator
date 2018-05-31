@@ -3,6 +3,14 @@ body {
     font-family: 'Architects Daughter', cursive;
 }
 
+.modal-dialog {
+    max-width: 800px !important;
+}
+
+.modal-content {
+    background: url("/static/img/background_image.jpg") no-repeat fixed center;
+}
+
 .lots-font-color-gold:hover {
     color: #ffb316;
 }
