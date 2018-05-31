@@ -44,6 +44,14 @@ public class QuizQuestion {
         return quizAnswers;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public void addAnswer(QuizAnswer answer) {
         if (!quizAnswers.contains(answer)){
             quizAnswers.add(answer);

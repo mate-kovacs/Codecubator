@@ -78,6 +78,10 @@ public abstract class Assignment {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     private boolean isValidexpRewards(Map<Skills, Integer> expRewards) {
         return expRewards != null && expRewards.size() > 0 && isNoNegativeInRewardsMap(expRewards);
     }
