@@ -3,7 +3,7 @@
 <head th:replace="common_head.html :: common_head(~{::title}, ~{::script})">
     <meta charset="UTF-8">
     <title>Login</title>
-    <script></script>
+    <script src="/static/js/login.js" defer></script>
 </head>
 
 <body class="lots-main-page-body">
@@ -19,8 +19,9 @@
                     <input id="password" class="form-control lots-input-field" name="password" type="password"
                            placeholder="Password">
                 </div>
+                <div class="alert alert-warning" role="alert" id="alertMessage" style="display: none"></div>
                 <div class="form-group">
-                    <input type="submit" class="btn btn-dark" value="Log in" id="submit">
+                    <button type="button" class="btn btn-dark" value="Log in" id="submit">Log in</button>
                     <p class="mt-2">Not registered? <a class="lots-font-color-gold" href="/registration">Create an account</a></p>
                 </div>
             </form>

@@ -31,15 +31,13 @@ public class Registration extends HttpServlet {
         String name = request.getParameter("name");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-//        response.sendRedirect("/registration");
-
         String hashPW = BCrypt.hashpw(password, BCrypt.gensalt(12));
+
         User user = new User(name, hashPW, email);
         UserManager userManager = new UserManager();
-        response.setContentType("text/plain");
         JSONObject json = new JSONObject();
-
         response.setContentType("application/json");
+
         if (userManager.registerUser(user)) {
             json.put("isNameAddedToDB", true);
         } else {
