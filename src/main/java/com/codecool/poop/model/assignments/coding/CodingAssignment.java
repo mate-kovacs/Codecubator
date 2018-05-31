@@ -4,36 +4,51 @@ import com.codecool.poop.model.assignments.Assignment;
 import com.codecool.poop.model.Skills;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Entity
 @DiscriminatorValue("CODING")
 public class CodingAssignment extends Assignment{
 
-    @OneToOne(mappedBy = "assignment")
-    private CodingQuestion question;
 
-    public CodingAssignment(String name, String description, Map<Skills, Integer> expRewards, Integer codeCoinReward) {
+    @ManyToMany(mappedBy = "assignments")
+    private Set<CodingQuestion> questions = new HashSet<>();
+
+    public CodingAssignment(String name,
+                            String description,
+                            Map<Skills, Integer> expRewards,
+                            Integer codeCoinReward,
+                            Set<CodingQuestion> questions) {
         super(name, description, expRewards, codeCoinReward);
+        this.questions = questions;
+        setCodingQuestionReferences();
     }
 
     public CodingAssignment(){
     }
 
-    public void evaluateAnswer(CodingAnswer answer){
-        int numberOfCorrectSolutions = question.correctSolutions(answer);
-        //TODO
+    private void setCodingQuestionReferences(){
+        for (CodingQuestion question: questions) {
+            question.addAssignment(this);
+        }
     }
 
     public int getMaxPoints(){
-        return question.getMaxPoints();
+        int points = 0;
+        for (CodingQuestion question: questions) {
+            points += question.getMaxPoints();
+        }
+        return points;
     }
 
-    public CodingQuestion getQuestion(){
-        return question;
+    public Set<CodingQuestion> getQuestions(){
+        return questions;
     }
 
-    public void setQuestion(CodingQuestion question) {
-        this.question = question;
+    public void setQuestions(Set<CodingQuestion> questions) {
+        this.questions = questions;
     }
 }

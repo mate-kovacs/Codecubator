@@ -1,6 +1,10 @@
 package com.codecool.poop.model.assignments.coding;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "coding_question")
@@ -8,17 +12,18 @@ public class CodingQuestion {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
 
     @Column(name = "question_text", nullable = false)
     private String question;
 
-    @OneToOne(mappedBy = "question")
-    private CodingAnswer answer;
+    @OneToMany(mappedBy = "question")
+    private List<CodingAnswer> answers = new ArrayList<>();
 
-    @OneToOne
+    @ManyToMany
     @JoinColumn(name = "assignment_id")
-    private CodingAssignment assignment;
+    private Set<CodingAssignment> assignments = new HashSet<>();
 
     public CodingQuestion(String question) {
         this.question = question;
@@ -27,28 +32,39 @@ public class CodingQuestion {
     public CodingQuestion(){
     }
 
-    public Integer correctSolutions(CodingAnswer currentAnswer){
-        return answer.matchingSolutions(currentAnswer);
+    public Integer checkSolution(List<CodingAnswer> userAnswers){
+        Integer numberOfCorrectAnswers = 0;
+        for (CodingAnswer userAnswer: userAnswers) {
+            CodingAnswer correctAnswer = answers.get(userAnswers.indexOf(userAnswer));
+            if (correctAnswer.isMatching(userAnswer)){
+                numberOfCorrectAnswers ++;
+            }
+        }
+        return numberOfCorrectAnswers;
     }
 
     public int getMaxPoints() {
-        return answer.getAnswers().size();
+        return answers.size();
     }
 
-    public CodingAnswer getAnswer() {
-        return answer;
+    public List<CodingAnswer> getAnswers() {
+        return answers;
     }
 
-    public void setAnswer(CodingAnswer answer) {
-        this.answer = answer;
+    public void addAnswer(CodingAnswer answer) {
+        this.answers.add(answer);
     }
 
-    public String getQuestions() {
+    public String getQuestion() {
         return question;
     }
 
-    public void setAssignment(CodingAssignment assignment) {
-        this.assignment = assignment;
+    public void addAssignment(CodingAssignment assignment) {
+        this.assignments.add(assignment);
+    }
+
+    public void removeAssignment(CodingAssignment assignment){
+        this.assignments.remove(assignment);
     }
 
     public int getId() {
@@ -57,6 +73,6 @@ public class CodingQuestion {
 
     @Override
     public String toString() {
-        return getQuestions();
+        return getQuestion();
     }
 }

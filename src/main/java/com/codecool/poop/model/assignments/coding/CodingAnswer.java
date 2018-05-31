@@ -1,8 +1,6 @@
 package com.codecool.poop.model.assignments.coding;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "coding_answer")
@@ -10,52 +8,48 @@ public class CodingAnswer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
 
-    @ElementCollection
-    @CollectionTable(name = "coding_asnwer_parts")
-    private List<String> answers;
+    @Column(name = "answer_text")
+    private String answer;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "question_id")
     private CodingQuestion question;
 
     public CodingAnswer() {
     }
 
-    private List<String> validateAnswers(List<String> answers){
-        List<String> goodAnswers = new ArrayList<>();
-        for (String answer : answers){
-            String[] answerParts = answer.split("[\\s]+");
-            String temp = "";
-            for (String answerPart : answerParts) {
-                temp = temp.concat(answerPart);
-            }
-            goodAnswers.add(temp);
+    public CodingAnswer(String answer, CodingQuestion question) {
+        this.answer = formatAnswer(answer);
+        this.question = question;
+        setCodingQuestionReference();
+    }
+
+    private void setCodingQuestionReference(){
+        question.addAnswer(this);
+    }
+
+    private String formatAnswer(String answer) {
+        String[] answerParts = answer.split("[\\s]+");
+        String goodAnswer = "";
+        for (String answerPart : answerParts) {
+            goodAnswer = goodAnswer.concat(answerPart);
         }
-        return goodAnswers;
+        return goodAnswer;
     }
 
-    public Integer matchingSolutions(CodingAnswer answer){
-        Integer numberOfMatchingSolutions = 0;
-        for (String solution : answer.getAnswers()){
-            if (isMatching(answer.getAnswers().indexOf(solution), solution)){
-                numberOfMatchingSolutions ++;
-            }
-        }
-        return numberOfMatchingSolutions;
+    public boolean isMatching(CodingAnswer answerToMatch) {
+        return formatAnswer(answerToMatch.getAnswer()).equals(this.answer);
     }
 
-    private boolean isMatching(int index, String solution){
-        return  solution.equals(this.answers.get(index));
+    public String getAnswer() {
+        return answer;
     }
 
-    public List<String> getAnswers() {
-        return answers;
-    }
-
-    public void setAnswers(List<String> answers) {
-        this.answers = validateAnswers(answers);
+    public void setAnswer(String answer) {
+        this.answer = formatAnswer(answer);
     }
 
     public void setQuestion(CodingQuestion question) {
