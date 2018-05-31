@@ -40,4 +40,8 @@ public class CodingAssignment extends Assignment{
     public void setQuestion(CodingQuestion question) {
         this.question = question;
     }
+
+    public int getAssignmentID() {
+        return assignmentID;
+    }
 }
