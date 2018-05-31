@@ -139,7 +139,8 @@ class CodingQuesttManagerTest {
         CodingQuestManager manager = CodingQuestManager.getInstance();
         assertThrows(NullPointerException.class, () -> manager.getCodingAnswerByID(0).toString());
     }
-    
+
+    @Disabled
     @Test
     void test_get_all_coding_assignments_happy_path() {
 
@@ -147,6 +148,7 @@ class CodingQuesttManagerTest {
         assertEquals(2, manager.getAllCodingAssignments().size());
     }
 
+    @Disabled
     @Test
     void test_get_all_coding_questions_happy_path() {
 
