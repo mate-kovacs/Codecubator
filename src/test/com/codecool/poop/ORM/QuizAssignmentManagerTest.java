@@ -28,11 +28,9 @@ class QuizAssignmentManagerTest {
 
     @Test
     public void Should_RunWithoutProblem_When_AddingValidQuizAssignment() {
-        QuizAnswer answer01 = new QuizAnswer("Dog", false);
-        QuizAnswer answer02 = new QuizAnswer("Cat", true);
-        List<QuizAnswer> answers01 = new ArrayList<>(Arrays.asList(answer01, answer02));
         QuizQuestion question01 = new QuizQuestion("Whic one is cat?");
-        question01.setQuizAnswers(answers01);
+        QuizAnswer answer01 = new QuizAnswer("Dog", false, question01);
+        QuizAnswer answer02 = new QuizAnswer("Cat", true, question01);
 
         List<QuizQuestion> questions01 = new ArrayList<>(Arrays.asList(question01));
 

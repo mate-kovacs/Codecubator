@@ -13,9 +13,11 @@ public class QuizAnswer {
     @ManyToOne
     private QuizQuestion question;
 
-    public QuizAnswer(String answerText, Boolean answerValidity) {
+    public QuizAnswer(String answerText, Boolean answerValidity, QuizQuestion question) {
         this.answerText = answerText;
         this.answerValidity = answerValidity;
+        this.question = question;
+        question.addAnswer(this);
     }
 
     protected QuizAnswer() {}
