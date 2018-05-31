@@ -7,12 +7,8 @@ import javax.persistence.*;
 import java.util.Map;
 
 @Entity
-@Table(name = "coding_assignments")
+@DiscriminatorValue("CODING")
 public class CodingAssignment extends Assignment{
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int assignmentID;
 
     @OneToOne(mappedBy = "assignment")
     private CodingQuestion question;
@@ -39,9 +35,5 @@ public class CodingAssignment extends Assignment{
 
     public void setQuestion(CodingQuestion question) {
         this.question = question;
-    }
-
-    public int getAssignmentID() {
-        return assignmentID;
     }
 }
