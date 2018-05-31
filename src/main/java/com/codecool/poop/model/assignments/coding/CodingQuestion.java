@@ -1,5 +1,7 @@
 package com.codecool.poop.model.assignments.coding;
 
+import com.codecool.poop.model.assignments.Assignment;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -23,7 +25,7 @@ public class CodingQuestion {
 
     @ManyToMany
     @JoinColumn(name = "assignment_id")
-    private Set<CodingAssignment> assignments = new HashSet<>();
+    private Set<Assignment> assignments = new HashSet<>();
 
     public CodingQuestion(String question) {
         this.question = question;
@@ -59,11 +61,11 @@ public class CodingQuestion {
         return question;
     }
 
-    public void addAssignment(CodingAssignment assignment) {
+    public void addAssignment(Assignment assignment) {
         this.assignments.add(assignment);
     }
 
-    public void removeAssignment(CodingAssignment assignment){
+    public void removeAssignment(Assignment assignment){
         this.assignments.remove(assignment);
     }
 
