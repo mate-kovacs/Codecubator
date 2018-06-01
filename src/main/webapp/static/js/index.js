@@ -25,5 +25,6 @@ index = {
     }
 };
 
-
-window.onload(index.init());
+window.onload = function () {
+    index.init();
+};
