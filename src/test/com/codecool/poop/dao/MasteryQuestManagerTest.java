@@ -1,4 +1,4 @@
-package com.codecool.poop.ORM;
+package com.codecool.poop.dao;
 
 import com.codecool.poop.model.Skills;
 import com.codecool.poop.model.assignments.coding.CodingQuestion;
@@ -12,7 +12,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.codecool.poop.ORM.QuizQuestManagerTest.qam;
 import static org.junit.jupiter.api.Assertions.*;
 
 class MasteryQuestManagerTest {

@@ -21,7 +21,4 @@ function loginListener() {
     })
 }
 
-$(document).ready(function () {
-    loginListener();
-    $('#privacy-policy-modal').modal('show')
-});
+loginListener();

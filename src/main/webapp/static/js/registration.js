@@ -34,4 +34,9 @@ function registrationListener() {
 }
 
 
-registrationListener();
+$(document).ready(function () {
+    registrationListener();
+    $('#privacy-policy-modal').modal('show')
+});
+
+

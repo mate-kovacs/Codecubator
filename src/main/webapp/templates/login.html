@@ -3,7 +3,7 @@
 <head th:replace="common_head.html :: common_head(~{::title}, ~{::script})">
     <meta charset="UTF-8">
     <title>Login</title>
-    <script src="/static/js/login.js"></script>
+    <script src="/static/js/login.js" defer></script>
 </head>
 
 <body class="lots-main-page-body">
@@ -25,36 +25,6 @@
                     <p class="mt-2">Not registered? <a class="lots-font-color-gold" href="/registration">Create an account</a></p>
                 </div>
             </form>
-        </div>
-    </div>
-</div>
-
-<!-- Modal -->
-<div class="modal fade" id="privacy-policy-modal" tabindex="-1" role="dialog" aria-labelledby="privacy-policy-modal-title" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title lots-font-color-gold" id="privacy-policy-modal-title">Notice of Policy and Account Updates</h4>
-            </div>
-            <div class="modal-body">
-                <p>Hello,</p>
-                <p>As part of our ongoing effort to provide the best service to learners, we updated some of our policies effective May 15, 2018. Please log in to your account today to review these policies.
-                The purpose of these changes is to update our policies and procedures, which include bringing them in line with the General Data Protection Regulation (“GDPR”). For your convenience, here is a brief summary of the changes to each policy:</p>
-                    <p><span class="lots-font-color-gold">Terms of Use:</span> Updated with references and links to the new Cookies Policy and further clarifications on our refund policy.</p>
-                <br>
-                <p><span class="lots-font-color-gold">Privacy Policies:</span> The Privacy Policies have been updated to account for GDPR provisions. We’ve also made the policies more transparent by providing specific details on our data processing activities.</p>
-                <br>
-                <p><span class="lots-font-color-gold">Cookies Policy:</span> Previously part of the Terms of Use, the Cookies Policy now stands alone as its own policy. The Cookies Policy covers Coursera’s use of both internal and third-party cookies including: what cookies we use, what data third-parties collect, and your choices regarding cookies. You can also view our Cookies Table, which provides a summary of some of the cookies we use.
-                In addition, we updated our product for GDPR compliance effective May 25th, 2018:
-                Right to Control Your Data — You can withdraw consent to our data processing at any time.</p>
-                <br>
-                <p>Right to Access Your Data — You can request a copy of your purchase history, course history, and the personal information we have about you.</p>
-                <br>
-                <p>Opt-in Consent — We provide more granular opt-in functionality for marketing and our general policies.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-warning" data-dismiss="modal">Got it!</button>
-            </div>
         </div>
     </div>
 </div>

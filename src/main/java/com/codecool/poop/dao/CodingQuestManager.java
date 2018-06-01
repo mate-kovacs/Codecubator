@@ -1,6 +1,5 @@
-package com.codecool.poop.ORM;
+package com.codecool.poop.dao;
 
-import com.codecool.poop.model.Skills;
 import com.codecool.poop.model.assignments.coding.CodingAnswer;
 import com.codecool.poop.model.assignments.coding.CodingAssignment;
 import com.codecool.poop.model.assignments.coding.CodingQuestion;
@@ -8,7 +7,6 @@ import com.codecool.poop.model.assignments.coding.CodingQuestion;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import java.util.List;
-import java.util.Map;
 
 public class CodingQuestManager extends DataManager{
     private static CodingQuestManager managerInstance = new CodingQuestManager();

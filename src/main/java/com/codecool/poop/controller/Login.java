@@ -1,10 +1,9 @@
 package com.codecool.poop.controller;
 
-import com.codecool.poop.ORM.UserManager;
+import com.codecool.poop.dao.UserManager;
 import com.codecool.poop.config.TemplateEngineUtil;
 
 import com.codecool.poop.model.User;
-import org.json.JSONObject;
 import org.mindrot.jbcrypt.BCrypt;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
