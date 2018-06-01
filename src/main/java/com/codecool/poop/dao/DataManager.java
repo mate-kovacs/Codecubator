@@ -1,4 +1,4 @@
-package com.codecool.poop.ORM;
+package com.codecool.poop.dao;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;

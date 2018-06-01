@@ -1,4 +1,4 @@
-package com.codecool.poop.ORM;
+package com.codecool.poop.dao;
 
 import com.codecool.poop.model.Skills;
 import com.codecool.poop.model.assignments.quiz.QuizAnswer;
