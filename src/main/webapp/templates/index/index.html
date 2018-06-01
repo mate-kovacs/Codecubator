@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common_head.html :: common_head(~{::title}, ~{::script})">
+    <title>CodeCubator</title>
+    <script src="/static/js/index.js" defer></script>
+</head>
+<body class="lots-main-page-body">
+<div class="wrapper">
+    <div id="welcome_text">
+        <h1 id="welcome_h1" th:text="'Hello ' + ${user_name} + ' !'">Hello User</h1>
+    </div>
+</div>
+    <img id="tbc" class="tbc_arrow" src="/static/img/tbc_arrow.png">
+    <audio id="music" src="/static/misc/tobecontinued.mp3"></audio>
+</body>
+</html>
