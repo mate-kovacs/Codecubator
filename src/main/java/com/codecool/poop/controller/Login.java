@@ -19,11 +19,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-@WebServlet(urlPatterns = {"/"})
+//@WebServlet(urlPatterns = {"/"})
 public class Login extends HttpServlet {
+    private String message;
+
+    public Login(String message) {
+        this.message = message;
+    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        System.out.println(message);
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(request.getServletContext());
         WebContext context = new WebContext(request, response, request.getServletContext());
         engine.process("login.html", context, response.getWriter());
