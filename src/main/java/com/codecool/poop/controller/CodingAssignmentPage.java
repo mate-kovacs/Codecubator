@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Map;
 
 public class CodingAssignmentPage extends HttpServlet implements LoginHandler {
 
@@ -21,12 +22,12 @@ public class CodingAssignmentPage extends HttpServlet implements LoginHandler {
         session = request.getSession();
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(request.getServletContext());
         WebContext context = new WebContext(request, response, request.getServletContext());
-        if (session.getId() == null){
+        if (!isUserLoggedIn(session)){
             response.sendRedirect("/");
             return;
         }
 
-        
+        engine.process("assignments/coding_assignment.html", context, response.getWriter());
     }
 
 }
