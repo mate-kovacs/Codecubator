@@ -17,7 +17,7 @@ class QuizQuestManagerTest {
 
     @BeforeAll
     private static void setupTest(){
-        qam = QuizQuestManager.getInstance();
+        qam = new QuizQuestManager();
     }
 
     @Test
