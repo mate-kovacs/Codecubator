@@ -37,3 +37,13 @@
 #inventory {
     display: none;
 }
+
+.box-title {
+    text-align: center;
+}
+
+#skill-table {
+    width: 80%;
+    margin: 0 auto;
+}
+

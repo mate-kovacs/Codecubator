@@ -1,9 +1,8 @@
 <!doctype html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="common_head.html :: common_head(~{::title}, ~{::script}, ~{::link})">
+<head th:replace="common_head.html :: common_head(~{::title}, ~{::script})">
     <title>User Profile</title>
     <script></script>
-    <link rel="stylesheet" type="text/css" href="/static/css/user_profile.css">
 </head>
 <body class="lots-main-page-body">
 <div class="container">
@@ -14,10 +13,16 @@
             </div>
         </div>
         <div id="skills" class="lots-box">
-            <h1>Skills</h1>
+            <h1 class="box-title">Skills</h1>
+            <table id="skill-table">
+                <tr th:each="skill : ${skills}">
+                    <td th:text="${skill.key}">skill name</td>
+                    <td th:text="${skill.value}">skill value</td>
+                </tr>
+            </table>
         </div>
         <div id="achievements" class="lots-box">
-            <h1>Achievements</h1>
+            <h1 class="box-title">Achievements</h1>
         </div>
         <div id="inventory" class="lots-box">
             <h1>Inventory</h1>

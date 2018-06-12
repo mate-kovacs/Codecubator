@@ -1,5 +1,6 @@
 package com.codecool.poop.dao;
 
+import com.codecool.poop.db_initializer.DummyDBInitializer;
 import com.codecool.poop.model.Skills;
 import com.codecool.poop.model.assignments.coding.CodingQuestion;
 import com.codecool.poop.model.assignments.mastery.MasteryAssignment;
@@ -16,52 +17,34 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class MasteryQuestManagerTest {
 
-    static MasteryQuestManager manager;
+    private static MasteryQuestManager masteryManager;
 
     @BeforeAll
     private static void setupTest(){
-        manager = new MasteryQuestManager();
+        UserManager userManager = new UserManager();
+        CodingQuestManager codingQuestManager = new CodingQuestManager();
+        QuizQuestManager quizQuestManager = new QuizQuestManager();
+        MasteryQuestManager masteryQuestManager = new MasteryQuestManager();
+
+        DummyDBInitializer dummyDBInitializer = new DummyDBInitializer(
+                userManager,
+                quizQuestManager,
+                codingQuestManager,
+                masteryQuestManager);
+        dummyDBInitializer.initializeDummyDB();
+
+        masteryManager = masteryQuestManager;
     }
 
     @Test
     public void Should_ThrowException_When_TryToAddNull() {
-        assertThrows(IllegalArgumentException.class, () -> manager.addMasteryAssignmentToDB(null));
+        assertThrows(IllegalArgumentException.class, () -> masteryManager.addMasteryAssignmentToDB(null));
     }
 
     @Test
     public void Should_AbleToFindAssignment_When_AddingValidAssignment() {
-        Map<Skills, Integer> reward = new HashMap<>();
-        reward.put(Skills.ALGORITHMS, 10);
-        MasteryAssignment assignment = new MasteryAssignment("Name",
-                "Description",
-                reward,
-                5,
-                null,
-                null);
-        QuizQuestion question11 = new QuizQuestion("Quiz question");
-        QuizQuestion question12 = new QuizQuestion("Quit question");
-        CodingQuestion question21 = new CodingQuestion("Coding question");
-        CodingQuestion question22 = new CodingQuestion("Modding question");
-        List<QuizQuestion> quizQuestions = new ArrayList<>();
-        List<CodingQuestion> codingQuestions = new ArrayList<>();
-        quizQuestions.add(question11);
-        quizQuestions.add(question12);
-        codingQuestions.add(question21);
-        codingQuestions.add(question22);
-
-        CodingQuestManager codingManager = new CodingQuestManager();
-        QuizQuestManager quizManager = new QuizQuestManager();
-
-        for (CodingQuestion question: codingQuestions) {
-            codingManager.addCodingQuestionToDB(question);
-        }
-        for (QuizQuestion question: quizQuestions) {
-            quizManager.addQuizQuestionToDB(question);
-        }
-
-        int id = manager.addMasteryAssignmentToDB(assignment);
-
-        assertEquals(assignment.getName(), manager.getMasteryAssignemntByID(id).getName());
+        int id = 4;
+        assertEquals("Name", masteryManager.getMasteryAssignemntByID(id).getName());
 
     }
 
