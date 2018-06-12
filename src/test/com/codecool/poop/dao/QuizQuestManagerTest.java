@@ -13,11 +13,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class QuizQuestManagerTest {
 
-    static QuizQuestManager qam;
+    private static QuizQuestManager qam;
 
     @BeforeAll
     private static void setupTest(){
-        qam = QuizQuestManager.getInstance();
+        qam = new QuizQuestManager();
     }
 
     @Test
