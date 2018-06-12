@@ -1,5 +1,6 @@
 package com.codecool.poop.controller.controller_manager;
 
+import com.codecool.poop.controller.CodingAssignmentPage;
 import com.codecool.poop.controller.Index;
 import com.codecool.poop.controller.Login;
 import com.codecool.poop.controller.Registration;
@@ -16,10 +17,12 @@ public class InitializationServlet  extends HttpServlet{
         Login servletLogin = new Login(userManager);
         Registration servletRegistration = new Registration(userManager);
         Index servletIndex = new Index();
+        CodingAssignmentPage servletCodingAssignment = new CodingAssignmentPage();
 
         getServletContext().setAttribute("servletIndex", servletIndex);
         getServletContext().setAttribute("servletLogin", servletLogin);
         getServletContext().setAttribute("servletRegistration", servletRegistration);
+        getServletContext().setAttribute("servletCodingAssignment", servletCodingAssignment);
 
     }
 }
