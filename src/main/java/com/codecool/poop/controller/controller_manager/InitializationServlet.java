@@ -24,7 +24,7 @@ public class InitializationServlet  extends HttpServlet{
         Login servletLogin = new Login(userManager);
         Registration servletRegistration = new Registration(userManager);
         Index servletIndex = new Index();
-        CodingAssignmentPage servletCodingAssignment = new CodingAssignmentPage();
+        CodingAssignmentPage servletCodingAssignment = new CodingAssignmentPage(codingQuestManager);
 
         getServletContext().setAttribute("servletIndex", servletIndex);
         getServletContext().setAttribute("servletLogin", servletLogin);
