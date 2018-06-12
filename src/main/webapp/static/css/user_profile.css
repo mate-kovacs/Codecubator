@@ -1,0 +1,50 @@
+#user-wrapper {
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
+    height: 100vh;
+    margin-top: 10%;
+    grid-gap: 20px;
+}
+
+#user-profile-avatar {
+    grid-row: 1/1;
+    grid-column: 1/1;
+    align-self: center;
+    justify-self: center;
+}
+
+#profile-avatar {
+    max-height: 200px;
+    max-width: 200px;
+}
+
+#skills {
+    grid-column: 1/1;
+    grid-row: 2/2;
+    background-color: #247b4b;
+}
+
+#achievements {
+    background-color: #beff51;
+    grid-column: 2/4;
+    grid-row: 1/1;
+}
+
+#inventory {
+    background-color: #970dff;
+    grid-column: 2/4;
+    grid-row: 2/2;
+}
+
+#avatar {
+    background-color: #21292f;
+    border: 2px solid #d2d3ca;
+    border-radius: 10px;
+    padding-bottom: 0px;
+    box-shadow: 2px 2px 10px 3px rgba(0,0,0,0.56);
+}
+
+#avatar-img {
+    opacity: 0.5;
+}
