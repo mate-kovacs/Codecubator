@@ -5,14 +5,6 @@ import com.codecool.poop.model.assignments.quiz.QuizAssignment;
 import com.codecool.poop.model.assignments.quiz.QuizQuestion;
 
 public class QuizQuestManager extends DataManager {
-    private static QuizQuestManager ourInstance = new QuizQuestManager();
-
-    public static QuizQuestManager getInstance() {
-        return ourInstance;
-    }
-
-    private QuizQuestManager() {
-    }
 
     public int addQuizAssignmentToDB(QuizAssignment assignment) {
         if(!(assignment instanceof QuizAssignment)){
