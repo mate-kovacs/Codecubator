@@ -7,15 +7,6 @@ import javax.persistence.EntityTransaction;
 
 public class MasteryQuestManager extends DataManager{
 
-    private static MasteryQuestManager managerInstance = new MasteryQuestManager();
-
-    public static MasteryQuestManager getInstance() {
-        return managerInstance;
-    }
-
-    private MasteryQuestManager(){
-    }
-
     public int addMasteryAssignmentToDB(MasteryAssignment assignment){
         EntityManager entityManager = getEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();

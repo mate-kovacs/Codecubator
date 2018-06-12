@@ -9,14 +9,6 @@ import javax.persistence.EntityTransaction;
 import java.util.List;
 
 public class CodingQuestManager extends DataManager{
-    private static CodingQuestManager managerInstance = new CodingQuestManager();
-
-    public static CodingQuestManager getInstance() {
-        return managerInstance;
-    }
-
-    private CodingQuestManager() {
-    }
 
     public int addCodingAssignmentToDB(CodingAssignment assignment){
         EntityManager entityManager = getEntityManager();
