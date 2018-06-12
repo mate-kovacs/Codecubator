@@ -11,7 +11,7 @@ import java.util.Map;
 @DiscriminatorValue("QUIZ")
 public class QuizAssignment extends Assignment {
 
-    @ManyToMany
+    @ManyToMany (mappedBy = "assignments")
     private List<QuizQuestion> questions;
 
     protected QuizAssignment() {}
