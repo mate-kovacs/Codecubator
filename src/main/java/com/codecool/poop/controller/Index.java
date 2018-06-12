@@ -11,7 +11,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Map;
 
-public class Index extends HttpServlet {
+public class Index extends HttpServlet implements LoginHandler {
 
     public Index() {
     }
@@ -22,12 +22,12 @@ public class Index extends HttpServlet {
         session = request.getSession();
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(request.getServletContext());
         WebContext context = new WebContext(request, response, request.getServletContext());
-        if (session.getAttribute("user") != null) {
-            Map<String, Object> userData = (Map) session.getAttribute("user");
-            context.setVariable("user_name", userData.get("user_name"));
-            engine.process("index/index.html", context, response.getWriter());
-        } else {
+        if (!isUserLoggedIn(session)) {
             response.sendRedirect("/");
+            return;
         }
+        Map<String, Object> userData = (Map) session.getAttribute("user");
+        context.setVariable("user_name", userData.get("user_name"));
+        engine.process("index/index.html", context, response.getWriter());
     }
 }
