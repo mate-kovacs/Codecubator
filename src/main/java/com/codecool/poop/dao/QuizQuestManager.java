@@ -7,7 +7,7 @@ import com.codecool.poop.model.assignments.quiz.QuizQuestion;
 public class QuizQuestManager extends DataManager {
 
     public int addQuizAssignmentToDB(QuizAssignment assignment) {
-        if(!(assignment instanceof QuizAssignment)){
+        if(assignment == null){
             throw new IllegalArgumentException("It's not a QuizAssignment");
         }
         getEntityManager().getTransaction().begin();
@@ -17,7 +17,7 @@ public class QuizQuestManager extends DataManager {
     }
 
     public int addQuizQuestionToDB(QuizQuestion question) {
-        if(!(question instanceof QuizQuestion)){
+        if(question == null){
             throw new IllegalArgumentException("It's not a QuizQuestion");
         }
         getEntityManager().getTransaction().begin();
@@ -28,7 +28,7 @@ public class QuizQuestManager extends DataManager {
     }
 
     public int addQuizAnswerToDB(QuizAnswer answer) {
-        if(!(answer instanceof QuizAnswer)){
+        if(answer == null){
             throw new IllegalArgumentException("It's not a QuizAnswer");
         }
         getEntityManager().getTransaction().begin();
