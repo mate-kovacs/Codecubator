@@ -1,6 +1,8 @@
 package com.codecool.poop.controller;
 
 import com.codecool.poop.config.TemplateEngineUtil;
+import com.codecool.poop.dao.CodingQuestManager;
+import com.codecool.poop.model.assignments.coding.CodingAssignment;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -13,7 +15,10 @@ import java.util.Map;
 
 public class CodingAssignmentPage extends HttpServlet implements LoginHandler {
 
-    public CodingAssignmentPage(){
+    private CodingQuestManager manager;
+
+    public CodingAssignmentPage(CodingQuestManager manager){
+        this.manager = manager;
     }
 
     @Override
@@ -23,6 +28,14 @@ public class CodingAssignmentPage extends HttpServlet implements LoginHandler {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(request.getServletContext());
         WebContext context = new WebContext(request, response, request.getServletContext());
         if (!isUserLoggedIn(session)){
+            response.sendRedirect("/");
+            return;
+        }
+
+        int assignmentID = Integer.parseInt(request.getParameter("assignment_id"));
+        CodingAssignment assignment = manager.getCodingAssignemntByID(assignmentID);
+        if (assignment == null){
+            System.out.println("No coding assignment with such ID.");
             response.sendRedirect("/");
             return;
         }
