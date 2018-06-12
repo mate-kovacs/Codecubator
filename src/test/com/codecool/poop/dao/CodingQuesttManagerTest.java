@@ -65,7 +65,7 @@ class CodingQuesttManagerTest {
             question.addAssignment(assignment2);
         }
 
-        CodingQuestManager manager = CodingQuestManager.getInstance();
+        CodingQuestManager manager = new CodingQuestManager();
 
         testAssignmentID = manager.addCodingAssignmentToDB(assignment);
         manager.addCodingAssignmentToDB(assignment2);
@@ -94,7 +94,7 @@ class CodingQuesttManagerTest {
     @Test
     void test_get_coding_assignment_happy_path() {
 
-        CodingQuestManager manager = CodingQuestManager.getInstance();
+        CodingQuestManager manager = new CodingQuestManager();
         CodingAssignment assignment = manager.getCodingAssignemntByID(testAssignmentID);
 
         assertEquals("Number one", assignment.getName());
@@ -103,14 +103,14 @@ class CodingQuesttManagerTest {
     @Test
     void test_get_coding_assignment_invalid_id() {
 
-        CodingQuestManager manager = CodingQuestManager.getInstance();
+        CodingQuestManager manager = new CodingQuestManager();
         assertThrows(NullPointerException.class, () -> manager.getCodingAssignemntByID(0).getName());
     }
 
     @Test
     void test_get_coding_question_happy_path() {
 
-        CodingQuestManager manager = CodingQuestManager.getInstance();
+        CodingQuestManager manager = new CodingQuestManager();
         CodingQuestion question = manager.getCodingQuestionByID(testQuestionID);
 
         assertEquals("What?", question.toString());
@@ -119,14 +119,14 @@ class CodingQuesttManagerTest {
     @Test
     void test_get_coding_question_invalid_id() {
 
-        CodingQuestManager manager = CodingQuestManager.getInstance();
+        CodingQuestManager manager = new CodingQuestManager();
         assertThrows(NullPointerException.class, () -> manager.getCodingQuestionByID(0).toString());
     }
 
     @Test
     void test_get_coding_answer_happy_path() {
 
-        CodingQuestManager manager = CodingQuestManager.getInstance();
+        CodingQuestManager manager = new CodingQuestManager();
         CodingAnswer answer = manager.getCodingAnswerByID(testAnswerID);
 
         assertEquals("Me", answer.getAnswer());
@@ -136,23 +136,23 @@ class CodingQuesttManagerTest {
     @Test
     void test_get_coding_answer_invalid_id() {
 
-        CodingQuestManager manager = CodingQuestManager.getInstance();
+        CodingQuestManager manager = new CodingQuestManager();
         assertThrows(NullPointerException.class, () -> manager.getCodingAnswerByID(0).toString());
     }
 
-    @Disabled
+//    @Disabled
     @Test
     void test_get_all_coding_assignments_happy_path() {
 
-        CodingQuestManager manager = CodingQuestManager.getInstance();
+        CodingQuestManager manager = new CodingQuestManager();
         assertEquals(2, manager.getAllCodingAssignments().size());
     }
 
-    @Disabled
+//    @Disabled
     @Test
     void test_get_all_coding_questions_happy_path() {
 
-        CodingQuestManager manager = CodingQuestManager.getInstance();
+        CodingQuestManager manager = new CodingQuestManager();
         assertEquals(4, manager.getAllCodingQuestions().size());
     }
 
