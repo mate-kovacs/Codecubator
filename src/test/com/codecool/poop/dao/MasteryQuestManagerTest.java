@@ -20,7 +20,7 @@ class MasteryQuestManagerTest {
 
     @BeforeAll
     private static void setupTest(){
-        manager = MasteryQuestManager.getInstance();
+        manager = new MasteryQuestManager();
     }
 
     @Test
@@ -49,11 +49,14 @@ class MasteryQuestManagerTest {
         codingQuestions.add(question21);
         codingQuestions.add(question22);
 
+        CodingQuestManager codingManager = new CodingQuestManager();
+        QuizQuestManager quizManager = new QuizQuestManager();
+
         for (CodingQuestion question: codingQuestions) {
-            CodingQuestManager.getInstance().addCodingQuestionToDB(question);
+            codingManager.addCodingQuestionToDB(question);
         }
         for (QuizQuestion question: quizQuestions) {
-            QuizQuestManager.getInstance().addQuizQuestionToDB(question);
+            quizManager.addQuizQuestionToDB(question);
         }
 
         int id = manager.addMasteryAssignmentToDB(assignment);
