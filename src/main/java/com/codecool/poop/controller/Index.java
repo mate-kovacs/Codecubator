@@ -12,8 +12,10 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Map;
 
-@WebServlet(urlPatterns = {"/index"})
 public class Index extends HttpServlet {
+
+    public Index() {
+    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -28,9 +30,5 @@ public class Index extends HttpServlet {
         } else {
             response.sendRedirect("/");
         }
-    }
-
-    @Override
-    protected void doPost (HttpServletRequest request, HttpServletResponse response) throws IOException {
     }
 }
