@@ -1,4 +1,4 @@
-package com.codecool.poop.controller;
+package com.codecool.poop.controller.controller_manager;
 
 import java.io.*;
 
