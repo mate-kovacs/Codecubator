@@ -1,11 +1,13 @@
 package com.codecool.poop.dao;
 
+import com.codecool.poop.model.Skills;
 import com.codecool.poop.model.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
+import java.util.Map;
 
 public class UserManager extends DataManager {
 

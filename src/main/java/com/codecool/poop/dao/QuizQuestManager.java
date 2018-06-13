@@ -4,6 +4,9 @@ import com.codecool.poop.model.assignments.quiz.QuizAnswer;
 import com.codecool.poop.model.assignments.quiz.QuizAssignment;
 import com.codecool.poop.model.assignments.quiz.QuizQuestion;
 
+import javax.persistence.EntityManager;
+import java.util.List;
+
 public class QuizQuestManager extends DataManager {
 
     public int addQuizAssignmentToDB(QuizAssignment assignment) {
@@ -35,6 +38,12 @@ public class QuizQuestManager extends DataManager {
         getEntityManager().persist(answer);
         getEntityManager().getTransaction().commit();
         return answer.getId();
+    }
+
+    public List getAllQuizAssignments(){
+        EntityManager entityManager = getEntityManager();
+        return entityManager.createQuery("SELECT assignment " +
+                "FROM QuizAssignment as assignment").getResultList();
     }
 
     public QuizAssignment getQuizAssignemntByID(Integer id) {
