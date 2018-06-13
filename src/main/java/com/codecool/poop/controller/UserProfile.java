@@ -34,6 +34,7 @@ public class UserProfile extends HttpServlet implements LoginHandler{
         Map<String, Object> userData = (Map) session.getAttribute("user");
         User user = userManager.getUserByName((String) userData.get("user_name"));
         Map<Skills, Integer> skills = user.getExperiences();
+        context.setVariable("user_name", userData.get("user_name"));
         context.setVariable("skills", skills);
         engine.process("user_profile/user_profile.html", context, response.getWriter());
     }
