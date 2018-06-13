@@ -13,8 +13,12 @@
         <!--<div class="assignment-type" th:text="${prod.supplier.getName()}">Supplier name</div>-->
         <h3 class="assignment-name" th:text="${assignment.name}">Product name</h3>
         <p class="assignment-description" th:text="${assignment.description}">Assignment description...</p>
-        <div class="assignment-reward" th:text="${assignment.codeCoinReward}">100</div>
-        <div class="take-assignment" th:data-id="${assignment.id}">Take Assignment</div>
+        <!--<div class="assignment-reward" th:text="${assignment.codeCoinReward}">100</div>-->
+        <div class="lots-pricewrapper">
+            <div class="lots_price" th:text="${assignment.codeCoinReward}">100</div>
+            <div class="lots-currency-icon"></div>
+        </div>
+        <div class="take-assignment btn btn-warning" th:data-id="${assignment.id}">Take Assignment</div>
     </div>
 </div>
 
