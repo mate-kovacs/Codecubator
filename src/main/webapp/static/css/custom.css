@@ -448,3 +448,7 @@ body {
     padding: 5px;
     cursor: pointer;
 }
+
+#assignments {
+    display: flex;
+}
