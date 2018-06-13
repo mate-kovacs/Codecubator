@@ -71,10 +71,33 @@ public class CodingAssignmentPage extends HttpServlet implements LoginHandler {
             response.sendRedirect("/");
             return;
         } else if (question == null) {
+            if (questionID == 0) {
+                System.out.println("First question");
+
+                List<CodingQuestion> questionList = assignment.getQuestions();
+                CodingQuestion nextQuestion = questionList.get(0);
+
+                JSONObject nextQuestionData = new JSONObject();
+                nextQuestionData.put("question_id", nextQuestion.getId());
+                nextQuestionData.put("question_text", nextQuestion.getQuestion());
+
+                List<Integer> answerIdList = new ArrayList<>();
+                for (CodingAnswer answer : nextQuestion.getAnswers()) {
+                    answerIdList.add(answer.getId());
+                }
+
+                nextQuestionData.put("answer_ids", answerIdList);
+                response.setContentType("application/json");
+                response.getWriter().print(nextQuestionData);
+                return;
+            }
+
+        } else {
             System.out.println("No coding question with such ID.");
             response.sendRedirect("/");
             return;
         }
+
 
         CodingQuestion nextQuestion = null;
         List<CodingQuestion> questionList = assignment.getQuestions();
@@ -107,7 +130,6 @@ public class CodingAssignmentPage extends HttpServlet implements LoginHandler {
 
             System.out.println("That was the last question");
         }
-
 
 
     }
