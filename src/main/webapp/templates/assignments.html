@@ -7,8 +7,8 @@
 </head>
 <body class="lots-main-page-body">
 <div th:include="fragments/navbar.html"></div>
-<h1>Quiz quests:</h1>
-<div id="assignments" style="display: flex">
+<h1 th:text="${header}"></h1>
+<div id="assignments">
     <div class="assignment" th:each="assignment : ${assignments}" th:id="'assignment_' + ${assignment.id}">
         <!--<div class="assignment-type" th:text="${prod.supplier.getName()}">Supplier name</div>-->
         <h3 class="assignment-name" th:text="${assignment.name}">Product name</h3>

@@ -12,9 +12,8 @@ import com.codecool.poop.db_initializer.DummyDBInitializer;
 import javax.servlet.*;
 import javax.servlet.http.HttpServlet;
 
-public class InitializationServlet  extends HttpServlet{
-    public void init() throws ServletException
-    {
+public class InitializationServlet extends HttpServlet {
+    public void init() throws ServletException {
         UserManager userManager = new UserManager();
         CodingQuestManager codingQuestManager = new CodingQuestManager();
         QuizQuestManager quizQuestManager = new QuizQuestManager();
@@ -24,13 +23,13 @@ public class InitializationServlet  extends HttpServlet{
         Registration servletRegistration = new Registration(userManager);
         Index servletIndex = new Index();
         UserProfile servletUserProfile = new UserProfile(userManager);
-        Logout servletLogout= new Logout();
-        QuizAssignmentsController servletQuizAssignments = new QuizAssignmentsController(quizQuestManager);
+        Logout servletLogout = new Logout();
+        AssignmentsController servletAssignments = new AssignmentsController(quizQuestManager, codingQuestManager, masteryQuestManager);
 
         getServletContext().setAttribute("servletLogin", servletLogin);
         getServletContext().setAttribute("servletLogout", servletLogout);
         getServletContext().setAttribute("servletRegistration", servletRegistration);
-        getServletContext().setAttribute("servletQuizAssignments", servletQuizAssignments);
+        getServletContext().setAttribute("servletAssignments", servletAssignments);
         getServletContext().setAttribute("servletIndex", servletIndex);
         getServletContext().setAttribute("servletUserProfile", servletUserProfile);
 

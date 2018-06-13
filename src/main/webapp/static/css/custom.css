@@ -423,6 +423,7 @@ body {
     min-height: 100px;
     margin: 0 auto;
     padding: 15px;
+    margin-bottom: 20px;
 }
 
 .assignment:hover {
@@ -447,4 +448,8 @@ body {
     width: 90px;
     padding: 5px;
     cursor: pointer;
+}
+
+#assignments {
+    /*display: flex;*/
 }
