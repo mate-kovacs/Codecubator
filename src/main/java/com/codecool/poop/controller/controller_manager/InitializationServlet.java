@@ -23,7 +23,7 @@ public class InitializationServlet  extends HttpServlet{
         Registration servletRegistration = new Registration(userManager);
         Index servletIndex = new Index();
         Logout servletLogout= new Logout();
-        QuizAssignmentsController servletQuizAssignments = new QuizAssignmentsController();
+        QuizAssignmentsController servletQuizAssignments = new QuizAssignmentsController(quizQuestManager);
 
         getServletContext().setAttribute("servletIndex", servletIndex);
         getServletContext().setAttribute("servletLogin", servletLogin);
