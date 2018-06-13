@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -75,26 +76,40 @@ public class CodingAssignmentPage extends HttpServlet implements LoginHandler {
             return;
         }
 
-        CodingQuestion nextQUestion = null;
+        CodingQuestion nextQuestion = null;
         List<CodingQuestion> questionList = assignment.getQuestions();
-        for (CodingQuestion currentQuestion: questionList) {
-            if (currentQuestion.getId() == questionID){
-                nextQUestion = questionList.get(questionList.indexOf(currentQuestion) + 1);
+        try {
+            for (CodingQuestion currentQuestion : questionList) {
+                if (currentQuestion.getId() == questionID) {
+                    nextQuestion = questionList.get(questionList.indexOf(currentQuestion) + 1);
+                }
             }
-        }
-        if (nextQUestion == null){
+
+            System.out.println("Return the next qustion");
+
+            JSONObject nextQuestionData = new JSONObject();
+            nextQuestionData.put("question_id", nextQuestion.getId());
+            nextQuestionData.put("question_text", nextQuestion.getQuestion());
+
+            List<Integer> answerIdList = new ArrayList<>();
+            for (CodingAnswer answer : nextQuestion.getAnswers()) {
+                answerIdList.add(answer.getId());
+
+
+                nextQuestionData.put("answer_ids", answerIdList);
+                response.setContentType("application/json");
+                response.getWriter().print(nextQuestionData);
+            }
+
+        } catch (IndexOutOfBoundsException ex) {
             response.setContentType("text/plain");
             response.getWriter().print("Last question");
 
             System.out.println("That was the last question");
-        } else {
-            System.out.println("Return the next qustion");
-
-            JSONObject nextQuestionData = new JSONObject();
-            nextQuestionData.put("question", nextQUestion);
-            response.setContentType("application/json");
-            response.getWriter().print(nextQuestionData);
         }
+
+
+
     }
 
 }
