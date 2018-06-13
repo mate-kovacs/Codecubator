@@ -8,21 +8,17 @@
 <body class="lots-main-page-body">
 <div class="wrapper">
     <div class="text-in-middle" id="assignment-start">
-        <div id="welcome_h2" th:text="${assignment.getName()}"></div>
-        <div id="welcome_h3" th:text="${assignment.getDescription()}">Hello User</div>
+        <div id="assignment_id" th:data-assignment_id=" ${assignment.getId()} "></div>
+        <div id="assignment_name" th:text="${assignment.getName()}"></div>
+        <div id="assignment_description" th:text="${assignment.getDescription()}"></div>
         <div id="take-assignment-button">Take assignment</div>
     </div>
     <div class="text-in-middle" id="question-list" style="visibility: hidden">
-        <div th:each="question : ${assignment.getQuestions()}">
-            <div class="coding-question">
-                <div th:text="'Question id: ' + ${question.getId()}"></div>
-                <div th:text="'Question: ' + ${question.getQuestion()}"></div>
-            </div>
-            <div th:each="answer : ${question.getAnswers()}">
-                <div th:text="'Answer id: ' + ${answer.getId()}"></div>
-                <div th:text="'Correct answer: ' + ${answer.getAnswer()}"></div>
-            </div>
+        <div class="coding-question">
+            <div id="question_id" data-question_id=""></div>
+            <div id="question_holder"></div>
         </div>
+        <div id="submit_question_button">Submit</div>
     </div>
 </div>
 </body>
