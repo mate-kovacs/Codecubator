@@ -71,10 +71,10 @@ public class DummyDBInitializer {
         Map<Skills, Integer> reward = new HashMap<>();
         reward.put(Skills.HTML_BASIC, 5);
         reward.put(Skills.CSS_BASIC, 8);
-        Set<CodingQuestion> questions = new HashSet<>();
+        List<CodingQuestion> questions = new ArrayList<>();
         CodingQuestion question11 = new CodingQuestion("What?");
         CodingQuestion question12 = new CodingQuestion("Why?");
-        Set<CodingQuestion> questions2 = new HashSet<>();
+        List<CodingQuestion> questions2 = new ArrayList<>();
         CodingQuestion question21 = new CodingQuestion("How?");
         CodingQuestion question22 = new CodingQuestion("Who?");
 
