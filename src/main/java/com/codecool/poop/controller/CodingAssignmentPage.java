@@ -5,6 +5,7 @@ import com.codecool.poop.dao.CodingQuestManager;
 import com.codecool.poop.model.assignments.coding.CodingAnswer;
 import com.codecool.poop.model.assignments.coding.CodingAssignment;
 import com.codecool.poop.model.assignments.coding.CodingQuestion;
+import org.json.JSONObject;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 public class CodingAssignmentPage extends HttpServlet implements LoginHandler {
@@ -42,20 +44,57 @@ public class CodingAssignmentPage extends HttpServlet implements LoginHandler {
             return;
         }
 
-        context.setVariable("assignment_id", assignment.getId());
-        context.setVariable("assignment_name", assignment.getName());
-        context.setVariable("assignment_description", assignment.getDescription());
-        int currentQuestionId = 0;
-        for (CodingQuestion question : assignment.getQuestions()) {
-            context.setVariable("question_" + currentQuestionId + "_id", question.getId());
-            context.setVariable("question_" + currentQuestionId + "_question", question.getQuestion());
-            int currentAnswerId = 0;
-            for (CodingAnswer answer : question.getAnswers()) {
-                context.setVariable("answer_" + currentAnswerId + "_id", answer.getId());
-            }
-        }
+        context.setVariable("assignment", assignment);
 
         engine.process("assignments/coding_assignment.html", context, response.getWriter());
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        HttpSession session;
+        session = request.getSession();
+        TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(request.getServletContext());
+        WebContext context = new WebContext(request, response, request.getServletContext());
+        if (!isUserLoggedIn(session)) {
+            response.sendRedirect("/");
+            return;
+        }
+
+        int assignmentID = Integer.parseInt(request.getParameter("assignment_id"));
+        int questionID = Integer.parseInt(request.getParameter("question_id"));
+
+        CodingAssignment assignment = manager.getCodingAssignemntByID(assignmentID);
+        CodingQuestion question = manager.getCodingQuestionByID(questionID);
+        if (assignment == null) {
+            System.out.println("No coding assignment with such ID.");
+            response.sendRedirect("/");
+            return;
+        } else if (question == null) {
+            System.out.println("No coding question with such ID.");
+            response.sendRedirect("/");
+            return;
+        }
+
+        CodingQuestion nextQUestion = null;
+        List<CodingQuestion> questionList = assignment.getQuestions();
+        for (CodingQuestion currentQuestion: questionList) {
+            if (currentQuestion.getId() == questionID){
+                nextQUestion = questionList.get(questionList.indexOf(currentQuestion) + 1);
+            }
+        }
+        if (nextQUestion == null){
+            response.setContentType("text/plain");
+            response.getWriter().print("Last question");
+
+            System.out.println("That was the last question");
+        } else {
+            System.out.println("Return the next qustion");
+
+            JSONObject nextQuestionData = new JSONObject();
+            nextQuestionData.put("question", nextQUestion);
+            response.setContentType("application/json");
+            response.getWriter().print(nextQuestionData);
+        }
     }
 
 }
