@@ -3,12 +3,26 @@
 <head th:replace="common_head.html :: common_head(~{::title}, ~{::script})">
     <meta charset="UTF-8">
     <title>Coding Assignment</title>
-    <script></script>
+    <script src="/static/js/coding_assignment.js" defer></script>
 </head>
 <body class="lots-main-page-body">
 <div class="wrapper">
-    <div id="welcome_text">
-        <p>Test text on the screen</p>
+    <div class="text-in-middle" id="assignment-start">
+        <div id="welcome_h2" th:text="${assignment.getName()}"></div>
+        <div id="welcome_h3" th:text="${assignment.getDescription()}">Hello User</div>
+        <div id="take-assignment-button">Take assignment</div>
+    </div>
+    <div class="text-in-middle" id="question-list" style="visibility: hidden">
+        <div th:each="question : ${assignment.getQuestions()}">
+            <div class="coding-question">
+                <div th:text="'Question id: ' + ${question.getId()}"></div>
+                <div th:text="'Question: ' + ${question.getQuestion()}"></div>
+            </div>
+            <div th:each="answer : ${question.getAnswers()}">
+                <div th:text="'Answer id: ' + ${answer.getId()}"></div>
+                <div th:text="'Correct answer: ' + ${answer.getAnswer()}"></div>
+            </div>
+        </div>
     </div>
 </div>
 </body>
