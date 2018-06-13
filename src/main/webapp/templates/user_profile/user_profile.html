@@ -5,6 +5,7 @@
     <script></script>
 </head>
 <body class="lots-main-page-body">
+<div th:include="fragments/navbar.html"></div>
 <div class="container">
     <div id="user-wrapper">
         <div id="user-profile-avatar">
@@ -16,7 +17,7 @@
             <h1 class="box-title">Skills</h1>
             <table id="skill-table">
                 <tr th:each="skill : ${skills}">
-                    <td th:text="${skill.key}">skill name</td>
+                    <td th:text="${#strings.capitalizeWords(skill.key.toString().toLowerCase().replace('_', ' '))}">skill name</td>
                     <td th:text="${skill.value}">skill value</td>
                 </tr>
             </table>
