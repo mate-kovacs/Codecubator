@@ -1,3 +1,14 @@
+@media (max-width: 770px) {
+    .box-title {
+        font-size: 2rem !important;
+    }
+    .container {
+        margin-left: 1% !important;
+        margin-right: 1% !important;
+        max-width: 100% !important;
+    }
+}
+
 #user-wrapper {
     margin-top: 5%;
     justify-content: center;
