@@ -58,7 +58,7 @@ public class AssignmentsController extends HttpServlet implements LoginHandler {
         context.setVariable("user_name", userData.get("user_name"));
         context.setVariable("assignments", assignments);
         context.setVariable("header", header);
-        engine.process("quiz_assignments.html", context, response.getWriter());
+        engine.process("assignments.html", context, response.getWriter());
     }
 
     @Override
