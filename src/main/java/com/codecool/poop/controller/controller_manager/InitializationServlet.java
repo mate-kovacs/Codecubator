@@ -1,8 +1,6 @@
 package com.codecool.poop.controller.controller_manager;
 
-import com.codecool.poop.controller.Index;
-import com.codecool.poop.controller.Login;
-import com.codecool.poop.controller.Logout;
+import com.codecool.poop.controller.*;
 import com.codecool.poop.controller.Registration;
 import com.codecool.poop.dao.CodingQuestManager;
 import com.codecool.poop.dao.MasteryQuestManager;
@@ -25,11 +23,13 @@ public class InitializationServlet  extends HttpServlet{
         Registration servletRegistration = new Registration(userManager);
         Index servletIndex = new Index();
         Logout servletLogout= new Logout();
+        QuizAssignmentsController servletQuizAssignments = new QuizAssignmentsController();
 
         getServletContext().setAttribute("servletIndex", servletIndex);
         getServletContext().setAttribute("servletLogin", servletLogin);
         getServletContext().setAttribute("servletLogout", servletLogout);
         getServletContext().setAttribute("servletRegistration", servletRegistration);
+        getServletContext().setAttribute("servletQuizAssignments", servletQuizAssignments);
 
         DummyDBInitializer dummyDBInitializer = new DummyDBInitializer(
                 userManager,
