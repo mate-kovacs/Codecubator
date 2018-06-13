@@ -416,20 +416,20 @@ body {
 }
 
 .assignment {
-    background-color:rgba(0, 0, 0, 0.5);
-    box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.3);
-    display: inline-block;
+    border: 2px solid #d2d3ca;
+    border-radius: 10px;
+    background-color:rgba(0, 0, 0, 0.3);
+    box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.6);
     width: 70%;
     min-height: 100px;
-    margin: 0 auto;
+    margin: 0 auto 20px auto;
     padding: 15px;
-    margin-bottom: 20px;
 }
 
-.assignment:hover {
-    background-color:rgba(0, 0, 0, 0.6);
-    box-shadow: 2px 5px 5px rgba(0, 0, 0, 0.4);
-}
+/*.assignment:hover {*/
+    /*background-color:rgba(0, 0, 0, 0.6);*/
+    /*box-shadow: 2px 5px 5px rgba(0, 0, 0, 0.4);*/
+/*}*/
 
 .assignment-reward {
     position: absolute;
@@ -450,6 +450,21 @@ body {
     cursor: pointer;
 }
 
-#assignments {
-    /*display: flex;*/
+.assignments-header {
+    background-color:rgba(0, 0, 0, 0.2);
+    box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.6);
+    width: 100%;
+    height: 80px;
+    margin: 0 auto 35px auto;
+}
+
+.assignments-header h1 {
+    display: inline-block;
+    vertical-align: -50px;
+}
+
+.take-assignment {
+    width: 20%;
+    margin-left: auto;
+    margin-right: auto;
 }
