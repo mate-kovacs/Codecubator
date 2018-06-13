@@ -70,5 +70,9 @@
 }
 
 .bg-dark {
-    background-color: #21292e !important;
+    /*background-color: #21292e !important;*/
+    background-color:rgba(33, 41, 46, 0.9) !important;
+    /*box-shadow: 20px 30px 60px rgba(0, 0, 0, 0.3);*/
+
+
 }
