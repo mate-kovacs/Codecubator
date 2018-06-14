@@ -2,6 +2,7 @@ package com.codecool.poop.controller;
 
 import com.codecool.poop.config.TemplateEngineUtil;
 import com.codecool.poop.dao.QuizQuestManager;
+import com.codecool.poop.dao.UserManager;
 import com.codecool.poop.model.assignments.coding.CodingAnswer;
 import com.codecool.poop.model.assignments.coding.CodingAssignment;
 import com.codecool.poop.model.assignments.coding.CodingQuestion;
@@ -24,10 +25,13 @@ import java.util.List;
 
 public class QuizAssignmentController extends HttpServlet implements LoginHandler {
     private QuizQuestManager quizQuestManager;
+    private UserManager userManager;
 
-    public QuizAssignmentController(QuizQuestManager quizQuestManager) {
+    public QuizAssignmentController(QuizQuestManager quizQuestManager, UserManager userManager) {
         this.quizQuestManager = quizQuestManager;
+        this.userManager = userManager;
     }
+
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
