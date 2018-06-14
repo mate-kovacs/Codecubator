@@ -59,8 +59,6 @@ public class CodingAssignmentPage extends HttpServlet implements LoginHandler {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session;
         session = request.getSession();
-        TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(request.getServletContext());
-        WebContext context = new WebContext(request, response, request.getServletContext());
         if (!isUserLoggedIn(session)) {
             response.sendRedirect("/");
             return;
@@ -166,10 +164,6 @@ public class CodingAssignmentPage extends HttpServlet implements LoginHandler {
         }
         nextQuestionData.put("answer_ids", answerIdList);
         return nextQuestionData;
-    }
-
-    private void evaluateAnswer(int questionID, List<Integer> answerIDs, List<String> answers) {
-
     }
 
     private boolean isAssignmentValid(int assignmentID) {
