@@ -28,7 +28,7 @@ public class InitializationServlet extends HttpServlet {
         UserProfile servletUserProfile = new UserProfile(userManager);
         Logout servletLogout = new Logout();
         AssignmentsController servletAssignments = new AssignmentsController(quizQuestManager, codingQuestManager, masteryQuestManager);
-        CodingAssignmentPage servletCodingAssignment = new CodingAssignmentPage(codingQuestManager);
+        CodingAssignmentPage servletCodingAssignment = new CodingAssignmentPage(codingQuestManager, userManager);
 
         getServletContext().setAttribute("servletLogin", servletLogin);
         getServletContext().setAttribute("servletLogout", servletLogout);

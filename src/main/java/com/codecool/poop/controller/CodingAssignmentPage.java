@@ -2,6 +2,10 @@ package com.codecool.poop.controller;
 
 import com.codecool.poop.config.TemplateEngineUtil;
 import com.codecool.poop.dao.CodingQuestManager;
+import com.codecool.poop.dao.UserManager;
+import com.codecool.poop.model.Skills;
+import com.codecool.poop.model.User;
+import com.codecool.poop.model.assignments.Assignment;
 import com.codecool.poop.model.assignments.coding.CodingAnswer;
 import com.codecool.poop.model.assignments.coding.CodingAssignment;
 import com.codecool.poop.model.assignments.coding.CodingQuestion;
@@ -17,13 +21,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 public class CodingAssignmentPage extends HttpServlet implements LoginHandler {
 
-    private CodingQuestManager manager;
+    private CodingQuestManager questManager;
+    private UserManager userManager;
 
-    public CodingAssignmentPage(CodingQuestManager manager) {
-        this.manager = manager;
+    public CodingAssignmentPage(CodingQuestManager questManager, UserManager userManager) {
+        this.questManager = questManager;
+        this.userManager = userManager;
     }
 
     @Override
@@ -38,7 +45,7 @@ public class CodingAssignmentPage extends HttpServlet implements LoginHandler {
         }
 
         int assignmentID = Integer.parseInt(request.getParameter("assignment_id"));
-        CodingAssignment assignment = manager.getCodingAssignemntByID(assignmentID);
+        CodingAssignment assignment = questManager.getCodingAssignemntByID(assignmentID);
         if (assignment == null) {
             System.out.println("No coding assignment with such ID.");
             response.sendRedirect("/");
@@ -73,7 +80,7 @@ public class CodingAssignmentPage extends HttpServlet implements LoginHandler {
             String answers[] = (request.getParameterValues("answers[]"));
             List<String> answerTexts = new ArrayList<>(Arrays.asList(answers));
 
-            CodingQuestion question = manager.getCodingQuestionByID(questionID);
+            CodingQuestion question = questManager.getCodingQuestionByID(questionID);
             int numberOfCorrectAnswers = question.checkSolution(answerTexts);
             boolean correctAnswer = isWholeAnswerCorrect(question, numberOfCorrectAnswers);
 
@@ -98,9 +105,18 @@ public class CodingAssignmentPage extends HttpServlet implements LoginHandler {
             return;
         }
 
-        List<CodingQuestion> questionList = manager.getCodingAssignemntByID(assignmentID).getQuestions();
+        List<CodingQuestion> questionList = questManager.getCodingAssignemntByID(assignmentID).getQuestions();
 
         if (isLastQuestion(questionID, questionList)) {
+
+
+            //TODO check if palyer has HP
+            //Here we add reward to user
+            Map userMap = (Map) session.getAttribute("user");
+            String userName = (String) userMap.get("user_name");
+            User user = userManager.getUserByName(userName);
+            Assignment assignment = questManager.getCodingAssignemntByID(assignmentID);
+            UserManager.addRewardToUser(user, assignment);
 
             JSONObject assignmentEvaluation = createJsonAssignmentEvaluation(session, assignmentID);
 
@@ -135,7 +151,7 @@ public class CodingAssignmentPage extends HttpServlet implements LoginHandler {
         JSONObject evaluationData = new JSONObject();
 
         evaluationData.put("points_achieved", session.getAttribute("points"));
-        evaluationData.put("max_points", manager.getCodingAssignemntByID(assignmentID).getMaxPoints());
+        evaluationData.put("max_points", questManager.getCodingAssignemntByID(assignmentID).getMaxPoints());
         return evaluationData;
     }
 
@@ -147,12 +163,11 @@ public class CodingAssignmentPage extends HttpServlet implements LoginHandler {
     }
 
     private void savePointsToSession(HttpSession session, int numberOfCorrectAnswers) {
-        int pointsForThisQuestion = numberOfCorrectAnswers;
         Integer currentPoints = (Integer) session.getAttribute("points");
         if (currentPoints == null){
             currentPoints = 0;
         }
-        session.setAttribute("points", currentPoints + pointsForThisQuestion);
+        session.setAttribute("points", currentPoints + numberOfCorrectAnswers);
     }
 
     private JSONObject createJsonNextQuestionData(CodingQuestion nextQuestion) {
@@ -173,7 +188,7 @@ public class CodingAssignmentPage extends HttpServlet implements LoginHandler {
     }
 
     private boolean isAssignmentValid(int assignmentID) {
-        CodingAssignment assignment = manager.getCodingAssignemntByID(assignmentID);
+        CodingAssignment assignment = questManager.getCodingAssignemntByID(assignmentID);
         return assignment != null;
     }
 
@@ -181,7 +196,7 @@ public class CodingAssignmentPage extends HttpServlet implements LoginHandler {
         if (questionID == 0) {
             return true;
         }
-        CodingQuestion question = manager.getCodingQuestionByID(questionID);
+        CodingQuestion question = questManager.getCodingQuestionByID(questionID);
         return question != null;
     }
 
@@ -195,6 +210,15 @@ public class CodingAssignmentPage extends HttpServlet implements LoginHandler {
 
     private boolean isAnswerSubmitted(HttpServletRequest request) {
         return request.getParameter("answers[]") != null;
+    }
+
+    /**
+     *
+     * @param points final points earned by user on an assignment
+     * @return false if failed
+     */
+    private boolean isAssignmentCompleted(int points) {
+        return points > 0;
     }
 
 }
