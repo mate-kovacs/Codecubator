@@ -228,7 +228,6 @@ public class CodingAssignmentPage extends HttpServlet implements LoginHandler {
      */
     private void addRewardToUser(String userName, Assignment assignment) {
         User user = userManager.getUserByName(userName);
-//        Assignment assignment = questManager.getCodingAssignemntByID(codingAssignmentId);
         int codeCoinReward = assignment.getCodeCoinReward();
         int userCoins = user.getCodeCoins() + codeCoinReward;
         user.setCodeCoins(userCoins);
