@@ -104,7 +104,9 @@ public class CodingAssignmentPage extends HttpServlet implements LoginHandler {
         List<CodingQuestion> questionList = questManager.getCodingAssignemntByID(assignmentID).getQuestions();
 
         if (isLastQuestion(questionID, questionList)) {
-            
+
+
+            //TODO check if palyer has HP
             //Here we add reward to user
             Map userMap = (Map) session.getAttribute("user");
             String userName = (String) userMap.get("user_name");
