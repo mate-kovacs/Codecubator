@@ -47,7 +47,9 @@ public class QuizAssignmentController extends HttpServlet implements LoginHandle
             return;
         }
 
+        setUserToMaxHealth(session);
         setAchievedPointsToZero(session);
+
         Integer assignmentID = Integer.parseInt(request.getParameter("assignment_id"));
         context.setVariable("assignment_id", assignmentID);
         engine.process("quiz_assignment/quiz_assignment.html", context, response.getWriter());
@@ -74,17 +76,18 @@ public class QuizAssignmentController extends HttpServlet implements LoginHandle
             List<QuizAnswer> correctAnswerList = question.getQuizAnswers();
             int numberOfCorrectAnswers = 0;
             for (int i = 0; i < correctAnswerList.size(); i++) {
-                if (Boolean.parseBoolean(answers[i]) == correctAnswerList.get(i).getAnswerValidity()){
-                    if(correctAnswerList.get(i).getAnswerValidity()){
-                        numberOfCorrectAnswers ++;
+                if (Boolean.parseBoolean(answers[i]) == correctAnswerList.get(i).getAnswerValidity()) {
+                    if (correctAnswerList.get(i).getAnswerValidity()) {
+                        numberOfCorrectAnswers++;
                     }
                 }
             }
             boolean correctAnswer = isWholeAnswerCorrect(question, numberOfCorrectAnswers);
+            boolean death = isUserDead(session, correctAnswer);
 
             savePointsToSession(session, numberOfCorrectAnswers);
 
-            JSONObject answerEvaluation = createJsonAnswerEvaluation(correctAnswer);
+            JSONObject answerEvaluation = createJsonAnswerEvaluation(correctAnswer, death);
 
             response.setContentType("application/json");
             response.getWriter().print(answerEvaluation);
@@ -147,9 +150,10 @@ public class QuizAssignmentController extends HttpServlet implements LoginHandle
         session.setAttribute("points", currentPoints + pointsForThisQuestion);
     }
 
-    private JSONObject createJsonAnswerEvaluation(boolean correctAnswer) {
+    private JSONObject createJsonAnswerEvaluation(boolean correctAnswer, boolean death) {
         JSONObject evaluationData = new JSONObject();
 
+        evaluationData.put("death", death);
         evaluationData.put("correct_answer", correctAnswer);
         return evaluationData;
     }
@@ -204,7 +208,36 @@ public class QuizAssignmentController extends HttpServlet implements LoginHandle
         return numberOfCorrectAnswers == question.getMaxPoints();
     }
 
+    private void setUserToMaxHealth(HttpSession session) {
+        Map userMap = (Map) session.getAttribute("user");
+        String userName = (String) userMap.get("user_name");
+        User user = userManager.getUserByName(userName);
+        user.setHealthToMax();
+    }
+
     private void setAchievedPointsToZero(HttpSession session) {
         session.setAttribute("points", 0);
+    }
+
+    private void userLoseHealth(HttpSession session) {
+        Map userMap = (Map) session.getAttribute("user");
+        String userName = (String) userMap.get("user_name");
+        User user = userManager.getUserByName(userName);
+        user.loseOneHealth();
+    }
+
+    private boolean isUserDead(HttpSession session, boolean correctAnswer) {
+        boolean death = false;
+
+        if (!correctAnswer) {
+            userLoseHealth(session);
+            Map userMap = (Map) session.getAttribute("user");
+            String userName = (String) userMap.get("user_name");
+            User user = userManager.getUserByName(userName);
+            if (user.getHealth() == 0) {
+                death = true;
+            }
+        }
+        return death;
     }
 }

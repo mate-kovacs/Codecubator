@@ -3,7 +3,6 @@ package com.codecool.poop.controller;
 import com.codecool.poop.config.TemplateEngineUtil;
 import com.codecool.poop.dao.CodingQuestManager;
 import com.codecool.poop.dao.UserManager;
-import com.codecool.poop.model.Skills;
 import com.codecool.poop.model.User;
 import com.codecool.poop.model.assignments.Assignment;
 import com.codecool.poop.model.assignments.coding.CodingAnswer;
@@ -52,14 +51,12 @@ public class CodingAssignmentPage extends HttpServlet implements LoginHandler {
             return;
         }
 
+        setUserToMaxHealth(session);
         setAchievedPointsToZero(session);
+
         context.setVariable("assignment", assignment);
 
         engine.process("assignments/coding_assignment.html", context, response.getWriter());
-    }
-
-    private void setAchievedPointsToZero(HttpSession session) {
-        session.setAttribute("points", 0);
     }
 
     @Override
@@ -81,10 +78,11 @@ public class CodingAssignmentPage extends HttpServlet implements LoginHandler {
             CodingQuestion question = questManager.getCodingQuestionByID(questionID);
             int numberOfCorrectAnswers = question.checkSolution(answerTexts);
             boolean correctAnswer = isWholeAnswerCorrect(question, numberOfCorrectAnswers);
+            boolean death = isUserDead(session, correctAnswer);
 
             savePointsToSession(session, numberOfCorrectAnswers);
 
-            JSONObject answerEvaluation = createJsonAnswerEvaluation(correctAnswer);
+            JSONObject answerEvaluation = createJsonAnswerEvaluation(correctAnswer, death);
 
             response.setContentType("application/json");
             response.getWriter().print(answerEvaluation);
@@ -153,16 +151,17 @@ public class CodingAssignmentPage extends HttpServlet implements LoginHandler {
         return evaluationData;
     }
 
-    private JSONObject createJsonAnswerEvaluation(boolean correctAnswer) {
+    private JSONObject createJsonAnswerEvaluation(boolean correctAnswer, boolean death) {
         JSONObject evaluationData = new JSONObject();
 
+        evaluationData.put("death", death);
         evaluationData.put("correct_answer", correctAnswer);
         return evaluationData;
     }
 
     private void savePointsToSession(HttpSession session, int numberOfCorrectAnswers) {
         Integer currentPoints = (Integer) session.getAttribute("points");
-        if (currentPoints == null){
+        if (currentPoints == null) {
             currentPoints = 0;
         }
         session.setAttribute("points", currentPoints + numberOfCorrectAnswers);
@@ -207,7 +206,6 @@ public class CodingAssignmentPage extends HttpServlet implements LoginHandler {
     }
 
     /**
-     *
      * @param points final points earned by user on an assignment
      * @return false if failed
      */
@@ -215,4 +213,36 @@ public class CodingAssignmentPage extends HttpServlet implements LoginHandler {
         return points > 0;
     }
 
+    private void setUserToMaxHealth(HttpSession session) {
+        Map userMap = (Map) session.getAttribute("user");
+        String userName = (String) userMap.get("user_name");
+        User user = userManager.getUserByName(userName);
+        user.setHealthToMax();
+    }
+
+    private void setAchievedPointsToZero(HttpSession session) {
+        session.setAttribute("points", 0);
+    }
+
+    private void userLoseHealth(HttpSession session) {
+        Map userMap = (Map) session.getAttribute("user");
+        String userName = (String) userMap.get("user_name");
+        User user = userManager.getUserByName(userName);
+        user.loseOneHealth();
+    }
+
+    private boolean isUserDead(HttpSession session, boolean correctAnswer) {
+        boolean death = false;
+
+        if (!correctAnswer) {
+            userLoseHealth(session);
+            Map userMap = (Map) session.getAttribute("user");
+            String userName = (String) userMap.get("user_name");
+            User user = userManager.getUserByName(userName);
+            if (user.getHealth() == 0) {
+                death = true;
+            }
+        }
+        return death;
+    }
 }
