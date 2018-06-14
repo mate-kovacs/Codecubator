@@ -497,7 +497,7 @@ body {
 #assignment-form-box {
     margin: 4% auto;
     text-align: center;
-    width: 50%;
+    width: 60%;
     background-color: #21292f;
     border: 2px solid #d2d3ca;
     border-radius: 10px;
@@ -576,4 +576,8 @@ body {
 
 #submit_error_message {
     color: #dc5b5b;
+}
+
+#question_holder {
+    margin: 0 5%;
 }
