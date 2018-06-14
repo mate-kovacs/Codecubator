@@ -40,8 +40,8 @@ public class CodingAnswer {
         return goodAnswer;
     }
 
-    public boolean isMatching(CodingAnswer answerToMatch) {
-        return formatAnswer(answerToMatch.getAnswer()).equals(this.answer);
+    public boolean isMatching(String answerToMatch) {
+        return answerToMatch.equals(this.answer);
     }
 
     public String getAnswer() {
