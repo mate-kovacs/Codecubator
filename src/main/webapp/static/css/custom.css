@@ -474,7 +474,7 @@ body {
     /*box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.2);*/
     /*background: #ffb316;*/
     font-size: 1.2em;
-    border: 1px solid #d2d3ca;
+    /*border: 1px solid #d2d3ca;*/
 
 }
 
@@ -486,8 +486,6 @@ body {
     margin-left: 50px;
     margin-right: 50px;
 }
-
-
 
 .text-in-middle {
     text-align: center;
