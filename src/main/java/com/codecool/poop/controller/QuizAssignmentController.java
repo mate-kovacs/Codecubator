@@ -47,7 +47,9 @@ public class QuizAssignmentController extends HttpServlet implements LoginHandle
             return;
         }
 
+        setUserToMaxHealth(session);
         setAchievedPointsToZero(session);
+
         Integer assignmentID = Integer.parseInt(request.getParameter("assignment_id"));
         context.setVariable("assignment_id", assignmentID);
         engine.process("quiz_assignment/quiz_assignment.html", context, response.getWriter());
@@ -81,10 +83,11 @@ public class QuizAssignmentController extends HttpServlet implements LoginHandle
                 }
             }
             boolean correctAnswer = isWholeAnswerCorrect(question, numberOfCorrectAnswers);
+            boolean death = isUserDead(session, correctAnswer);
 
             savePointsToSession(session, numberOfCorrectAnswers);
 
-            JSONObject answerEvaluation = createJsonAnswerEvaluation(correctAnswer);
+            JSONObject answerEvaluation = createJsonAnswerEvaluation(correctAnswer, death);
 
             response.setContentType("application/json");
             response.getWriter().print(answerEvaluation);
@@ -147,9 +150,10 @@ public class QuizAssignmentController extends HttpServlet implements LoginHandle
         session.setAttribute("points", currentPoints + pointsForThisQuestion);
     }
 
-    private JSONObject createJsonAnswerEvaluation(boolean correctAnswer) {
+    private JSONObject createJsonAnswerEvaluation(boolean correctAnswer, boolean death) {
         JSONObject evaluationData = new JSONObject();
 
+        evaluationData.put("death", death);
         evaluationData.put("correct_answer", correctAnswer);
         return evaluationData;
     }
@@ -204,7 +208,33 @@ public class QuizAssignmentController extends HttpServlet implements LoginHandle
         return numberOfCorrectAnswers == question.getMaxPoints();
     }
 
+    private void setUserToMaxHealth(HttpSession session) {
+        User user = userManager.getUserByName(session.getAttribute("user_name").toString());
+        session.setAttribute("user_health", user.getHealth());
+    }
+
     private void setAchievedPointsToZero(HttpSession session) {
         session.setAttribute("points", 0);
+    }
+
+    private void userLoseHealth(HttpSession session) {
+        int userHealth = (int) session.getAttribute("user_health");
+        session.setAttribute("user_health", userHealth - 1);
+    }
+
+    private boolean isUserDead(HttpSession session){
+        return (int) session.getAttribute("user_health") == 0;
+    }
+
+    private boolean isUserDead(HttpSession session, boolean correctAnswer) {
+        boolean death = false;
+
+        if (!correctAnswer){
+            userLoseHealth(session);
+            if (isUserDead(session)){
+                death = true;
+            }
+        }
+        return death;
     }
 }
