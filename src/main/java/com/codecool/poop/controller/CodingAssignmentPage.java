@@ -64,77 +64,76 @@ public class CodingAssignmentPage extends HttpServlet implements LoginHandler {
         int assignmentID = Integer.parseInt(request.getParameter("assignment_id"));
         int questionID = Integer.parseInt(request.getParameter("question_id"));
 
-        System.out.println(questionID);
-
-        CodingAssignment assignment = manager.getCodingAssignemntByID(assignmentID);
-        CodingQuestion question = manager.getCodingQuestionByID(questionID);
-
-        if (assignment == null) {
+        if (!isAssignmentValid(assignmentID)) {
             System.out.println("No coding assignment with such ID.");
             response.sendRedirect("/");
             return;
-        } else if (question == null) {
-            if (questionID == 0) {
-                System.out.println("First question");
-
-                List<CodingQuestion> questionList = assignment.getQuestions();
-                CodingQuestion nextQuestion = questionList.get(0);
-
-                JSONObject nextQuestionData = new JSONObject();
-                nextQuestionData.put("question_id", nextQuestion.getId());
-                nextQuestionData.put("question_text", nextQuestion.getQuestion());
-
-                List<Integer> answerIdList = new ArrayList<>();
-                for (CodingAnswer answer : nextQuestion.getAnswers()) {
-                    answerIdList.add(answer.getId());
-                }
-
-                nextQuestionData.put("answer_ids", answerIdList);
-                response.setContentType("application/json");
-                response.getWriter().print(nextQuestionData);
-                return;
-            } else {
-                System.out.println("No coding question with such ID.");
-                response.sendRedirect("/");
-                return;
-            }
         }
 
+        if (!isQuestionValid(questionID)) {
+            System.out.println("No coding question with such ID.");
+            response.sendRedirect("/");
+            return;
+        }
+
+        List<CodingQuestion> questionList = manager.getCodingAssignemntByID(assignmentID).getQuestions();
+
+        if (isLastQuestion(questionID, questionList)) {
+            response.setContentType("text/plain");
+            response.getWriter().print("Last question");
+            return;
+        }
 
         CodingQuestion nextQuestion = null;
-        List<CodingQuestion> questionList = assignment.getQuestions();
-        try {
+
+        if (isFirstQuestion(questionID)) {
+            nextQuestion = questionList.get(0);
+        } else {
             for (CodingQuestion currentQuestion : questionList) {
                 if (currentQuestion.getId() == questionID) {
                     nextQuestion = questionList.get(questionList.indexOf(currentQuestion) + 1);
                 }
             }
-
-            System.out.println("Return the next qustion");
-
-            JSONObject nextQuestionData = new JSONObject();
-            nextQuestionData.put("question_id", nextQuestion.getId());
-            nextQuestionData.put("question_text", nextQuestion.getQuestion());
-
-            List<Integer> answerIdList = new ArrayList<>();
-            for (CodingAnswer answer : nextQuestion.getAnswers()) {
-                answerIdList.add(answer.getId());
-            }
-
-
-            nextQuestionData.put("answer_ids", answerIdList);
-            response.setContentType("application/json");
-            response.getWriter().print(nextQuestionData);
-
-
-        } catch (IndexOutOfBoundsException ex) {
-            response.setContentType("text/plain");
-            response.getWriter().print("Last question");
-
-            System.out.println("That was the last question");
         }
 
+        JSONObject nextQuestionData = buildJSONOfNextQuestionData(nextQuestion);
+        
+        response.setContentType("application/json");
+        response.getWriter().print(nextQuestionData);
+    }
 
+    private JSONObject buildJSONOfNextQuestionData(CodingQuestion nextQuestion) {
+        JSONObject nextQuestionData = new JSONObject();
+        nextQuestionData.put("question_id", nextQuestion.getId());
+        nextQuestionData.put("question_text", nextQuestion.getQuestion());
+
+        List<Integer> answerIdList = new ArrayList<>();
+        for (CodingAnswer answer : nextQuestion.getAnswers()) {
+            answerIdList.add(answer.getId());
+        }
+        nextQuestionData.put("answer_ids", answerIdList);
+        return nextQuestionData;
+    }
+
+    private boolean isAssignmentValid(int assignmentID) {
+        CodingAssignment assignment = manager.getCodingAssignemntByID(assignmentID);
+        return assignment != null;
+    }
+
+    private boolean isQuestionValid(int questionID) {
+        if (questionID == 0) {
+            return true;
+        }
+        CodingQuestion question = manager.getCodingQuestionByID(questionID);
+        return question != null;
+    }
+
+    private boolean isFirstQuestion(int questionID) {
+        return questionID == 0;
+    }
+
+    private boolean isLastQuestion(int questionID, List<CodingQuestion> questionList) {
+        return questionList.get(questionList.size() - 1).getId() == questionID;
     }
 
 }
