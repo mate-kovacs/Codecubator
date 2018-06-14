@@ -12,12 +12,17 @@ function take_assignment_listener() {
 }
 
 function submit_question_listener() {
-    let coding_questions = document.getElementsByClassName("submit-question-button");
-    for (let current_question of coding_questions) {
-        current_question.addEventListener("click", function () {
-            get_next_question(2, 1);
-        })
-    }
+    let submit_answer_button = document.getElementById("submit_question_button");
+    submit_answer_button.addEventListener("click", function () {
+
+        let question_id = document.getElementById("question_id").getAttribute("data-question_id");
+        let assignment_id = document.getElementById("assignment_id").getAttribute("data-assignment_id");
+
+        console.log(question_id);
+        console.log(assignment_id);
+
+        get_next_question(question_id, assignment_id);
+    })
 }
 
 function get_next_question(question_id, assignment_id) {
@@ -31,6 +36,9 @@ function get_next_question(question_id, assignment_id) {
             console.log("success");
             if (response === "Last question") {
                 console.log("last question");
+                document.getElementById("question-list").style.visibility = "hidden";
+                document.getElementById("assignment-finished").style.visibility = "visible";
+
             } else {
                 console.log("next question");
                 console.log(response);
