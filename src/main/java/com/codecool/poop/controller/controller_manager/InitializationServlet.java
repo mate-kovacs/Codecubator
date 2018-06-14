@@ -1,6 +1,9 @@
 package com.codecool.poop.controller.controller_manager;
 
 import com.codecool.poop.controller.*;
+import com.codecool.poop.controller.CodingAssignmentPage;
+import com.codecool.poop.controller.Index;
+import com.codecool.poop.controller.Login;
 import com.codecool.poop.controller.Registration;
 import com.codecool.poop.dao.CodingQuestManager;
 import com.codecool.poop.dao.MasteryQuestManager;
@@ -25,7 +28,8 @@ public class InitializationServlet extends HttpServlet {
         UserProfile servletUserProfile = new UserProfile(userManager);
         Logout servletLogout = new Logout();
         AssignmentsController servletAssignments = new AssignmentsController(quizQuestManager, codingQuestManager, masteryQuestManager);
-        QuizAssignment servletQuizAssignment = new QuizAssignment(quizQuestManager);
+        CodingAssignmentPage servletCodingAssignment = new CodingAssignmentPage(codingQuestManager);
+        QuizAssignmentController servletQuizAssignment = new QuizAssignmentController(quizQuestManager);
 
         getServletContext().setAttribute("servletLogin", servletLogin);
         getServletContext().setAttribute("servletLogout", servletLogout);
@@ -33,6 +37,7 @@ public class InitializationServlet extends HttpServlet {
         getServletContext().setAttribute("servletAssignments", servletAssignments);
         getServletContext().setAttribute("servletIndex", servletIndex);
         getServletContext().setAttribute("servletUserProfile", servletUserProfile);
+        getServletContext().setAttribute("servletCodingAssignment", servletCodingAssignment);
         getServletContext().setAttribute("servletQuizAssignment", servletQuizAssignment);
 
         DummyDBInitializer dummyDBInitializer = new DummyDBInitializer(

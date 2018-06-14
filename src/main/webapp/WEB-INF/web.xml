@@ -123,7 +123,23 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>QuizAssignment</servlet-name>
+        <servlet-name>CodingAssignment</servlet-name>
+        <servlet-class>com.codecool.poop.controller.controller_manager.DelegateHttpServlet</servlet-class>
+
+        <init-param>
+            <param-name>servletContextKey</param-name>
+            <param-value>servletCodingAssignment</param-value>
+        </init-param>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>CodingAssignment</servlet-name>
+        <url-pattern>/coding-assignment</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>QuizAssignmentController</servlet-name>
         <servlet-class>com.codecool.poop.controller.controller_manager.DelegateHttpServlet</servlet-class>
 
         <init-param>
@@ -134,7 +150,7 @@
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>QuizAssignment</servlet-name>
+        <servlet-name>QuizAssignmentController</servlet-name>
         <url-pattern>/quiz-assignment</url-pattern>
     </servlet-mapping>
 

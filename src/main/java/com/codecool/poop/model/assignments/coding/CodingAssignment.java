@@ -4,10 +4,7 @@ import com.codecool.poop.model.assignments.Assignment;
 import com.codecool.poop.model.Skills;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @DiscriminatorValue("CODING")
@@ -15,13 +12,13 @@ public class CodingAssignment extends Assignment{
 
 
     @ManyToMany(mappedBy = "assignments")
-    private Set<CodingQuestion> questions = new HashSet<>();
+    private List<CodingQuestion> questions = new ArrayList<>();
 
     public CodingAssignment(String name,
                             String description,
                             Map<Skills, Integer> expRewards,
                             Integer codeCoinReward,
-                            Set<CodingQuestion> questions) {
+                            List<CodingQuestion> questions) {
         super(name, description, expRewards, codeCoinReward);
         this.questions = questions;
         setCodingQuestionReferences();
@@ -44,11 +41,11 @@ public class CodingAssignment extends Assignment{
         return points;
     }
 
-    public Set<CodingQuestion> getQuestions(){
+    public List<CodingQuestion> getQuestions(){
         return questions;
     }
 
-    public void setQuestions(Set<CodingQuestion> questions) {
+    public void setQuestions(List<CodingQuestion> questions) {
         this.questions = questions;
     }
 }

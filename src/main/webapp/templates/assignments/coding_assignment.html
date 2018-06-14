@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common_head.html :: common_head(~{::title}, ~{::script})">
+    <meta charset="UTF-8">
+    <title>Coding Assignment</title>
+    <script src="/static/js/coding_assignment.js" defer></script>
+</head>
+<body class="lots-main-page-body">
+<div class="wrapper">
+    <div class="text-in-middle" id="assignment-start">
+        <div id="assignment_id" th:data-assignment_id=" ${assignment.getId()} "></div>
+        <div id="take-assignment-button">Start the assignment</div>
+    </div>
+    <div class="text-in-middle" id="question-list" style="visibility: hidden">
+        <div id="coding-question">
+            <div id="question_id" data-question_id=""></div>
+            <div id="question_holder"></div>
+        </div>
+        <div id="submit_error_message"></div>
+        <div id="submit_question_button">Submit</div>
+    </div>
+    <div class="text-in-middle" id="assignment-finished" style="visibility: hidden">
+        <div id="assignment_finished_text">You have completed this assignment!</div>
+        <div id="assignment-score"></div>
+    </div>
+</div>
+</body>
+</html>

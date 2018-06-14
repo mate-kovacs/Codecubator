@@ -2,6 +2,7 @@ package com.codecool.poop.controller;
 
 import com.codecool.poop.config.TemplateEngineUtil;
 import com.codecool.poop.dao.QuizQuestManager;
+import com.codecool.poop.model.assignments.quiz.QuizAssignment;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -12,10 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-public class QuizAssignment extends HttpServlet implements LoginHandler {
+public class QuizAssignmentController extends HttpServlet implements LoginHandler {
     private QuizQuestManager quizQuestManager;
 
-    public QuizAssignment(QuizQuestManager quizQuestManager) {
+    public QuizAssignmentController(QuizQuestManager quizQuestManager) {
         this.quizQuestManager = quizQuestManager;
     }
 
@@ -29,11 +30,15 @@ public class QuizAssignment extends HttpServlet implements LoginHandler {
             response.sendRedirect("/");
             return;
         }
+        Integer assignmentID = Integer.parseInt(request.getParameter("assignment_id"));
+        context.setVariable("assignment_id", assignmentID);
         engine.process("quiz_assignment/quiz_assignment.html", context, response.getWriter());
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         System.out.println("Post received");
+        Integer assignmentID = Integer.parseInt(request.getParameter("assignment_id"));
+        QuizAssignment quizAssignment = quizQuestManager.getQuizAssignemntByID(assignmentID);
     }
 }
