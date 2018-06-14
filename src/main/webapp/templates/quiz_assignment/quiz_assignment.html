@@ -8,14 +8,16 @@
 <body class="lots-main-page-body">
 <div th:include="fragments/navbar.html"></div>
 <div class="container" th:attr="data-assignment-id=${assignment_id}">
-    <div id="question-title" data-question-id="">
+    <div id="assignment-form-box">
+        <div id="question-title" data-question-id="">
 
-    </div>
-    <div id="answer-container">
+        </div>
+        <div id="answer-container">
 
+        </div>
+        <div id="submit_error_message"></div>
+        <div id="submit-button">Submit</div>
     </div>
-    <div id="submit_error_message"></div>
-    <div id="submit-button">Submit</div>
 </div>
 </body>
 </html>
