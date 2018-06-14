@@ -130,6 +130,51 @@ public class DummyDBInitializer {
         );
         codingManager.addCodingAssignmentToDB(codingAssignment1);
 
+
+        CodingQuestion question7 = new CodingQuestion("List$ stringList = $ ArrayList<>();");
+        codingManager.addCodingQuestionToDB(question7);
+        CodingAnswer answer71 = new CodingAnswer("<String>", question7);
+        codingManager.addCodingAnswerToDB(answer71);
+        CodingAnswer answer72 = new CodingAnswer("new", question7);
+        codingManager.addCodingAnswerToDB(answer72);
+
+        CodingQuestion question8 = new CodingQuestion("public $ HelloWorld {\n  public" +
+                " $(String asrgs[]) {\n    $.println(\"Hello World!\");\n  }\n}");
+        codingManager.addCodingQuestionToDB(question8);
+        CodingAnswer answer81 = new CodingAnswer("class", question8);
+        codingManager.addCodingAnswerToDB(answer81);
+        CodingAnswer answer82 = new CodingAnswer("static void main", question8);
+        codingManager.addCodingAnswerToDB(answer82);
+        CodingAnswer answer83 = new CodingAnswer("System.out", question8);
+        codingManager.addCodingAnswerToDB(answer83);
+
+        CodingQuestion question9 = new CodingQuestion("public $ factorial(int n) {\n  " +
+                "int result = 1;\n  for ($; i <= n; i++) {\n    " +
+                "result *= i;\n  }\n  return result;");
+        codingManager.addCodingQuestionToDB(question9);
+        CodingAnswer answer91 = new CodingAnswer("int", question9);
+        codingManager.addCodingAnswerToDB(answer91);
+        CodingAnswer answer92 = new CodingAnswer("int i = 1", question9);
+        codingManager.addCodingAnswerToDB(answer92);
+
+        List<CodingQuestion> questions2 = new ArrayList<>();
+        questions2.add(question7);
+        questions2.add(question8);
+        questions2.add(question9);
+
+        Map<Skills, Integer> rewardMap2 = new HashMap<>();
+        rewardMap2.put(Skills.JAVA_BASIC, 12);
+        rewardMap2.put(Skills.OBJECT_ORIENTED_PROGRAMMING, 4);
+        CodingAssignment codingAssignment2 = new CodingAssignment(
+                "Java basics",
+                "A series of very simple code completion tasks. Fill in all the blanks in the Java code correctly.",
+                rewardMap2,
+                2,
+                questions2
+        );
+        codingManager.addCodingAssignmentToDB(codingAssignment2);
+
+
     }
 
     private void createQuizAssignment() {
