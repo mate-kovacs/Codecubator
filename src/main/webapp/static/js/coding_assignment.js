@@ -24,16 +24,12 @@ function submit_question_listener() {
 
         let question_id = document.getElementById("question_id").getAttribute("data-question_id");
         let assignment_id = document.getElementById("assignment_id").getAttribute("data-assignment_id");
-        let answer_texts = [];
 
         let answers = document.getElementsByClassName("answer_part");
+        let answer_texts = [];
         for (answer of answers) {
             answer_texts.push(answer.value);
         }
-
-        console.log(question_id);
-        console.log(assignment_id);
-        console.log(answer_texts);
 
         submit_answer(assignment_id, question_id, answer_texts);
     });
@@ -57,48 +53,22 @@ function submit_answer(assignment_id, question_id, answers) {
 }
 
 function get_next_question(question_id, assignment_id) {
-    // let question_data;
-
     $.ajax({
         type: "POST",
         url: "/coding-assignment",
         data: {"question_id": question_id, "assignment_id": assignment_id},
         success: function (response) {
-            console.log("success");
             if (response.points_achieved != null) {
-                console.log(response);
-                document.getElementById("question-list").style.visibility = "hidden";
-                let score = document.getElementById("assignment-score");
-                html_string = "You have scored " +
-                    response.points_achieved + " / " + response.max_points +
-                    " points on this assignment.";
-                score.innerHTML = html_string;
-                document.getElementById("assignment-finished").style.visibility = "visible";
-
+                let max_points = response.max_points;
+                let points_achieved = response.points_achieved;
+                create_and_show_html_completed_assignment(max_points, points_achieved);
             } else {
-                console.log("next question");
-                console.log(response);
                 let coding_question_id = document.getElementById("question_id");
                 coding_question_id.setAttribute("data-question_id", response.question_id);
 
                 let question_parts = response.question_text.split("$");
                 let answer_ids = response.answer_ids;
-                let coding_question_body = document.getElementById("question_holder");
-
-                let html_string =
-                    "<div class='question_part'>" +
-                    question_parts[0] +
-                    "</div>";
-                for (let i = 0; i < answer_ids.length; i++) {
-                    html_string +=
-                        "<input class='answer_part' type='text' id='" + answer_ids[i] + "'>" +
-                        "<div class='question_part'>" +
-                        question_parts[i + 1] +
-                        "</div>"
-                }
-
-                coding_question_body.innerHTML = html_string;
-
+                set_html_next_question(question_parts, answer_ids);
             }
         },
     });
@@ -112,6 +82,33 @@ function is_every_answer_filled() {
         }
     }
     return true;
+}
+
+
+function create_and_show_html_completed_assignment(max_points, points_achieved) {
+    document.getElementById("question-list").style.visibility = "hidden";
+    let score = document.getElementById("assignment-score");
+    score.innerHTML = "You have scored " +
+        points_achieved + " / " + max_points +
+        " points on this assignment.";
+    document.getElementById("assignment-finished").style.visibility = "visible";
+}
+
+function set_html_next_question(question_parts, answer_ids) {
+    let coding_question_body = document.getElementById("question_holder");
+
+    let html_string =
+        "<div class='question_part'>" +
+        question_parts[0] +
+        "</div>";
+    for (let i = 0; i < answer_ids.length; i++) {
+        html_string +=
+            "<input class='answer_part' type='text' id='" + answer_ids[i] + "'>" +
+            "<div class='question_part'>" +
+            question_parts[i + 1] +
+            "</div>"
+    }
+    coding_question_body.innerHTML = html_string;
 }
 
 take_assignment_listener();
