@@ -55,7 +55,6 @@ public class AssignmentsController extends HttpServlet implements LoginHandler {
                 header = "Mastery assignments";
                 break;
         }
-        System.out.println(assignments);
         context.setVariable("user_name", userData.get("user_name"));
         context.setVariable("assignments", assignments);
         context.setVariable("header", header);
