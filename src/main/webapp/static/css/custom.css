@@ -468,14 +468,13 @@ body {
 }
 
 .take-assignment {
-    width: 20%;
     margin-top: 20px;
-    display: flex;
-    /*box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.2);*/
-    /*background: #ffb316;*/
+    display: inline-block;
+    box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.2);
+    background: #4d597a;
     font-size: 1.2em;
-    /*border: 1px solid #d2d3ca;*/
-
+    font-weight: bold;
+    border: 1px solid #d2d3ca;
 }
 
 .exp-rewards {

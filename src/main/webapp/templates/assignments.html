@@ -24,7 +24,9 @@
                 <span class="exp-reward badge badge-success"
                       th:text="'+' + ${reward.value} + ' ' + ${reward.key}"></span>
             </div>
-            <div class="take-assignment btn" th:data-id="${assignment.id}">Take Assignment</div>
+            <div>
+                <div class="take-assignment btn" th:data-id="${assignment.id}">Take Assignment</div>
+            </div>
         </div>
     </div>
 </div>
