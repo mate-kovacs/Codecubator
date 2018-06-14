@@ -92,6 +92,7 @@ quizAssignment = {
 
     create_and_show_html_failed_assignment: function () {
         document.getElementById("question-title").style.visibility = "hidden";
+        document.getElementById("submit-button").style.visibility = "hidden";
         let finished_template = document.getElementById("answer-container");
         finished_template.innerHTML = "You have failed this assignment!";
     },
