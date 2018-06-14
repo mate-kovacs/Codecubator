@@ -1,10 +1,8 @@
 function take_assignment_listener() {
     let take_asssignment_button = document.getElementById("take-assignment-button");
     take_asssignment_button.addEventListener("click", function () {
-        let assignment_start = document.getElementById("assignment-start");
-        assignment_start.style.visibility = "hidden";
-        let question_list = document.getElementById("question-list");
-        question_list.style.visibility = "visible";
+        document.getElementById("assignment-start").style.visibility = "hidden";
+        document.getElementById("question-list").style.visibility = "visible";
         document.getElementById("submit_error_message").style.visibility = "hidden";
 
         let assignment_id = document.getElementById("assignment_id").getAttribute("data-assignment_id");
@@ -16,27 +14,54 @@ function submit_question_listener() {
     let submit_answer_button = document.getElementById("submit_question_button");
     submit_answer_button.addEventListener("click", function () {
 
-        if (!is_every_answer_filled()){
+        if (!is_every_answer_filled()) {
             let submit_error = document.getElementById("submit_error_message");
             submit_error.innerHTML = "Fill out all input fields to submit your answer!";
             submit_error.style.visibility = "visible";
             return;
         }
-
         document.getElementById("submit_error_message").style.visibility = "hidden";
 
         let question_id = document.getElementById("question_id").getAttribute("data-question_id");
         let assignment_id = document.getElementById("assignment_id").getAttribute("data-assignment_id");
+        let answer_ids = [];
+        let answer_texts = [];
+
+        let answers = document.getElementsByClassName("answer_part");
+        for (answer of answers) {
+            answer_ids.push(answer.getAttribute("id"));
+            answer_texts.push(answer.value);
+        }
 
         console.log(question_id);
         console.log(assignment_id);
+        console.log(answer_ids);
+        console.log(answer_texts);
 
-        get_next_question(question_id, assignment_id);
-    })
+        submit_answer(assignment_id, question_id, answer_ids, answer_texts);
+    });
+}
+
+function submit_answer(assignment_id, question_id, answer_ids, answers) {
+    $.ajax({
+        type: "POST",
+        url: "/coding-assignment",
+        data: {
+            "question_id": question_id,
+            "assignment_id": assignment_id,
+            "answer_ids": answer_ids,
+            "answers": answers
+        },
+        success: function (response) {
+            console.log(response);
+            //TODO animation reacts to correct or incorrect answer
+            get_next_question(question_id, assignment_id);
+        },
+    });
 }
 
 function get_next_question(question_id, assignment_id) {
-    let question_data;
+    // let question_data;
 
     $.ajax({
         type: "POST",
@@ -44,9 +69,14 @@ function get_next_question(question_id, assignment_id) {
         data: {"question_id": question_id, "assignment_id": assignment_id},
         success: function (response) {
             console.log("success");
-            if (response === "Last question") {
-                console.log("last question");
+            if (response.points_achieved != null) {
+                console.log(response);
                 document.getElementById("question-list").style.visibility = "hidden";
+                let score = document.getElementById("assignment-score");
+                html_string = "You have scored " +
+                    response.points_achieved + " / " + response.max_points +
+                    " points on this assignment.";
+                score.innerHTML = html_string;
                 document.getElementById("assignment-finished").style.visibility = "visible";
 
             } else {
@@ -80,8 +110,8 @@ function get_next_question(question_id, assignment_id) {
 
 function is_every_answer_filled() {
     let answer_parts = document.getElementsByClassName("answer_part");
-    for (answer of answer_parts){
-        if (answer.value === ""){
+    for (answer of answer_parts) {
+        if (answer.value === "") {
             return false;
         }
     }
