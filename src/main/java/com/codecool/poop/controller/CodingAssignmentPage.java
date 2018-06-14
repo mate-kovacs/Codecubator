@@ -3,6 +3,9 @@ package com.codecool.poop.controller;
 import com.codecool.poop.config.TemplateEngineUtil;
 import com.codecool.poop.dao.CodingQuestManager;
 import com.codecool.poop.dao.UserManager;
+import com.codecool.poop.model.Skills;
+import com.codecool.poop.model.User;
+import com.codecool.poop.model.assignments.Assignment;
 import com.codecool.poop.model.assignments.coding.CodingAnswer;
 import com.codecool.poop.model.assignments.coding.CodingAssignment;
 import com.codecool.poop.model.assignments.coding.CodingQuestion;
@@ -18,6 +21,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 public class CodingAssignmentPage extends HttpServlet implements LoginHandler {
 
@@ -200,4 +204,25 @@ public class CodingAssignmentPage extends HttpServlet implements LoginHandler {
         return request.getParameter("answers[]") != null;
     }
 
+
+    /**
+     * WHERE TO PUT THIS METHOD???
+     * @param userName a username
+     * @param codingAssignmentId a codingassignmentID
+     */
+    private void addRewardToUser(String userName, int codingAssignmentId) {
+        User user = userManager.getUserByName(userName);
+        Assignment assignment = questManager.getCodingAssignemntByID(codingAssignmentId);
+        int codeCoinReward = assignment.getCodeCoinReward();
+        int userCoins = user.getCodeCoins() + codeCoinReward;
+        user.setCodeCoins(userCoins);
+        Map<Skills, Integer> expRewards = assignment.getExpRewards();
+        for (Map.Entry<Skills, Integer> entry : expRewards.entrySet()) {
+            System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
+            Skills skill = entry.getKey();
+            Integer value = entry.getValue();
+            user.addXpValueToSkill(skill, value);
+        }
+
+    }
 }
