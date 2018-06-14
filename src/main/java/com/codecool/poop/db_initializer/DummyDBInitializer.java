@@ -68,77 +68,68 @@ public class DummyDBInitializer {
     }
 
     private void createCodingAssignments() {
-        Map<Skills, Integer> reward = new HashMap<>();
-        reward.put(Skills.HTML_BASIC, 5);
-        reward.put(Skills.CSS_BASIC, 8);
-        List<CodingQuestion> questions = new ArrayList<>();
-        CodingQuestion question11 = new CodingQuestion("To $ or not $ be this is $ question");
-        CodingQuestion question12 = new CodingQuestion("May the $ be with $");
-        CodingQuestion question13 = new CodingQuestion("Albus Precifal Wulfrich $ Dumbledore");
-        List<CodingQuestion> questions2 = new ArrayList<>();
-        CodingQuestion question21 = new CodingQuestion("A B C $ E $ G");
-        CodingQuestion question22 = new CodingQuestion("X $ Z");
 
-        List<CodingAnswer> answers11 = new ArrayList<>();
-        answers11.add(new CodingAnswer("be", question11));
-        answers11.add(new CodingAnswer("to", question11));
-        answers11.add(new CodingAnswer("the", question11));
-        List<CodingAnswer> answers12 = new ArrayList<>();
-        answers12.add(new CodingAnswer("force", question12));
-        answers12.add(new CodingAnswer("you", question12));
-        List<CodingAnswer> answers13 = new ArrayList<>();
-        answers13.add(new CodingAnswer("Brian", question13));
-        List<CodingAnswer> answers21 = new ArrayList<>();
-        answers21.add(new CodingAnswer("D", question21));
-        answers21.add(new CodingAnswer("F", question21));
-        List<CodingAnswer> answers22 = new ArrayList<>();
-        answers22.add(new CodingAnswer("Y", question22));
+        CodingQuestion question1 = new CodingQuestion("SELECT * $ users $ id=1;");
+        codingManager.addCodingQuestionToDB(question1);
+        CodingAnswer answer11 = new CodingAnswer("FROM", question1);
+        codingManager.addCodingAnswerToDB(answer11);
+        CodingAnswer answer12 = new CodingAnswer("WHERE", question1);
+        codingManager.addCodingAnswerToDB(answer12);
 
-        questions.add(question11);
-        questions.add(question12);
-        questions.add(question13);
-        questions2.add(question21);
-        questions2.add(question22);
+        CodingQuestion question2 = new CodingQuestion("INSERT $ products (product_name, product_description) $ ('USB charger', 'Provides much needed electricity to your beloved gadget.'$");
+        codingManager.addCodingQuestionToDB(question2);
+        CodingAnswer answer21 = new CodingAnswer("INTO", question2);
+        codingManager.addCodingAnswerToDB(answer21);
+        CodingAnswer answer22 = new CodingAnswer("VALUES", question2);
+        codingManager.addCodingAnswerToDB(answer22);
+        CodingAnswer answer23 = new CodingAnswer(");", question2);
+        codingManager.addCodingAnswerToDB(answer23);
 
-        CodingAssignment assignment = new CodingAssignment("Number one",
-                "Description",
-                reward,
-                3,
-                questions);
-        for (CodingQuestion question : questions) {
-            question.addAssignment(assignment);
-        }
-        CodingAssignment assignment2 = new CodingAssignment("Number two",
-                "Other",
-                reward,
-                2,
-                questions2);
-        for (CodingQuestion question : questions2) {
-            question.addAssignment(assignment2);
-        }
+        CodingQuestion question3 = new CodingQuestion("DELETE $ friends WHERE name $ 'Bob%';");
+        codingManager.addCodingQuestionToDB(question3);
+        CodingAnswer answer31 = new CodingAnswer("FROM", question3);
+        codingManager.addCodingAnswerToDB(answer31);
+        CodingAnswer answer32 = new CodingAnswer("LIKE", question3);
+        codingManager.addCodingAnswerToDB(answer32);
 
-        codingManager.addCodingAssignmentToDB(assignment);
-        codingManager.addCodingAssignmentToDB(assignment2);
+        CodingQuestion question4 = new CodingQuestion("UPDATE addresses $ city='Budapest' WHERE zip LIKE '1$");
+        codingManager.addCodingQuestionToDB(question4);
+        CodingAnswer answer41 = new CodingAnswer("SET", question4);
+        codingManager.addCodingAnswerToDB(answer41);
+        CodingAnswer answer42 = new CodingAnswer("%';", question4);
+        codingManager.addCodingAnswerToDB(answer42);
 
-        codingManager.addCodingQuestionToDB(question11);
-        codingManager.addCodingQuestionToDB(question12);
-        codingManager.addCodingQuestionToDB(question13);
+        CodingQuestion question5 = new CodingQuestion("SELECT name, movie_title FROM actors INNER $ ON $.movie=movies.protagonist WHERE release_date=1392;");
+        codingManager.addCodingQuestionToDB(question5);
+        CodingAnswer answer51 = new CodingAnswer("JOIN", question5);
+        codingManager.addCodingAnswerToDB(answer51);
+        CodingAnswer answer52 = new CodingAnswer("actors", question5);
+        codingManager.addCodingAnswerToDB(answer52);
 
-        for (CodingQuestion question : questions2) {
-            codingManager.addCodingQuestionToDB(question);
-        }
+        CodingQuestion question6 = new CodingQuestion("INSERT INTO users (name, email, password) VALUES ('Robert $ DROP TABLE users;");
+        codingManager.addCodingQuestionToDB(question6);
+        CodingAnswer answer61 = new CodingAnswer("','','');", question6);
+        codingManager.addCodingAnswerToDB(answer61);
 
-        for (CodingAnswer answer : answers11) {
-            codingManager.addCodingAnswerToDB(answer);
-        }
-        for (CodingAnswer answer : answers12) {
-            codingManager.addCodingAnswerToDB(answer);
-        }
-        for (CodingAnswer answer : answers21) {
-            codingManager.addCodingAnswerToDB(answer);
-        }
-        codingManager.addCodingAnswerToDB(answers22.get(0));
-        codingManager.addCodingAnswerToDB(answers13.get(0));
+        List<CodingQuestion> questions1 = new ArrayList<>();
+        questions1.add(question1);
+        questions1.add(question2);
+        questions1.add(question3);
+        questions1.add(question4);
+        questions1.add(question5);
+        questions1.add(question6);
+
+        Map<Skills, Integer> rewardMap1 = new HashMap<>();
+        rewardMap1.put(Skills.DATA_STRUCTURES, 25);
+        CodingAssignment codingAssignment1 = new CodingAssignment(
+                "SQL basics",
+                "A series of code completion assignments that cover most of the basic SQL queries and require a little extra knowledge.",
+                rewardMap1,
+                4,
+                questions1
+        );
+        codingManager.addCodingAssignmentToDB(codingAssignment1);
+
     }
 
     private void createQuizAssignment() {
