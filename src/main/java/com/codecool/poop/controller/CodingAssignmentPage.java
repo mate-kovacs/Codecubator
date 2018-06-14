@@ -3,7 +3,6 @@ package com.codecool.poop.controller;
 import com.codecool.poop.config.TemplateEngineUtil;
 import com.codecool.poop.dao.CodingQuestManager;
 import com.codecool.poop.dao.UserManager;
-import com.codecool.poop.model.Skills;
 import com.codecool.poop.model.User;
 import com.codecool.poop.model.assignments.Assignment;
 import com.codecool.poop.model.assignments.coding.CodingAnswer;
@@ -52,14 +51,12 @@ public class CodingAssignmentPage extends HttpServlet implements LoginHandler {
             return;
         }
 
+        setUserToMaxHealth(session);
         setAchievedPointsToZero(session);
+
         context.setVariable("assignment", assignment);
 
         engine.process("assignments/coding_assignment.html", context, response.getWriter());
-    }
-
-    private void setAchievedPointsToZero(HttpSession session) {
-        session.setAttribute("points", 0);
     }
 
     @Override
@@ -81,10 +78,11 @@ public class CodingAssignmentPage extends HttpServlet implements LoginHandler {
             CodingQuestion question = questManager.getCodingQuestionByID(questionID);
             int numberOfCorrectAnswers = question.checkSolution(answerTexts);
             boolean correctAnswer = isWholeAnswerCorrect(question, numberOfCorrectAnswers);
+            boolean death = isUserDead(session, correctAnswer);
 
             savePointsToSession(session, numberOfCorrectAnswers);
 
-            JSONObject answerEvaluation = createJsonAnswerEvaluation(correctAnswer);
+            JSONObject answerEvaluation = createJsonAnswerEvaluation(correctAnswer, death);
 
             response.setContentType("application/json");
             response.getWriter().print(answerEvaluation);
@@ -106,9 +104,7 @@ public class CodingAssignmentPage extends HttpServlet implements LoginHandler {
         List<CodingQuestion> questionList = questManager.getCodingAssignemntByID(assignmentID).getQuestions();
 
         if (isLastQuestion(questionID, questionList)) {
-
-
-            //TODO check if palyer has HP
+            
             //Here we add reward to user
             Map userMap = (Map) session.getAttribute("user");
             String userName = (String) userMap.get("user_name");
@@ -153,9 +149,10 @@ public class CodingAssignmentPage extends HttpServlet implements LoginHandler {
         return evaluationData;
     }
 
-    private JSONObject createJsonAnswerEvaluation(boolean correctAnswer) {
+    private JSONObject createJsonAnswerEvaluation(boolean correctAnswer, boolean death) {
         JSONObject evaluationData = new JSONObject();
 
+        evaluationData.put("death", death);
         evaluationData.put("correct_answer", correctAnswer);
         return evaluationData;
     }
@@ -215,4 +212,33 @@ public class CodingAssignmentPage extends HttpServlet implements LoginHandler {
         return points > 0;
     }
 
+    private void setUserToMaxHealth(HttpSession session) {
+        User user = userManager.getUserByName(session.getAttribute("user_name").toString());
+        session.setAttribute("user_health", user.getHealth());
+    }
+
+    private void setAchievedPointsToZero(HttpSession session) {
+        session.setAttribute("points", 0);
+    }
+
+    private void userLoseHealth(HttpSession session) {
+        int userHealth = (int) session.getAttribute("user_health");
+        session.setAttribute("user_health", userHealth - 1);
+    }
+
+    private boolean isUserDead(HttpSession session){
+        return (int) session.getAttribute("user_health") == 0;
+    }
+
+    private boolean isUserDead(HttpSession session, boolean correctAnswer) {
+        boolean death = false;
+
+        if (!correctAnswer){
+            userLoseHealth(session);
+            if (isUserDead(session)){
+                death = true;
+            }
+        }
+        return death;
+    }
 }
