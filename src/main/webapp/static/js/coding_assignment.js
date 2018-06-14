@@ -5,6 +5,7 @@ function take_assignment_listener() {
         assignment_start.style.visibility = "hidden";
         let question_list = document.getElementById("question-list");
         question_list.style.visibility = "visible";
+        document.getElementById("submit_error_message").style.visibility = "hidden";
 
         let assignment_id = document.getElementById("assignment_id").getAttribute("data-assignment_id");
         get_next_question(0, assignment_id);
@@ -16,8 +17,13 @@ function submit_question_listener() {
     submit_answer_button.addEventListener("click", function () {
 
         if (!is_every_answer_filled()){
+            let submit_error = document.getElementById("submit_error_message");
+            submit_error.innerHTML = "Fill out all input fields to submit your answer!";
+            submit_error.style.visibility = "visible";
             return;
         }
+
+        document.getElementById("submit_error_message").style.visibility = "hidden";
 
         let question_id = document.getElementById("question_id").getAttribute("data-question_id");
         let assignment_id = document.getElementById("assignment_id").getAttribute("data-assignment_id");
