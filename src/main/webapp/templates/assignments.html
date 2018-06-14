@@ -14,13 +14,18 @@
 
     <div class="assignment" th:each="assignment : ${assignments}" th:id="'assignment_' + ${assignment.id}">
         <h3 class="assignment-name" th:text="${assignment.name}">Product name</h3>
-        <p class="assignment-description" th:text="${assignment.description}">Assignment description...</p>
-        <div class="lots-pricewrapper">
-            <div class="lots_price" th:text="${assignment.codeCoinReward}">100</div>
-            <div class="lots-currency-icon"></div>
+        <div class="assignment-body">
+            <p class="assignment-description" th:text="${assignment.description}">Assignment description...</p>
+            <div style="font-size: 1em">
+                <span class="lots_price" th:text="'+' + ${assignment.codeCoinReward}">100</span>
+                <span class="lots-currency-icon"></span>
+            </div>
+            <div class="exp-rewards" th:each="reward : ${assignment.expRewards}" style="font-size: 1.5em">
+                <span class="exp-reward badge badge-success"
+                      th:text="'+' + ${reward.value} + ' ' + ${reward.key}"></span>
+            </div>
+            <div class="take-assignment btn" th:data-id="${assignment.id}">Take Assignment</div>
         </div>
-        <div class="take-assignment btn btn-outline-warning" th:data-id="${assignment.id}">Take Assignment</div>
-
     </div>
 </div>
 
