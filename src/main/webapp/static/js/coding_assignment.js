@@ -90,7 +90,7 @@ function is_every_answer_filled() {
 
 function create_and_show_html_failed_assignment() {
     document.getElementById("question-list").style.visibility = "hidden";
-    let finished_template = document.getElementById("assignment_finished");
+    let finished_template = document.getElementById("assignment-finished");
     finished_template.innerHTML = "<div id='assignment_finished_text'>You have failed this assignment!</div>";
     document.getElementById("assignment-finished").style.visibility = "visible";
 }
