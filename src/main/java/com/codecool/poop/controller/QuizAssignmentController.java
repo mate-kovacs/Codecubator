@@ -76,9 +76,9 @@ public class QuizAssignmentController extends HttpServlet implements LoginHandle
             List<QuizAnswer> correctAnswerList = question.getQuizAnswers();
             int numberOfCorrectAnswers = 0;
             for (int i = 0; i < correctAnswerList.size(); i++) {
-                if (Boolean.parseBoolean(answers[i]) == correctAnswerList.get(i).getAnswerValidity()){
-                    if(correctAnswerList.get(i).getAnswerValidity()){
-                        numberOfCorrectAnswers ++;
+                if (Boolean.parseBoolean(answers[i]) == correctAnswerList.get(i).getAnswerValidity()) {
+                    if (correctAnswerList.get(i).getAnswerValidity()) {
+                        numberOfCorrectAnswers++;
                     }
                 }
             }
@@ -212,7 +212,7 @@ public class QuizAssignmentController extends HttpServlet implements LoginHandle
         Map userMap = (Map) session.getAttribute("user");
         String userName = (String) userMap.get("user_name");
         User user = userManager.getUserByName(userName);
-        session.setAttribute("user_health", user.getHealth());
+        user.setHealthToMax();
     }
 
     private void setAchievedPointsToZero(HttpSession session) {
@@ -220,20 +220,21 @@ public class QuizAssignmentController extends HttpServlet implements LoginHandle
     }
 
     private void userLoseHealth(HttpSession session) {
-        int userHealth = (int) session.getAttribute("user_health");
-        session.setAttribute("user_health", userHealth - 1);
-    }
-
-    private boolean isUserDead(HttpSession session){
-        return (int) session.getAttribute("user_health") == 0;
+        Map userMap = (Map) session.getAttribute("user");
+        String userName = (String) userMap.get("user_name");
+        User user = userManager.getUserByName(userName);
+        user.loseOneHealth();
     }
 
     private boolean isUserDead(HttpSession session, boolean correctAnswer) {
         boolean death = false;
 
-        if (!correctAnswer){
+        if (!correctAnswer) {
             userLoseHealth(session);
-            if (isUserDead(session)){
+            Map userMap = (Map) session.getAttribute("user");
+            String userName = (String) userMap.get("user_name");
+            User user = userManager.getUserByName(userName);
+            if (user.getHealth() == 0) {
                 death = true;
             }
         }
