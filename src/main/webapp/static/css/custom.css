@@ -415,6 +415,68 @@ body {
     height: 100vh;
 }
 
+.assignment {
+    border: 1px solid #d2d3ca;
+    border-radius: 10px;
+    background-color:rgba(0, 0, 0, 0.3);
+    box-shadow: 20px 20px 10px rgba(0, 0, 0, 0.4);
+    width: 70%;
+    min-height: 100px;
+    margin: 0 auto 40px auto;
+    padding: 15px;
+}
+
+.assignment-name {
+    background-color:rgba(0, 0, 0, 0.3);
+    width: 100%;
+    padding: 10px;
+}
+
+.assignment-reward {
+    position: absolute;
+    bottom: -30px;
+    right: -30px;
+    background-color: #21292e;
+    border-color: #d2d3ca;
+    border-style: solid;
+    border-width: 5px;
+    border-radius: 50%;
+    background-image: url(/static/img/chest.png);
+    background-position: center;
+    background-size: 60%;
+    background-repeat: no-repeat;
+    height: 90px;
+    width: 90px;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.assignments-header {
+    background-color:rgba(0, 0, 0, 0.2);
+    box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    height: 60px;
+    margin: 0 auto 35px auto;
+}
+
+.assignments-header h1 {
+    display: inline-block;
+    vertical-align: -30px;
+}
+
+.take-assignment {
+    width: 20%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.user-dropdown {
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+
+
 .text-in-middle {
     text-align: center;
     grid-column: 2/3;

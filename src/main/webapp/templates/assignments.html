@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common_head.html :: common_head(~{::title}, ~{::script})">
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script></script>
+</head>
+<body class="lots-main-page-body">
+<div th:include="fragments/navbar.html"></div>
+<div class="assignments-header">
+    <h1 th:text="${header}"></h1>
+</div>
+<div id="assignments">
+
+    <div class="assignment" th:each="assignment : ${assignments}" th:id="'assignment_' + ${assignment.id}">
+        <h3 class="assignment-name" th:text="${assignment.name}">Product name</h3>
+        <p class="assignment-description" th:text="${assignment.description}">Assignment description...</p>
+        <div class="lots-pricewrapper">
+            <div class="lots_price" th:text="${assignment.codeCoinReward}">100</div>
+            <div class="lots-currency-icon"></div>
+        </div>
+        <div class="take-assignment btn btn-outline-warning" th:data-id="${assignment.id}">Take Assignment</div>
+
+    </div>
+</div>
+
+</body>
+</html>
