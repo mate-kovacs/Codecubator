@@ -42,7 +42,11 @@ quizAssignment = {
             success: function (response) {
                 console.log(response);
                 //TODO animation reacts to correct or incorrect answer
-                quizAssignment.get_next_question(questionID, assignmentID);
+                if (response.death) {
+                    quizAssignment.create_and_show_html_failed_assignment();
+                } else {
+                    quizAssignment.get_next_question(questionID, assignmentID);
+                }
             },
         });
     },
@@ -77,13 +81,19 @@ quizAssignment = {
 
         let html_string = "";
         let counter = 0;
-        for(answer_part of answers){
+        for (answer_part of answers) {
             html_string += "<div><label for='" + counter + "'>" + answer_part + "</label>";
             html_string += "<input class='answer-checkbox' id='" + counter + "' type='checkbox'></div>";
-            counter ++;
+            counter++;
         }
 
         answer_container.innerHTML = html_string;
+    },
+
+    create_and_show_html_failed_assignment: function () {
+        document.getElementById("question-title").style.visibility = "hidden";
+        let finished_template = document.getElementById("answer-container");
+        finished_template.innerHTML = "You have failed this assignment!";
     },
 
     create_and_show_html_completed_assignment: function (max_points, points_achieved) {
