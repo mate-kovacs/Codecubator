@@ -48,8 +48,6 @@ quizAssignment = {
     },
 
     get_next_question: function (questionID, assignmentID) {
-        console.log(questionID);
-        console.log(assignmentID);
         $.ajax({
             type: "POST",
             url: "/quiz-assignment",
@@ -58,7 +56,6 @@ quizAssignment = {
                 "question_id": questionID
             },
             success: function (response) {
-                console.log(response);
                 if (response.points_achieved != null) {
                     document.getElementById("submit-button").style.visibility = "hidden";
                     let max_points = response.max_points;
