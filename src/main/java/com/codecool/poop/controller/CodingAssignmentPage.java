@@ -114,7 +114,8 @@ public class CodingAssignmentPage extends HttpServlet implements LoginHandler {
             //Here we add reward to user
             Map userMap = (Map) session.getAttribute("user");
             String userName = (String) userMap.get("user_name");
-            addRewardToUser(userName, assignmentID);
+            Assignment assignment = questManager.getCodingAssignemntByID(assignmentID);
+            addRewardToUser(userName, assignment);
 
             JSONObject assignmentEvaluation = createJsonAssignmentEvaluation(session, assignmentID);
 
@@ -223,11 +224,11 @@ public class CodingAssignmentPage extends HttpServlet implements LoginHandler {
      *
      * WHERE TO PUT THIS METHOD???
      * @param userName a username
-     * @param codingAssignmentId a codingassignmentID
+     * @param assignment a assignment
      */
-    private void addRewardToUser(String userName, int codingAssignmentId) {
+    private void addRewardToUser(String userName, Assignment assignment) {
         User user = userManager.getUserByName(userName);
-        Assignment assignment = questManager.getCodingAssignemntByID(codingAssignmentId);
+//        Assignment assignment = questManager.getCodingAssignemntByID(codingAssignmentId);
         int codeCoinReward = assignment.getCodeCoinReward();
         int userCoins = user.getCodeCoins() + codeCoinReward;
         user.setCodeCoins(userCoins);
