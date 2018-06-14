@@ -109,6 +109,13 @@ public class CodingAssignmentPage extends HttpServlet implements LoginHandler {
 
         if (isLastQuestion(questionID, questionList)) {
 
+
+            //TODO check if palyer has HP
+            //Here we add reward to user
+            Map userMap = (Map) session.getAttribute("user");
+            String userName = (String) userMap.get("user_name");
+            addRewardToUser(userName, assignmentID);
+
             JSONObject assignmentEvaluation = createJsonAssignmentEvaluation(session, assignmentID);
 
             response.setContentType("application/json");
@@ -154,12 +161,11 @@ public class CodingAssignmentPage extends HttpServlet implements LoginHandler {
     }
 
     private void savePointsToSession(HttpSession session, int numberOfCorrectAnswers) {
-        int pointsForThisQuestion = numberOfCorrectAnswers;
         Integer currentPoints = (Integer) session.getAttribute("points");
         if (currentPoints == null){
             currentPoints = 0;
         }
-        session.setAttribute("points", currentPoints + pointsForThisQuestion);
+        session.setAttribute("points", currentPoints + numberOfCorrectAnswers);
     }
 
     private JSONObject createJsonNextQuestionData(CodingQuestion nextQuestion) {
@@ -204,8 +210,17 @@ public class CodingAssignmentPage extends HttpServlet implements LoginHandler {
         return request.getParameter("answers[]") != null;
     }
 
+    /**
+     *
+     * @param points final points earned by user on an assignment
+     * @return false if failed
+     */
+    private boolean isAssignmentCompleted(int points) {
+        return points > 0;
+    }
 
     /**
+     *
      * WHERE TO PUT THIS METHOD???
      * @param userName a username
      * @param codingAssignmentId a codingassignmentID
@@ -218,11 +233,10 @@ public class CodingAssignmentPage extends HttpServlet implements LoginHandler {
         user.setCodeCoins(userCoins);
         Map<Skills, Integer> expRewards = assignment.getExpRewards();
         for (Map.Entry<Skills, Integer> entry : expRewards.entrySet()) {
-            System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
             Skills skill = entry.getKey();
             Integer value = entry.getValue();
             user.addXpValueToSkill(skill, value);
         }
-
     }
+
 }
