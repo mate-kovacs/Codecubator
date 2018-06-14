@@ -114,8 +114,9 @@ public class CodingAssignmentPage extends HttpServlet implements LoginHandler {
             //Here we add reward to user
             Map userMap = (Map) session.getAttribute("user");
             String userName = (String) userMap.get("user_name");
+            User user = userManager.getUserByName(userName);
             Assignment assignment = questManager.getCodingAssignemntByID(assignmentID);
-            addRewardToUser(userName, assignment);
+            UserManager.addRewardToUser(user, assignment);
 
             JSONObject assignmentEvaluation = createJsonAssignmentEvaluation(session, assignmentID);
 
@@ -218,25 +219,6 @@ public class CodingAssignmentPage extends HttpServlet implements LoginHandler {
      */
     private boolean isAssignmentCompleted(int points) {
         return points > 0;
-    }
-
-    /**
-     *
-     * WHERE TO PUT THIS METHOD???
-     * @param userName a username
-     * @param assignment a assignment
-     */
-    private void addRewardToUser(String userName, Assignment assignment) {
-        User user = userManager.getUserByName(userName);
-        int codeCoinReward = assignment.getCodeCoinReward();
-        int userCoins = user.getCodeCoins() + codeCoinReward;
-        user.setCodeCoins(userCoins);
-        Map<Skills, Integer> expRewards = assignment.getExpRewards();
-        for (Map.Entry<Skills, Integer> entry : expRewards.entrySet()) {
-            Skills skill = entry.getKey();
-            Integer value = entry.getValue();
-            user.addXpValueToSkill(skill, value);
-        }
     }
 
 }
