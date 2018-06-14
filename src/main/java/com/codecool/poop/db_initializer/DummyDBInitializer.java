@@ -75,8 +75,8 @@ public class DummyDBInitializer {
         CodingQuestion question11 = new CodingQuestion("To $ or not $ be this is $ question");
         CodingQuestion question12 = new CodingQuestion("May the $ be with $");
         List<CodingQuestion> questions2 = new ArrayList<>();
-        CodingQuestion question21 = new CodingQuestion("How?");
-        CodingQuestion question22 = new CodingQuestion("Who?");
+        CodingQuestion question21 = new CodingQuestion("A B C $ E $ G");
+        CodingQuestion question22 = new CodingQuestion("X $ Z");
 
         List<CodingAnswer> answers11 = new ArrayList<>();
         answers11.add(new CodingAnswer("be", question11));
@@ -86,10 +86,10 @@ public class DummyDBInitializer {
         answers12.add(new CodingAnswer("force", question12));
         answers12.add(new CodingAnswer("you", question12));
         List<CodingAnswer> answers21 = new ArrayList<>();
-        answers21.add(new CodingAnswer("Fourty", question21));
-        answers21.add(new CodingAnswer("Two", question21));
+        answers21.add(new CodingAnswer("D", question21));
+        answers21.add(new CodingAnswer("F", question21));
         List<CodingAnswer> answers22 = new ArrayList<>();
-        answers22.add(new CodingAnswer("Me", question22));
+        answers22.add(new CodingAnswer("Y", question22));
 
         questions.add(question11);
         questions.add(question12);
@@ -108,7 +108,7 @@ public class DummyDBInitializer {
                 "Other",
                 reward,
                 2,
-                questions);
+                questions2);
         for (CodingQuestion question : questions2) {
             question.addAssignment(assignment2);
         }
