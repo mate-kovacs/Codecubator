@@ -38,7 +38,7 @@ public class CodingQuestion {
         int numberOfCorrectAnswers = 0;
         for (String userAnswer: userAnswers) {
             CodingAnswer correctAnswer = answers.get(userAnswers.indexOf(userAnswer));
-            if (correctAnswer.isMatching(userAnswer)){
+            if (correctAnswer.isMatching(CodingAnswer.formatAnswer(userAnswer))){
                 numberOfCorrectAnswers ++;
             }
         }

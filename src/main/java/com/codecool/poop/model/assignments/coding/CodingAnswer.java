@@ -18,6 +18,15 @@ public class CodingAnswer {
     @JoinColumn(name = "question_id")
     private CodingQuestion question;
 
+    public static String formatAnswer(String answer) {
+        String[] answerParts = answer.split("[\\s]+");
+        String goodAnswer = "";
+        for (String answerPart : answerParts) {
+            goodAnswer = goodAnswer.concat(answerPart);
+        }
+        return goodAnswer;
+    }
+
     public CodingAnswer() {
     }
 
@@ -29,15 +38,6 @@ public class CodingAnswer {
 
     private void setCodingQuestionReference(){
         question.addAnswer(this);
-    }
-
-    private String formatAnswer(String answer) {
-        String[] answerParts = answer.split("[\\s]+");
-        String goodAnswer = "";
-        for (String answerPart : answerParts) {
-            goodAnswer = goodAnswer.concat(answerPart);
-        }
-        return goodAnswer;
     }
 
     public boolean isMatching(String answerToMatch) {
