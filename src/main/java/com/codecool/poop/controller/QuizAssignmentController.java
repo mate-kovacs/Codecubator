@@ -3,6 +3,8 @@ package com.codecool.poop.controller;
 import com.codecool.poop.config.TemplateEngineUtil;
 import com.codecool.poop.dao.QuizQuestManager;
 import com.codecool.poop.dao.UserManager;
+import com.codecool.poop.model.User;
+import com.codecool.poop.model.assignments.Assignment;
 import com.codecool.poop.model.assignments.coding.CodingAnswer;
 import com.codecool.poop.model.assignments.coding.CodingAssignment;
 import com.codecool.poop.model.assignments.coding.CodingQuestion;
@@ -22,6 +24,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 public class QuizAssignmentController extends HttpServlet implements LoginHandler {
     private QuizQuestManager quizQuestManager;
@@ -103,6 +106,12 @@ public class QuizAssignmentController extends HttpServlet implements LoginHandle
         List<QuizQuestion> questionList = quizQuestManager.getQuizAssignemntByID(assignmentID).getQuestions();
 
         if (isLastQuestion(questionID, questionList)) {
+
+            Map userMap = (Map) session.getAttribute("user");
+            String userName = userMap.get("user_name").toString();
+            User user = userManager.getUserByName(userName);
+            Assignment quizAssignment = quizQuestManager.getQuizAssignemntByID(assignmentID);
+            UserManager.addRewardToUser(user, quizAssignment);
 
             JSONObject assignmentEvaluation = createJsonAssignmentEvaluation(session, assignmentID);
 
