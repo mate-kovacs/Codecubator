@@ -69,12 +69,7 @@ public class CodingAssignmentPage extends HttpServlet implements LoginHandler {
 
         if (isAnswerSubmitted(request)) {
             String answers[] = (request.getParameterValues("answers[]"));
-            String answerIDs[] = (request.getParameterValues("answer_ids[]"));
             List<String> answerTexts = new ArrayList<>(Arrays.asList(answers));
-            List<Integer> answerIDList = new ArrayList<>();
-            for (String id : answerIDs) {
-                answerIDList.add(Integer.parseInt(id));
-            }
 
             CodingQuestion question = manager.getCodingQuestionByID(questionID);
             int numberOfCorrectAnswers = question.checkSolution(answerTexts);

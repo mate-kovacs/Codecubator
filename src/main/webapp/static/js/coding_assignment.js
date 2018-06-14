@@ -24,32 +24,28 @@ function submit_question_listener() {
 
         let question_id = document.getElementById("question_id").getAttribute("data-question_id");
         let assignment_id = document.getElementById("assignment_id").getAttribute("data-assignment_id");
-        let answer_ids = [];
         let answer_texts = [];
 
         let answers = document.getElementsByClassName("answer_part");
         for (answer of answers) {
-            answer_ids.push(answer.getAttribute("id"));
             answer_texts.push(answer.value);
         }
 
         console.log(question_id);
         console.log(assignment_id);
-        console.log(answer_ids);
         console.log(answer_texts);
 
-        submit_answer(assignment_id, question_id, answer_ids, answer_texts);
+        submit_answer(assignment_id, question_id, answer_texts);
     });
 }
 
-function submit_answer(assignment_id, question_id, answer_ids, answers) {
+function submit_answer(assignment_id, question_id, answers) {
     $.ajax({
         type: "POST",
         url: "/coding-assignment",
         data: {
             "question_id": question_id,
             "assignment_id": assignment_id,
-            "answer_ids": answer_ids,
             "answers": answers
         },
         success: function (response) {
