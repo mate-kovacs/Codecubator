@@ -5,6 +5,7 @@ import com.codecool.poop.dao.CodingQuestManager;
 import com.codecool.poop.model.assignments.coding.CodingAnswer;
 import com.codecool.poop.model.assignments.coding.CodingAssignment;
 import com.codecool.poop.model.assignments.coding.CodingQuestion;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -45,6 +47,7 @@ public class CodingAssignmentPage extends HttpServlet implements LoginHandler {
             return;
         }
 
+        session.setAttribute("points", 0);
         context.setVariable("assignment", assignment);
 
         engine.process("assignments/coding_assignment.html", context, response.getWriter());
@@ -64,6 +67,35 @@ public class CodingAssignmentPage extends HttpServlet implements LoginHandler {
         int assignmentID = Integer.parseInt(request.getParameter("assignment_id"));
         int questionID = Integer.parseInt(request.getParameter("question_id"));
 
+        if (isAnswerSubmitted(request)) {
+            String answers[] = (request.getParameterValues("answers[]"));
+            String answerIDs[] = (request.getParameterValues("answer_ids[]"));
+            List<String> answerTexts = new ArrayList<>(Arrays.asList(answers));
+            List<Integer> answerIDList = new ArrayList<>();
+            for (String id : answerIDs) {
+                answerIDList.add(Integer.parseInt(id));
+            }
+
+            CodingQuestion question = manager.getCodingQuestionByID(questionID);
+            int numberOfCorrectAnswers = question.checkSolution(answerTexts);
+            boolean correctAnswer = numberOfCorrectAnswers == question.getMaxPoints();
+
+            int pointsForThisQuestion = numberOfCorrectAnswers;
+            Integer currentPoints = (Integer) session.getAttribute("points");
+            if (currentPoints == null){
+                currentPoints = 0;
+            }
+            session.setAttribute("points", currentPoints + pointsForThisQuestion);
+
+            JSONObject evaluationData = new JSONObject();
+
+            evaluationData.put("correct_answer", correctAnswer);
+
+            response.setContentType("application/json");
+            response.getWriter().print(evaluationData);
+            return;
+        }
+
         if (!isAssignmentValid(assignmentID)) {
             System.out.println("No coding assignment with such ID.");
             response.sendRedirect("/");
@@ -79,8 +111,14 @@ public class CodingAssignmentPage extends HttpServlet implements LoginHandler {
         List<CodingQuestion> questionList = manager.getCodingAssignemntByID(assignmentID).getQuestions();
 
         if (isLastQuestion(questionID, questionList)) {
-            response.setContentType("text/plain");
-            response.getWriter().print("Last question");
+
+            JSONObject evaluationData = new JSONObject();
+
+            evaluationData.put("points_achieved", session.getAttribute("points"));
+            evaluationData.put("max_points", manager.getCodingAssignemntByID(assignmentID).getMaxPoints());
+
+            response.setContentType("application/json");
+            response.getWriter().print(evaluationData);
             return;
         }
 
@@ -97,7 +135,7 @@ public class CodingAssignmentPage extends HttpServlet implements LoginHandler {
         }
 
         JSONObject nextQuestionData = buildJSONOfNextQuestionData(nextQuestion);
-        
+
         response.setContentType("application/json");
         response.getWriter().print(nextQuestionData);
     }
@@ -113,6 +151,10 @@ public class CodingAssignmentPage extends HttpServlet implements LoginHandler {
         }
         nextQuestionData.put("answer_ids", answerIdList);
         return nextQuestionData;
+    }
+
+    private void evaluateAnswer(int questionID, List<Integer> answerIDs, List<String> answers) {
+
     }
 
     private boolean isAssignmentValid(int assignmentID) {
@@ -134,6 +176,10 @@ public class CodingAssignmentPage extends HttpServlet implements LoginHandler {
 
     private boolean isLastQuestion(int questionID, List<CodingQuestion> questionList) {
         return questionList.get(questionList.size() - 1).getId() == questionID;
+    }
+
+    private boolean isAnswerSubmitted(HttpServletRequest request) {
+        return request.getParameter("answers[]") != null;
     }
 
 }
