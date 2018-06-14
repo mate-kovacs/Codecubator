@@ -6,7 +6,7 @@ function takeAssignmentListener() {
     for (button of buttons) {
         console.log(button);
         button.addEventListener("click", function() {
-            let id = button.dataset.id;
+            let id = this.dataset.id;
             let uri = location.pathname.substr(1);
             console.log(id);
             console.log(uri);
