@@ -15,6 +15,10 @@ function submit_question_listener() {
     let submit_answer_button = document.getElementById("submit_question_button");
     submit_answer_button.addEventListener("click", function () {
 
+        if (!is_every_answer_filled()){
+            return;
+        }
+
         let question_id = document.getElementById("question_id").getAttribute("data-question_id");
         let assignment_id = document.getElementById("assignment_id").getAttribute("data-assignment_id");
 
@@ -66,6 +70,16 @@ function get_next_question(question_id, assignment_id) {
             }
         },
     });
+}
+
+function is_every_answer_filled() {
+    let answer_parts = document.getElementsByClassName("answer_part");
+    for (answer of answer_parts){
+        if (answer.value === ""){
+            return false;
+        }
+    }
+    return true;
 }
 
 take_assignment_listener();
