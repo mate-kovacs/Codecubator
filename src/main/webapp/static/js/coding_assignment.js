@@ -1,9 +1,12 @@
 function take_assignment_listener() {
     let take_asssignment_button = document.getElementById("take-assignment-button");
     take_asssignment_button.addEventListener("click", function () {
-        document.getElementById("assignment-start").style.visibility = "hidden";
-        document.getElementById("question-list").style.visibility = "visible";
-        document.getElementById("submit_error_message").style.visibility = "hidden";
+        document.getElementById("assignment-start").style.display = "none";
+        document.getElementById("question-list").style.display = "block";
+        document.getElementById("coding-question").style.display = "block";
+        document.getElementById("submit_question_button").style.display = "block";
+        document.getElementById("submit_error_message").style.display = "none";
+        document.getElementById("assignment-finished").style.display = "none";
 
         let assignment_id = document.getElementById("assignment_id").getAttribute("data-assignment_id");
         get_next_question(0, assignment_id);
@@ -17,10 +20,10 @@ function submit_question_listener() {
         if (!is_every_answer_filled()) {
             let submit_error = document.getElementById("submit_error_message");
             submit_error.innerHTML = "Fill out all input fields to submit your answer!";
-            submit_error.style.visibility = "visible";
+            submit_error.style.display = "block";
             return;
         }
-        document.getElementById("submit_error_message").style.visibility = "hidden";
+        document.getElementById("submit_error_message").style.display = "none";
 
         let question_id = document.getElementById("question_id").getAttribute("data-question_id");
         let assignment_id = document.getElementById("assignment_id").getAttribute("data-assignment_id");
@@ -89,19 +92,21 @@ function is_every_answer_filled() {
 }
 
 function create_and_show_html_failed_assignment() {
-    document.getElementById("question-list").style.visibility = "hidden";
+    document.getElementById("question-list").style.display = "none";
     let finished_template = document.getElementById("assignment-finished");
     finished_template.innerHTML = "<div id='assignment_finished_text'>You have failed this assignment!</div>";
-    document.getElementById("assignment-finished").style.visibility = "visible";
+    document.getElementById("assignment-finished").style.display = "block";
+    // document.getElementById("assignment-finished").style.visibility = "visible";
 }
 
 function create_and_show_html_completed_assignment(max_points, points_achieved) {
-    document.getElementById("question-list").style.visibility = "hidden";
+    document.getElementById("question-list").style.display = "none";
     let score = document.getElementById("assignment-score");
     score.innerHTML = "You have scored " +
         points_achieved + " / " + max_points +
         " points on this assignment.";
-    document.getElementById("assignment-finished").style.visibility = "visible";
+    document.getElementById("assignment-finished").style.display = "block";
+    // document.getElementById("assignment-finished").style.visibility = "visible";
 }
 
 function set_html_next_question(question_parts, answer_ids) {
@@ -113,7 +118,7 @@ function set_html_next_question(question_parts, answer_ids) {
         "</div>";
     for (let i = 0; i < answer_ids.length; i++) {
         html_string +=
-            "<input class='answer_part' type='text' id='" + answer_ids[i] + "'>" +
+            "<input class='answer_part lots-input-field' type='text' id='" + answer_ids[i] + "'>" +
             "<div class='question_part'>" +
             question_parts[i + 1] +
             "</div>"

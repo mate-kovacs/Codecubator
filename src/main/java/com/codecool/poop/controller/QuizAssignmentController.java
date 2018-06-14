@@ -51,6 +51,8 @@ public class QuizAssignmentController extends HttpServlet implements LoginHandle
         setAchievedPointsToZero(session);
 
         Integer assignmentID = Integer.parseInt(request.getParameter("assignment_id"));
+        Map<String, Object> userData = (Map) session.getAttribute("user");
+        context.setVariable("user_name", userData.get("user_name"));
         context.setVariable("assignment_id", assignmentID);
         engine.process("quiz_assignment/quiz_assignment.html", context, response.getWriter());
     }

@@ -489,7 +489,7 @@ body {
 
 .assignment-scene {
     background-color: rgba(0, 0, 0, 0.7);
-    box-shadow: 20px 20px 10px rgba(0, 0, 0, 0.4);
+    /*box-shadow: 20px 20px 10px rgba(0, 0, 0, 0.4);*/
     width: 70%;
     margin: 0 auto 40px auto;
 }
@@ -530,3 +530,50 @@ body {
     margin-left: 2%;
 }
 
+#question-list #submit_question_button {
+    display: none;
+}
+
+#coding-question {
+    display: none;
+}
+
+#assignment-finished {
+    display: none;
+    padding: 5%;
+}
+
+.question_part {
+    margin-top: 1%;
+}
+
+.answer_part {
+    margin-top: 1%;
+    text-align: center;
+}
+
+#coding-question {
+    margin: 5% auto;
+    padding-bottom: 5%;
+    border-bottom: 1px solid;
+}
+
+#take-assignment-button {
+    font-size: 1.5rem;
+    margin: 5% auto;
+    width: 45%;
+    cursor: pointer;
+}
+
+#submit_question_button {
+    padding: 2%;
+    border: 1px solid rgba(234, 167, 17, 1);
+    border-radius: 7px;
+    width: 20%;
+    margin: 3% auto;
+    cursor: pointer;
+}
+
+#submit_error_message {
+    color: #dc5b5b;
+}
