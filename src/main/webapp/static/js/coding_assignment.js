@@ -47,7 +47,11 @@ function submit_answer(assignment_id, question_id, answers) {
         success: function (response) {
             console.log(response);
             //TODO animation reacts to correct or incorrect answer
-            get_next_question(question_id, assignment_id);
+            if (response.death) {
+                create_and_show_html_failed_assignment();
+            } else {
+                get_next_question(question_id, assignment_id);
+            }
         },
     });
 }
@@ -84,6 +88,12 @@ function is_every_answer_filled() {
     return true;
 }
 
+function create_and_show_html_failed_assignment() {
+    document.getElementById("question-list").style.visibility = "hidden";
+    let finished_template = document.getElementById("assignment_finished");
+    finished_template.innerHTML = "<div id='assignment_finished_text'>You have failed this assignment!</div>";
+    document.getElementById("assignment-finished").style.visibility = "visible";
+}
 
 function create_and_show_html_completed_assignment(max_points, points_achieved) {
     document.getElementById("question-list").style.visibility = "hidden";
