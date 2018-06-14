@@ -74,6 +74,7 @@ public class DummyDBInitializer {
         List<CodingQuestion> questions = new ArrayList<>();
         CodingQuestion question11 = new CodingQuestion("To $ or not $ be this is $ question");
         CodingQuestion question12 = new CodingQuestion("May the $ be with $");
+        CodingQuestion question13 = new CodingQuestion("Albus Precifal Wulfrich $ Dumbledore");
         List<CodingQuestion> questions2 = new ArrayList<>();
         CodingQuestion question21 = new CodingQuestion("A B C $ E $ G");
         CodingQuestion question22 = new CodingQuestion("X $ Z");
@@ -85,6 +86,8 @@ public class DummyDBInitializer {
         List<CodingAnswer> answers12 = new ArrayList<>();
         answers12.add(new CodingAnswer("force", question12));
         answers12.add(new CodingAnswer("you", question12));
+        List<CodingAnswer> answers13 = new ArrayList<>();
+        answers13.add(new CodingAnswer("Brian", question13));
         List<CodingAnswer> answers21 = new ArrayList<>();
         answers21.add(new CodingAnswer("D", question21));
         answers21.add(new CodingAnswer("F", question21));
@@ -93,6 +96,7 @@ public class DummyDBInitializer {
 
         questions.add(question11);
         questions.add(question12);
+        questions.add(question13);
         questions2.add(question21);
         questions2.add(question22);
 
@@ -118,6 +122,7 @@ public class DummyDBInitializer {
 
         codingManager.addCodingQuestionToDB(question11);
         codingManager.addCodingQuestionToDB(question12);
+        codingManager.addCodingQuestionToDB(question13);
 
         for (CodingQuestion question : questions2) {
             codingManager.addCodingQuestionToDB(question);
@@ -133,6 +138,7 @@ public class DummyDBInitializer {
             codingManager.addCodingAnswerToDB(answer);
         }
         codingManager.addCodingAnswerToDB(answers22.get(0));
+        codingManager.addCodingAnswerToDB(answers13.get(0));
     }
 
     private void createQuizAssignment() {
@@ -145,19 +151,26 @@ public class DummyDBInitializer {
 
         QuizQuestion question01 = new QuizQuestion("Question 1 for assignment?");
         quizManager.addQuizQuestionToDB(question01);
-        QuizAnswer answer03 = new QuizAnswer("A", false, question01);
-        quizManager.addQuizAnswerToDB(answer01);
-        QuizAnswer answer04 = new QuizAnswer("B", true, question01);
-        quizManager.addQuizAnswerToDB(answer02);
+        QuizAnswer answer03 = new QuizAnswer("Bad", false, question01);
+        quizManager.addQuizAnswerToDB(answer03);
+        QuizAnswer answer04 = new QuizAnswer("Good", true, question01);
+        quizManager.addQuizAnswerToDB(answer04);
 
         QuizQuestion question02 = new QuizQuestion("Question 2 for assignment?");
         quizManager.addQuizQuestionToDB(question02);
-        QuizAnswer answer05 = new QuizAnswer("C", false, question02);
-        quizManager.addQuizAnswerToDB(answer01);
-        QuizAnswer answer06 = new QuizAnswer("D", true, question02);
-        quizManager.addQuizAnswerToDB(answer02);
+        QuizAnswer answer05 = new QuizAnswer("Wrong", false, question02);
+        quizManager.addQuizAnswerToDB(answer05);
+        QuizAnswer answer06 = new QuizAnswer("Right", true, question02);
+        quizManager.addQuizAnswerToDB(answer06);
 
-        List<QuizQuestion> questions = new ArrayList<>(Arrays.asList(question01, question02));
+        QuizQuestion question03 = new QuizQuestion("Question 1 for assignment?");
+        quizManager.addQuizQuestionToDB(question03);
+        QuizAnswer answer07 = new QuizAnswer("Incorrect", false, question03);
+        quizManager.addQuizAnswerToDB(answer07);
+        QuizAnswer answer08 = new QuizAnswer("Correct", true, question03);
+        quizManager.addQuizAnswerToDB(answer08);
+
+        List<QuizQuestion> questions = new ArrayList<>(Arrays.asList(question01, question02, question03));
         Map<Skills, Integer> rewardMap = new HashMap<>();
         rewardMap.put(Skills.ALGORITHMS, 10);
         rewardMap.put(Skills.HTML_BASIC, 20);
