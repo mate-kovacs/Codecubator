@@ -145,8 +145,18 @@ public class DummyDBInitializer {
 
         QuizQuestion question01 = new QuizQuestion("Question 1 for assignment?");
         quizManager.addQuizQuestionToDB(question01);
+        QuizAnswer answer03 = new QuizAnswer("A", false, question01);
+        quizManager.addQuizAnswerToDB(answer01);
+        QuizAnswer answer04 = new QuizAnswer("B", true, question01);
+        quizManager.addQuizAnswerToDB(answer02);
+
         QuizQuestion question02 = new QuizQuestion("Question 2 for assignment?");
         quizManager.addQuizQuestionToDB(question02);
+        QuizAnswer answer05 = new QuizAnswer("C", false, question02);
+        quizManager.addQuizAnswerToDB(answer01);
+        QuizAnswer answer06 = new QuizAnswer("D", true, question02);
+        quizManager.addQuizAnswerToDB(answer02);
+
         List<QuizQuestion> questions = new ArrayList<>(Arrays.asList(question01, question02));
         Map<Skills, Integer> rewardMap = new HashMap<>();
         rewardMap.put(Skills.ALGORITHMS, 10);

@@ -29,6 +29,7 @@ public class InitializationServlet extends HttpServlet {
         Logout servletLogout = new Logout();
         AssignmentsController servletAssignments = new AssignmentsController(quizQuestManager, codingQuestManager, masteryQuestManager);
         CodingAssignmentPage servletCodingAssignment = new CodingAssignmentPage(codingQuestManager, userManager);
+        QuizAssignmentController servletQuizAssignment = new QuizAssignmentController(quizQuestManager, userManager);
 
         getServletContext().setAttribute("servletLogin", servletLogin);
         getServletContext().setAttribute("servletLogout", servletLogout);
@@ -37,6 +38,7 @@ public class InitializationServlet extends HttpServlet {
         getServletContext().setAttribute("servletIndex", servletIndex);
         getServletContext().setAttribute("servletUserProfile", servletUserProfile);
         getServletContext().setAttribute("servletCodingAssignment", servletCodingAssignment);
+        getServletContext().setAttribute("servletQuizAssignment", servletQuizAssignment);
 
         DummyDBInitializer dummyDBInitializer = new DummyDBInitializer(
                 userManager,

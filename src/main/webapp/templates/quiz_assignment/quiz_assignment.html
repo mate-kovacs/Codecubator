@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common_head.html :: common_head(~{::title}, ~{::script})">
+    <meta charset="UTF-8">
+    <title>Quiz Assignment</title>
+    <script src="/static/js/quiz_assignment.js" defer></script>
+</head>
+<body class="lots-main-page-body">
+<div th:include="fragments/navbar.html"></div>
+<div class="container" th:attr="data-assignment-id=${assignment_id}">
+    <div id="question-title" data-question-id="">
+
+    </div>
+    <div id="answer-container">
+
+    </div>
+    <div id="submit_error_message"></div>
+    <div id="submit-button">Submit</div>
+</div>
+</body>
+</html>
