@@ -209,7 +209,9 @@ public class QuizAssignmentController extends HttpServlet implements LoginHandle
     }
 
     private void setUserToMaxHealth(HttpSession session) {
-        User user = userManager.getUserByName(session.getAttribute("user_name").toString());
+        Map userMap = (Map) session.getAttribute("user");
+        String userName = (String) userMap.get("user_name");
+        User user = userManager.getUserByName(userName);
         session.setAttribute("user_health", user.getHealth());
     }
 
