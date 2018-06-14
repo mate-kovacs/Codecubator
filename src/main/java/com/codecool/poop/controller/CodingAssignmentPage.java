@@ -2,6 +2,7 @@ package com.codecool.poop.controller;
 
 import com.codecool.poop.config.TemplateEngineUtil;
 import com.codecool.poop.dao.CodingQuestManager;
+import com.codecool.poop.dao.UserManager;
 import com.codecool.poop.model.assignments.coding.CodingAnswer;
 import com.codecool.poop.model.assignments.coding.CodingAssignment;
 import com.codecool.poop.model.assignments.coding.CodingQuestion;
@@ -20,10 +21,12 @@ import java.util.List;
 
 public class CodingAssignmentPage extends HttpServlet implements LoginHandler {
 
-    private CodingQuestManager manager;
+    private CodingQuestManager questManager;
+    private UserManager userManager;
 
-    public CodingAssignmentPage(CodingQuestManager manager) {
-        this.manager = manager;
+    public CodingAssignmentPage(CodingQuestManager questManager, UserManager userManager) {
+        this.questManager = questManager;
+        this.userManager = userManager;
     }
 
     @Override
@@ -38,7 +41,7 @@ public class CodingAssignmentPage extends HttpServlet implements LoginHandler {
         }
 
         int assignmentID = Integer.parseInt(request.getParameter("assignment_id"));
-        CodingAssignment assignment = manager.getCodingAssignemntByID(assignmentID);
+        CodingAssignment assignment = questManager.getCodingAssignemntByID(assignmentID);
         if (assignment == null) {
             System.out.println("No coding assignment with such ID.");
             response.sendRedirect("/");
@@ -73,7 +76,7 @@ public class CodingAssignmentPage extends HttpServlet implements LoginHandler {
             String answers[] = (request.getParameterValues("answers[]"));
             List<String> answerTexts = new ArrayList<>(Arrays.asList(answers));
 
-            CodingQuestion question = manager.getCodingQuestionByID(questionID);
+            CodingQuestion question = questManager.getCodingQuestionByID(questionID);
             int numberOfCorrectAnswers = question.checkSolution(answerTexts);
             boolean correctAnswer = isWholeAnswerCorrect(question, numberOfCorrectAnswers);
 
@@ -98,7 +101,7 @@ public class CodingAssignmentPage extends HttpServlet implements LoginHandler {
             return;
         }
 
-        List<CodingQuestion> questionList = manager.getCodingAssignemntByID(assignmentID).getQuestions();
+        List<CodingQuestion> questionList = questManager.getCodingAssignemntByID(assignmentID).getQuestions();
 
         if (isLastQuestion(questionID, questionList)) {
 
@@ -135,7 +138,7 @@ public class CodingAssignmentPage extends HttpServlet implements LoginHandler {
         JSONObject evaluationData = new JSONObject();
 
         evaluationData.put("points_achieved", session.getAttribute("points"));
-        evaluationData.put("max_points", manager.getCodingAssignemntByID(assignmentID).getMaxPoints());
+        evaluationData.put("max_points", questManager.getCodingAssignemntByID(assignmentID).getMaxPoints());
         return evaluationData;
     }
 
@@ -173,7 +176,7 @@ public class CodingAssignmentPage extends HttpServlet implements LoginHandler {
     }
 
     private boolean isAssignmentValid(int assignmentID) {
-        CodingAssignment assignment = manager.getCodingAssignemntByID(assignmentID);
+        CodingAssignment assignment = questManager.getCodingAssignemntByID(assignmentID);
         return assignment != null;
     }
 
@@ -181,7 +184,7 @@ public class CodingAssignmentPage extends HttpServlet implements LoginHandler {
         if (questionID == 0) {
             return true;
         }
-        CodingQuestion question = manager.getCodingQuestionByID(questionID);
+        CodingQuestion question = questManager.getCodingQuestionByID(questionID);
         return question != null;
     }
 
