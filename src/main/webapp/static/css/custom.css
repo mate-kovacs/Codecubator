@@ -495,3 +495,13 @@ body {
     grid-row: 2/3;
     align-self: center;
 }
+
+.assignment-scene {
+    /*border: 1px solid #d2d3ca;*/
+    /*border-radius: 10px;*/
+    background-color:rgba(0, 0, 0, 0.7);
+    box-shadow: 20px 20px 10px rgba(0, 0, 0, 0.4);
+    width: 70%;
+    /*min-height: 100px;*/
+    margin: 0 auto 40px auto;
+}
