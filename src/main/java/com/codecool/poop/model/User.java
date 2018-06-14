@@ -7,6 +7,7 @@ import java.util.*;
 @Entity
 @Table(name = "users")
 public class User {
+    private static final int maxHealth = 3;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,6 +34,8 @@ public class User {
     @ManyToMany(mappedBy = "users", cascade = CascadeType.ALL)
     private Set<Achievement> achievements = new HashSet<>();
 
+    @Transient
+    private int health;
 
     public User() {
     }
@@ -123,6 +126,18 @@ public class User {
 
     public void addAchievement(Achievement achievement) {
         this.achievements.add(achievement);
+    }
+
+    public void setHealthToMax(){
+        health = maxHealth;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public void loseOneHealth(){
+        health --;
     }
 
     private void initExperiences() {
