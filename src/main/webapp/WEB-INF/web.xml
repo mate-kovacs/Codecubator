@@ -122,6 +122,22 @@
         <url-pattern>/user-profile</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>QuizAssignment</servlet-name>
+        <servlet-class>com.codecool.poop.controller.controller_manager.DelegateHttpServlet</servlet-class>
+
+        <init-param>
+            <param-name>servletContextKey</param-name>
+            <param-value>servletQuizAssignment</param-value>
+        </init-param>
+        <load-on-startup>6</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>QuizAssignment</servlet-name>
+        <url-pattern>/quiz-assignment</url-pattern>
+    </servlet-mapping>
+
 
     <session-config>
         <session-timeout>5</session-timeout>
