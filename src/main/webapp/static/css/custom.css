@@ -486,3 +486,12 @@ body {
     margin-left: 50px;
     margin-right: 50px;
 }
+
+
+
+.text-in-middle {
+    text-align: center;
+    grid-column: 2/3;
+    grid-row: 2/3;
+    align-self: center;
+}

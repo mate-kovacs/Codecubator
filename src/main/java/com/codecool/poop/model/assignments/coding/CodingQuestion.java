@@ -34,11 +34,11 @@ public class CodingQuestion {
     public CodingQuestion(){
     }
 
-    public Integer checkSolution(List<CodingAnswer> userAnswers){
-        Integer numberOfCorrectAnswers = 0;
-        for (CodingAnswer userAnswer: userAnswers) {
+    public Integer checkSolution(List<String> userAnswers){
+        int numberOfCorrectAnswers = 0;
+        for (String userAnswer: userAnswers) {
             CodingAnswer correctAnswer = answers.get(userAnswers.indexOf(userAnswer));
-            if (correctAnswer.isMatching(userAnswer)){
+            if (correctAnswer.isMatching(CodingAnswer.formatAnswer(userAnswer))){
                 numberOfCorrectAnswers ++;
             }
         }
