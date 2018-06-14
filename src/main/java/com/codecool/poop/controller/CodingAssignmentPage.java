@@ -5,7 +5,6 @@ import com.codecool.poop.dao.CodingQuestManager;
 import com.codecool.poop.model.assignments.coding.CodingAnswer;
 import com.codecool.poop.model.assignments.coding.CodingAssignment;
 import com.codecool.poop.model.assignments.coding.CodingQuestion;
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
@@ -18,7 +17,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 public class CodingAssignmentPage extends HttpServlet implements LoginHandler {
 
@@ -47,10 +45,14 @@ public class CodingAssignmentPage extends HttpServlet implements LoginHandler {
             return;
         }
 
-        session.setAttribute("points", 0);
+        setAchievedPointsToZero(session);
         context.setVariable("assignment", assignment);
 
         engine.process("assignments/coding_assignment.html", context, response.getWriter());
+    }
+
+    private void setAchievedPointsToZero(HttpSession session) {
+        session.setAttribute("points", 0);
     }
 
     @Override
@@ -73,21 +75,14 @@ public class CodingAssignmentPage extends HttpServlet implements LoginHandler {
 
             CodingQuestion question = manager.getCodingQuestionByID(questionID);
             int numberOfCorrectAnswers = question.checkSolution(answerTexts);
-            boolean correctAnswer = numberOfCorrectAnswers == question.getMaxPoints();
+            boolean correctAnswer = isWholeAnswerCorrect(question, numberOfCorrectAnswers);
 
-            int pointsForThisQuestion = numberOfCorrectAnswers;
-            Integer currentPoints = (Integer) session.getAttribute("points");
-            if (currentPoints == null){
-                currentPoints = 0;
-            }
-            session.setAttribute("points", currentPoints + pointsForThisQuestion);
+            savePointsToSession(session, numberOfCorrectAnswers);
 
-            JSONObject evaluationData = new JSONObject();
-
-            evaluationData.put("correct_answer", correctAnswer);
+            JSONObject answerEvaluation = createJsonAnswerEvaluation(correctAnswer);
 
             response.setContentType("application/json");
-            response.getWriter().print(evaluationData);
+            response.getWriter().print(answerEvaluation);
             return;
         }
 
@@ -107,13 +102,10 @@ public class CodingAssignmentPage extends HttpServlet implements LoginHandler {
 
         if (isLastQuestion(questionID, questionList)) {
 
-            JSONObject evaluationData = new JSONObject();
-
-            evaluationData.put("points_achieved", session.getAttribute("points"));
-            evaluationData.put("max_points", manager.getCodingAssignemntByID(assignmentID).getMaxPoints());
+            JSONObject assignmentEvaluation = createJsonAssignmentEvaluation(session, assignmentID);
 
             response.setContentType("application/json");
-            response.getWriter().print(evaluationData);
+            response.getWriter().print(assignmentEvaluation);
             return;
         }
 
@@ -129,13 +121,41 @@ public class CodingAssignmentPage extends HttpServlet implements LoginHandler {
             }
         }
 
-        JSONObject nextQuestionData = buildJSONOfNextQuestionData(nextQuestion);
+        JSONObject nextQuestionData = createJsonNextQuestionData(nextQuestion);
 
         response.setContentType("application/json");
         response.getWriter().print(nextQuestionData);
     }
 
-    private JSONObject buildJSONOfNextQuestionData(CodingQuestion nextQuestion) {
+    private boolean isWholeAnswerCorrect(CodingQuestion question, int numberOfCorrectAnswers) {
+        return numberOfCorrectAnswers == question.getMaxPoints();
+    }
+
+    private JSONObject createJsonAssignmentEvaluation(HttpSession session, int assignmentID) {
+        JSONObject evaluationData = new JSONObject();
+
+        evaluationData.put("points_achieved", session.getAttribute("points"));
+        evaluationData.put("max_points", manager.getCodingAssignemntByID(assignmentID).getMaxPoints());
+        return evaluationData;
+    }
+
+    private JSONObject createJsonAnswerEvaluation(boolean correctAnswer) {
+        JSONObject evaluationData = new JSONObject();
+
+        evaluationData.put("correct_answer", correctAnswer);
+        return evaluationData;
+    }
+
+    private void savePointsToSession(HttpSession session, int numberOfCorrectAnswers) {
+        int pointsForThisQuestion = numberOfCorrectAnswers;
+        Integer currentPoints = (Integer) session.getAttribute("points");
+        if (currentPoints == null){
+            currentPoints = 0;
+        }
+        session.setAttribute("points", currentPoints + pointsForThisQuestion);
+    }
+
+    private JSONObject createJsonNextQuestionData(CodingQuestion nextQuestion) {
         JSONObject nextQuestionData = new JSONObject();
         nextQuestionData.put("question_id", nextQuestion.getId());
         nextQuestionData.put("question_text", nextQuestion.getQuestion());
