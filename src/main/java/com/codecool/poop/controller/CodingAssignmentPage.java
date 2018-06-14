@@ -64,8 +64,11 @@ public class CodingAssignmentPage extends HttpServlet implements LoginHandler {
         int assignmentID = Integer.parseInt(request.getParameter("assignment_id"));
         int questionID = Integer.parseInt(request.getParameter("question_id"));
 
+        System.out.println(questionID);
+
         CodingAssignment assignment = manager.getCodingAssignemntByID(assignmentID);
         CodingQuestion question = manager.getCodingQuestionByID(questionID);
+
         if (assignment == null) {
             System.out.println("No coding assignment with such ID.");
             response.sendRedirect("/");
@@ -90,12 +93,11 @@ public class CodingAssignmentPage extends HttpServlet implements LoginHandler {
                 response.setContentType("application/json");
                 response.getWriter().print(nextQuestionData);
                 return;
+            } else {
+                System.out.println("No coding question with such ID.");
+                response.sendRedirect("/");
+                return;
             }
-
-        } else {
-            System.out.println("No coding question with such ID.");
-            response.sendRedirect("/");
-            return;
         }
 
 
@@ -117,12 +119,13 @@ public class CodingAssignmentPage extends HttpServlet implements LoginHandler {
             List<Integer> answerIdList = new ArrayList<>();
             for (CodingAnswer answer : nextQuestion.getAnswers()) {
                 answerIdList.add(answer.getId());
-
-
-                nextQuestionData.put("answer_ids", answerIdList);
-                response.setContentType("application/json");
-                response.getWriter().print(nextQuestionData);
             }
+
+
+            nextQuestionData.put("answer_ids", answerIdList);
+            response.setContentType("application/json");
+            response.getWriter().print(nextQuestionData);
+
 
         } catch (IndexOutOfBoundsException ex) {
             response.setContentType("text/plain");
