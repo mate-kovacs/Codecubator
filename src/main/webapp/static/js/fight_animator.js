@@ -32,7 +32,7 @@ class FightAnimator extends PIXI.Container {
         });
 
         this.succAttackStoryLine = [
-            this.movePlayerNearEnemy,
+            this.movePlayerToEnemy,
             function () {
                 this.storyPartInProgress = true;
                 this.player.armatureDisplay.animation.play("hit", 1);
