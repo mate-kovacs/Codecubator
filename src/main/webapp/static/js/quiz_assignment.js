@@ -41,7 +41,11 @@ quizAssignment = {
             },
             success: function (response) {
                 console.log(response);
-                //TODO animation reacts to correct or incorrect answer
+                if (response.correct_answer) {
+                    fight.playSuccefulAttack();
+                } else {
+                    fight.playUnsuccessfulAttack();
+                }
                 if (response.death) {
                     quizAssignment.create_and_show_html_failed_assignment();
                 } else {

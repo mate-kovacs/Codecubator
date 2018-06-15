@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <title>Coding Assignment</title>
     <script src="/static/js/coding_assignment.js" defer></script>
+    <script src="/static/js/pixi.min.js" defer></script>
+    <script src="/static/js/dragonBones.js" defer></script>
+    <script src="/static/js/fight_animator.js" defer></script>
 </head>
 <body class="lots-main-page-body">
 <div th:include="fragments/navbar.html"></div>
@@ -36,7 +39,7 @@
             </div>
         </div>
     </div>
-    <div class="fight-scene"></div>
+    <div id="fight-scene"></div>
 </div>
 </body>
 </html>
