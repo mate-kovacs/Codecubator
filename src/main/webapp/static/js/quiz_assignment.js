@@ -86,7 +86,7 @@ quizAssignment = {
         let html_string = "";
         let counter = 0;
         for (answer_part of answers) {
-            html_string += "<div><label for='" + counter + "'>" + answer_part + "</label>";
+            html_string += "<div class='answer-line'><label for='" + counter + "'>" + answer_part + "</label>";
             html_string += "<input class='answer-checkbox' id='" + counter + "' type='checkbox'></div>";
             counter++;
         }
@@ -95,14 +95,15 @@ quizAssignment = {
     },
 
     create_and_show_html_failed_assignment: function () {
-        document.getElementById("question-title").style.visibility = "hidden";
-        document.getElementById("submit-button").style.visibility = "hidden";
+        document.getElementById("question-title").style.display = "none";
+        document.getElementById("submit-button").style.display = "none";
         let finished_template = document.getElementById("answer-container");
         finished_template.innerHTML = "You have failed this assignment!";
     },
 
     create_and_show_html_completed_assignment: function (max_points, points_achieved) {
-        document.getElementById("question-title").style.visibility = "hidden";
+        document.getElementById("question-title").style.display = "none";
+        document.getElementById("submit-button").style.display = "none";
         let score = document.getElementById("answer-container");
         score.innerHTML = "You have scored " +
             points_achieved + " / " + max_points +
