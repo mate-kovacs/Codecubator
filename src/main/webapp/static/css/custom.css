@@ -581,3 +581,9 @@ body {
 #question_holder {
     margin: 0 5%;
 }
+
+#fight-scene {
+    width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
