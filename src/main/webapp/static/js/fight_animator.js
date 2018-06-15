@@ -1,25 +1,25 @@
 class Character {
- constructor(startPosX, startPosY, skeletonJSONPath, spriteAtlasJSONPath, spriteAtlasImagePath, armatureName, defaultAnimation) {
-     this.speed = 3;
-     this.startPosX = startPosX;
-     this.startPosY = startPosY;
-     this.goalPositionX = startPosX;
-     this.skeletonPath = skeletonJSONPath;
-     this.spriteAtlasPath = spriteAtlasJSONPath;
-     this.spriteAtlasImagePath = spriteAtlasImagePath;
-     this.armatureName = armatureName;
-     this.defaultAnimation = defaultAnimation;
-     this.ready = true;
-     this.armatureDisplay = null;
- }
- moveTowardGoal(deltaTime) {
-     console.log("Moving toward my goal");
-     if (this.goalPositionX < this.armatureDisplay.x) {
-         this.armatureDisplay.x  = Math.max(this.armatureDisplay.x - (this.speed * deltaTime), this.goalPositionX);
-     } else {
-         this.armatureDisplay.x  = Math.min(this.armatureDisplay.x + (this.speed * deltaTime), this.goalPositionX);
-     }
- }
+    constructor(startPosX, startPosY, skeletonJSONPath, spriteAtlasJSONPath, spriteAtlasImagePath, armatureName, defaultAnimation) {
+        this.speed = 3;
+        this.startPosX = startPosX;
+        this.startPosY = startPosY;
+        this.goalPositionX = startPosX;
+        this.skeletonPath = skeletonJSONPath;
+        this.spriteAtlasPath = spriteAtlasJSONPath;
+        this.spriteAtlasImagePath = spriteAtlasImagePath;
+        this.armatureName = armatureName;
+        this.defaultAnimation = defaultAnimation;
+        this.ready = true;
+        this.armatureDisplay = null;
+    }
+    moveTowardGoal(deltaTime) {
+        console.log("Moving toward my goal");
+        if (this.goalPositionX < this.armatureDisplay.x) {
+            this.armatureDisplay.x  = Math.max(this.armatureDisplay.x - (this.speed * deltaTime), this.goalPositionX);
+        } else {
+            this.armatureDisplay.x  = Math.min(this.armatureDisplay.x + (this.speed * deltaTime), this.goalPositionX);
+        }
+    }
 }
 
 class FightAnimator extends PIXI.Container {
@@ -30,8 +30,9 @@ class FightAnimator extends PIXI.Container {
             UNSUCCESFUL_ATTACK: Symbol("unsucc_atk"),
             GET_REKT: Symbol("get_rekt")
         });
+
         this.succAttackStoryLine = [
-            this.movePlayerToEnemy,
+            this.movePlayerNearEnemy,
             function () {
                 this.storyPartInProgress = true;
                 this.player.armatureDisplay.animation.play("hit", 1);
@@ -42,6 +43,26 @@ class FightAnimator extends PIXI.Container {
             },
             this.movePlayerToStart
         ];
+
+        this.unsuccAttackStoryLine = [
+            this.movePlayerNearEnemy,
+            function () {
+                this.storyPartInProgress = true;
+                this.player.armatureDisplay.animation.play("hit", 1);
+            },
+            this.moveEnemyToCounterAttack,
+            function () {
+                this.storyPartInProgress = true;
+                this.enemy.armatureDisplay.animation.play("hit", 1);
+            },
+            function () {
+                this.storyPartInProgress = true;
+                this.player.armatureDisplay.animation.play("get_damaged", 1);
+            },
+            this.movePlayerToStart,
+            this.moveEnemyToStart
+        ];
+
         this.currentEvent = null;
         this.storyPartInProgress = false;
         this.storyLineCounter = 0;
@@ -138,6 +159,15 @@ class FightAnimator extends PIXI.Container {
                 this.storyLineCounter++;
             }
         }
+        if (this.enemy.ready === false) {
+            if (this.enemy.goalPositionX !== this.enemy.armatureDisplay.x) {
+                this.enemy.moveTowardGoal(deltaTime);
+            } else {
+                this.enemy.ready = true;
+                this.storyPartInProgress = false;
+                this.storyLineCounter++;
+            }
+        }
     }
 
     storyHandler(){
@@ -153,22 +183,31 @@ class FightAnimator extends PIXI.Container {
                     this.succAttackStoryLine[this.storyLineCounter].call(this);
                 }
                 break;
+            case this.fightEvents.UNSUCCESFUL_ATTACK:
+                if (this.storyLineCounter === this.unsuccAttackStoryLine.length) {
+                    this.eventCompleted();
+                } else {
+                    this.storyPartInProgress = true;
+                    this.unsuccAttackStoryLine[this.storyLineCounter].call(this);
+                }
+                break;
         }
     }
 
+    /*
     update(deltaTime) {
         this.player.updatePosition(deltaTime);
         this.player.updateAnimation();
         this.enemy.updatePosition(deltaTime);
         this.enemy.updateAnimation();
-    }
+    }*/
 
     playSuccefulAttack() {
         this.currentEvent = this.fightEvents.SUCCESFUL_ATTACK;
     }
 
     playUnsuccessfulAttack() {
-
+        this.currentEvent = this.fightEvents.UNSUCCESFUL_ATTACK;
     }
 
     playGetRekt() {
@@ -182,6 +221,13 @@ class FightAnimator extends PIXI.Container {
 
     }
 
+    movePlayerNearEnemy() {
+        this.player.armatureDisplay.animation.play("walk");
+        this.player.ready = false;
+        this.player.goalPositionX = 480;
+
+    }
+
     movePlayerToStart() {
         this.player.armatureDisplay.animation.play("walk");
         this.player.ready = false;
@@ -189,11 +235,19 @@ class FightAnimator extends PIXI.Container {
     }
 
     moveEnemyToCounterAttack() {
-
+        this.enemy.armatureDisplay.animation.play("walk");
+        this.enemy.ready = false;
+        this.enemy.goalPositionX = 600;
     }
 
     moveEnemyToPlayer(){
 
+    }
+
+    moveEnemyToStart(){
+        this.enemy.armatureDisplay.animation.play("walk");
+        this.enemy.ready = false;
+        this.enemy.goalPositionX = this.enemy.startPosX;
     }
 
     eventCompleted() {
