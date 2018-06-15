@@ -54,6 +54,8 @@ public class CodingAssignmentPage extends HttpServlet implements LoginHandler {
         setUserToMaxHealth(session);
         setAchievedPointsToZero(session);
 
+        Map<String, Object> userData = (Map) session.getAttribute("user");
+        context.setVariable("user_name", userData.get("user_name"));
         context.setVariable("assignment", assignment);
 
         engine.process("assignments/coding_assignment.html", context, response.getWriter());
