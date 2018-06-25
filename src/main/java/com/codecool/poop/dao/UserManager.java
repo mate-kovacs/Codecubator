@@ -3,6 +3,7 @@ package com.codecool.poop.dao;
 import com.codecool.poop.model.Skills;
 import com.codecool.poop.model.User;
 import com.codecool.poop.model.assignments.Assignment;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -10,6 +11,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import java.util.Map;
 
+@Component
 public class UserManager extends DataManager {
 
     public boolean registerUser(User user) {

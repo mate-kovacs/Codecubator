@@ -8,7 +8,7 @@ body {
 }
 
 .modal-content {
-    background: url("/static/img/background_image.jpg") no-repeat fixed center;
+    background: url("../img/background_image.jpg") no-repeat fixed center;
 }
 
 .lots-font-color-gold:hover {
@@ -106,7 +106,7 @@ body {
 }
 
 .lots-top_divider {
-    background-image: url("/static/img/text_divider_top.png");
+    background-image: url("../img/text_divider_top.png");
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
@@ -119,7 +119,7 @@ body {
 }
 
 .lots-bot_divider {
-    background-image: url("/static/img/text_divider_bottom.png");
+    background-image: url("../img/text_divider_bottom.png");
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
@@ -184,7 +184,7 @@ body {
     height: 50px;
     width: 50px;
     margin-top: -5px;
-    background-image: url(/static/img/coin.png);
+    background-image: url(../img/coin.png);
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
@@ -208,7 +208,7 @@ body {
     border-style: solid;
     border-width: 5px;
     border-radius: 50%;
-    background-image: url(/static/img/chest.png);
+    background-image: url("../img/chest.png");
     background-position: center;
     background-size: 60%;
     background-repeat: no-repeat;
@@ -219,7 +219,7 @@ body {
 }
 
 .lots-main-page-body {
-    background: url("/static/img/background_image.jpg") no-repeat fixed center;
+    background: url("../img/background_image.jpg") no-repeat fixed center;
 }
 
 .lots-title-image {
@@ -437,7 +437,7 @@ body {
     border-style: solid;
     border-width: 5px;
     border-radius: 50%;
-    background-image: url(/static/img/chest.png);
+    background-image: url("../img/chest.png");
     background-position: center;
     background-size: 60%;
     background-repeat: no-repeat;
