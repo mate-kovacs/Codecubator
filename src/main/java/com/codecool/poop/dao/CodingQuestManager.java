@@ -10,14 +10,14 @@ import java.util.List;
 
 public class CodingQuestManager extends DataManager{
 
-    public int addCodingAssignmentToDB(CodingAssignment assignment){
-        EntityManager entityManager = getEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
-        transaction.begin();
-        entityManager.persist(assignment);
-        transaction.commit();
-        return assignment.getId();
-    }
+//    public int addCodingAssignmentToDB(CodingAssignment assignment){
+//        EntityManager entityManager = getEntityManager();
+//        EntityTransaction transaction = entityManager.getTransaction();
+//        transaction.begin();
+//        entityManager.persist(assignment);
+//        transaction.commit();
+//        return assignment.getId();
+//    }
 
     public int addCodingQuestionToDB(CodingQuestion question){
         EntityManager entityManager = getEntityManager();
@@ -37,12 +37,12 @@ public class CodingQuestManager extends DataManager{
         return answer.getId();
     }
 
-    public List<CodingAssignment> getAllCodingAssignments(){
-        EntityManager entityManager = getEntityManager();
-        List<CodingAssignment> assignments = entityManager.createQuery("SELECT assignment " +
-                "FROM CodingAssignment as assignment").getResultList();
-        return assignments;
-    }
+//    public List<CodingAssignment> getAllCodingAssignments(){
+//        EntityManager entityManager = getEntityManager();
+//        List<CodingAssignment> assignments = entityManager.createQuery("SELECT assignment " +
+//                "FROM CodingAssignment as assignment").getResultList();
+//        return assignments;
+//    }
 
     public List<CodingQuestion> getAllCodingQuestions(){
         EntityManager entityManager = getEntityManager();
@@ -50,11 +50,11 @@ public class CodingQuestManager extends DataManager{
                 "FROM CodingQuestion as question").getResultList();
         return questions;
     }
-
-    public CodingAssignment getCodingAssignemntByID(Integer id){
-        EntityManager entityManager = getEntityManager();
-        return entityManager.find(CodingAssignment.class, id);
-    }
+//
+//    public CodingAssignment getCodingAssignemntByID(Integer id){
+//        EntityManager entityManager = getEntityManager();
+//        return entityManager.find(CodingAssignment.class, id);
+//    }
 
     public CodingQuestion getCodingQuestionByID(Integer id){
         EntityManager entityManager = getEntityManager();
