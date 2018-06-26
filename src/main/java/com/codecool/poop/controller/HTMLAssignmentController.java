@@ -38,7 +38,7 @@ public class HTMLAssignmentController {
         model.addAttribute("user_name", userData.get("user_name"));
         model.addAttribute("assignment", assignment);
         user.setHealthToMax();
-//        setAchievedPointsToZero(session);
+        session.setAttribute("points", 0);
         return "assignments/coding_assignment";
     }
 
@@ -54,8 +54,8 @@ public class HTMLAssignmentController {
 
         model.addAttribute("user_name", userData.get("user_name"));
         model.addAttribute("assignment", assignment);
-//        setUserToMaxHealth(session);
-//        setAchievedPointsToZero(session);
+        user.setHealthToMax();
+        session.setAttribute("points", 0);
         return "assignments/quiz_assignment";
     }
 }
