@@ -33,7 +33,7 @@ quizAssignment = {
     submit_answer: function (questionID, assignmentID, answers) {
         $.ajax({
             type: "POST",
-            url: "/quiz-assignment",
+            url: "/quiz-answer",
             data: {
                 "question_id": questionID,
                 "assignment_id": assignmentID,
