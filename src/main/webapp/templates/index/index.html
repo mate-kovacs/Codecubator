@@ -5,12 +5,11 @@
     <script src="/static/js/index.js" defer></script>
 </head>
 <body class="lots-main-page-body">
+<div th:include="fragments/navbar.html"></div>
 <div class="wrapper">
     <div id="welcome_text">
         <h1 id="welcome_h1" th:text="'Hello ' + ${user_name} + ' !'">Hello User</h1>
     </div>
 </div>
-    <img id="tbc" class="tbc_arrow" src="/static/img/tbc_arrow.png">
-    <audio id="music" src="/static/misc/tobecontinued.mp3"></audio>
 </body>
 </html>

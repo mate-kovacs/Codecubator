@@ -1,6 +1,7 @@
 package com.codecool.poop.model;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,6 +20,7 @@ public class Achievement {
 
     private String description;
     private int codeCoinReward;
+    private LocalDateTime earnedDate;
 
     protected Achievement() {
     }
@@ -26,12 +28,14 @@ public class Achievement {
     public Achievement(String name, String description) {
         this.name = name;
         this.description = description;
+        this.earnedDate = LocalDateTime.now();
     }
 
     public Achievement(String name, String description, int codeCoinReward) {
         this.name = name;
         this.description = description;
         this.codeCoinReward = codeCoinReward;
+        this.earnedDate = LocalDateTime.now();
     }
 
     public long getId() {
@@ -76,5 +80,13 @@ public class Achievement {
 
     public void addUser(User user) {
         users.add(user);
+    }
+
+    public LocalDateTime getEarnedDate() {
+        return earnedDate;
+    }
+
+    public void setEarnedDate(LocalDateTime earnedDate) {
+        this.earnedDate = earnedDate;
     }
 }

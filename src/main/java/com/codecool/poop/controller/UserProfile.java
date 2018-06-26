@@ -1,6 +1,9 @@
 package com.codecool.poop.controller;
 
 import com.codecool.poop.config.TemplateEngineUtil;
+import com.codecool.poop.dao.UserManager;
+import com.codecool.poop.model.Skills;
+import com.codecool.poop.model.User;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -11,9 +14,11 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Map;
 
-public class Index extends HttpServlet implements LoginHandler {
+public class UserProfile extends HttpServlet implements LoginHandler{
+    private UserManager userManager;
 
-    public Index() {
+    public UserProfile(UserManager userManager) {
+        this.userManager = userManager;
     }
 
     @Override
@@ -27,7 +32,10 @@ public class Index extends HttpServlet implements LoginHandler {
             return;
         }
         Map<String, Object> userData = (Map) session.getAttribute("user");
+        User user = userManager.getUserByName((String) userData.get("user_name"));
+        Map<Skills, Integer> skills = user.getExperiences();
         context.setVariable("user_name", userData.get("user_name"));
-        engine.process("index/index.html", context, response.getWriter());
+        context.setVariable("skills", skills);
+        engine.process("user_profile/user_profile.html", context, response.getWriter());
     }
 }

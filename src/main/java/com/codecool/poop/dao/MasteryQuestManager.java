@@ -4,17 +4,9 @@ import com.codecool.poop.model.assignments.mastery.MasteryAssignment;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import java.util.List;
 
 public class MasteryQuestManager extends DataManager{
-
-    private static MasteryQuestManager managerInstance = new MasteryQuestManager();
-
-    public static MasteryQuestManager getInstance() {
-        return managerInstance;
-    }
-
-    private MasteryQuestManager(){
-    }
 
     public int addMasteryAssignmentToDB(MasteryAssignment assignment){
         EntityManager entityManager = getEntityManager();
@@ -29,4 +21,11 @@ public class MasteryQuestManager extends DataManager{
         EntityManager entityManager = getEntityManager();
         return entityManager.find(MasteryAssignment.class, id);
     }
+
+    public List getAllAssignments(){
+        EntityManager entityManager = getEntityManager();
+        return entityManager.createQuery("SELECT assignment " +
+                "FROM MasteryAssignment as assignment").getResultList();
+    }
+
 }
