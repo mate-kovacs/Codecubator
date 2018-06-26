@@ -22,7 +22,7 @@ public class AssignmentUtility {
     @Autowired
     private UserManager userManager;
 
-    public Map<String, Object> getAssignmentEvaluation(Assignment assignment, HttpSession session){
+    public Map<String, Object> getAssignmentEvaluation(Assignment assignment, HttpSession session) {
 
         Map<String, Object> userData = (Map) session.getAttribute("user");
         User user = userManager.getUserByName(userData.get("user_name").toString());
@@ -84,6 +84,14 @@ public class AssignmentUtility {
         return nextQuestionData;
     }
 
+    public Map<String, Object> getAnswerEvaluation(boolean correctAnswer, boolean death) {
+        Map<String, Object> evaluationData = new HashMap<>();
+
+        evaluationData.put("death", death);
+        evaluationData.put("correct_answer", correctAnswer);
+        return evaluationData;
+    }
+
     public boolean isFirstQuestion(int questionID) {
         return questionID == 0;
     }
@@ -94,5 +102,24 @@ public class AssignmentUtility {
 
     public boolean isLastQuizQuestion(int questionID, List<QuizQuestion> questionList) {
         return questionList.get(questionList.size() - 1).getId() == questionID;
+    }
+
+    public boolean isUserDead(User user, boolean correctAnswer) {
+        boolean death = false;
+        if (!correctAnswer) {
+            user.loseOneHealth();
+            if (user.getHealth() == 0) {
+                death = true;
+            }
+        }
+        return death;
+    }
+
+    public void savePointsToSession(HttpSession session, int numberOfCorrectAnswers) {
+        Integer currentPoints = (Integer) session.getAttribute("points");
+        if (currentPoints == null) {
+            currentPoints = 0;
+        }
+        session.setAttribute("points", currentPoints + numberOfCorrectAnswers);
     }
 }
