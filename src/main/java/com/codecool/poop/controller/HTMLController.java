@@ -37,4 +37,10 @@ public class HTMLController implements LoginHandler{
         model.addAttribute("user_name", sessionService.getCurrentUser().getUsername());
         return "index";
     }
+
+    @GetMapping(value = "/logout")
+    public String logout() {
+        sessionService.setCurrentUser(null);
+        return "redirect:/login";
+    }
 }
