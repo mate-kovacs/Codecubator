@@ -1,7 +1,7 @@
-package com.codecool.poop.service.CodingServices;
+package com.codecool.poop.service.coding_services;
 
 import com.codecool.poop.model.assignments.coding.CodingAnswer;
-import com.codecool.poop.repository.CodingRepositories.CodingAnswerRepository;
+import com.codecool.poop.repository.coding_repositories.CodingAnswerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;

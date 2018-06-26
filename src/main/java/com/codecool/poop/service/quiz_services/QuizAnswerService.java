@@ -1,7 +1,7 @@
 package com.codecool.poop.service.quiz_services;
 
 import com.codecool.poop.model.assignments.quiz.QuizAnswer;
-import com.codecool.poop.repository.QuizRepositories.QuizAnswerRepository;
+import com.codecool.poop.repository.quiz_repositories.QuizAnswerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;

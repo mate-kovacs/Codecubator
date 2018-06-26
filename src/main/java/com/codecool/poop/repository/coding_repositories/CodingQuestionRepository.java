@@ -1,4 +1,4 @@
-package com.codecool.poop.repository.CodingRepositories;
+package com.codecool.poop.repository.coding_repositories;
 
 import com.codecool.poop.model.assignments.coding.CodingQuestion;
 import org.springframework.data.jpa.repository.JpaRepository;
