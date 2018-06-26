@@ -1,11 +1,11 @@
 <!doctype html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="common_head.html :: common_head(~{::title}, ~{::script})">
+<head th:replace="fragments/common_head.html :: common_head(~{::title}, ~{::script})">
     <title>CodeCubator</title>
     <script src="/static/js/index.js" defer></script>
 </head>
 <body class="lots-main-page-body">
-<div th:include="fragments/navbar.html"></div>
+<div th:include="fragments/navbar.html">
 <div class="wrapper">
     <div id="welcome_text">
         <h1 id="welcome_h1" th:text="'Hello ' + ${user_name} + ' !'">Hello User</h1>

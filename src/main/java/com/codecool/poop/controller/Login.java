@@ -20,20 +20,20 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-@Controller
-public class Login {
-
-    @Autowired
-    private UserManager userManager;
+//@Controller
+//public class Login {
+//
+//    @Autowired
+//    private UserManager userManager;
 
 //    public Login(UserManager userManager) {
 //        this.userManager = userManager;
 //    }
 
-    @GetMapping(value = "/")
-    public String loginScreen() {
-        return "login";
-    }
+//    @GetMapping(value = "/")
+//    public String loginScreen() {
+//        return "login";
+//    }
 
 //    @Override
 //    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -67,6 +67,6 @@ public class Login {
 //            response.getWriter().print("Not matching");
 //        }
 //    }
-}
+//}
 
 
