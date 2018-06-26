@@ -11,15 +11,15 @@ public class CodingAnswerService {
     @Autowired
     private CodingAnswerRepository codingAnswerRepository;
 
-    public void addQuizAssignment(CodingAnswer assignment) {
+    public void addCodingAnswer(CodingAnswer assignment) {
         codingAnswerRepository.save(assignment);
     }
 
-    public List<CodingAnswer> getAllCodingAssignment() {
+    public List<CodingAnswer> getAllCodingAnswer() {
         return codingAnswerRepository.findAll();
     }
 
-    public CodingAnswer getCodingAssignmentById(Integer id) {
+    public CodingAnswer getCodingAnswerById(Integer id) {
         return codingAnswerRepository.getOne(id);
     }
 }

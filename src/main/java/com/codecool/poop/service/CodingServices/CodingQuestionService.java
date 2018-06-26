@@ -13,15 +13,15 @@ public class CodingQuestionService {
     @Autowired
     private CodingQuestionRepository codingQuestionRepository;
 
-    public void addQuizAssignment(CodingQuestion assignment) {
+    public void addCodingQuestion(CodingQuestion assignment) {
         codingQuestionRepository.save(assignment);
     }
 
-    public List<CodingQuestion> getAllCodingAssignment() {
+    public List<CodingQuestion> getAllCodingQuestion() {
         return codingQuestionRepository.findAll();
     }
 
-    public CodingQuestion getCodingAssignmentById(Integer id) {
+    public CodingQuestion getCodingQuestionById(Integer id) {
         return codingQuestionRepository.getOne(id);
     }
 }
