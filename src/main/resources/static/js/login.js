@@ -14,7 +14,7 @@ function loginListener() {
                     message.style.display = "inline-block";
                     message.innerHTML = "Wrong name or password!";
                 } else {
-                    document.location.href = "/index";
+                    document.location.href = "/";
                 }
             },
         });

@@ -1,10 +1,16 @@
-//package com.codecool.poop.db_initializer;
-//
+package com.codecool.poop.db_initializer;
+
+import com.codecool.poop.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
+
 //import com.codecool.poop.dao.CodingQuestManager;
 //import com.codecool.poop.dao.MasteryQuestManager;
 //import com.codecool.poop.dao.UserManager;
 //import com.codecool.poop.model.Skills;
-//import com.codecool.poop.model.User;
+import com.codecool.poop.model.User;
 //import com.codecool.poop.model.assignments.coding.CodingAnswer;
 //import com.codecool.poop.model.assignments.coding.CodingAssignment;
 //import com.codecool.poop.model.assignments.coding.CodingQuestion;
@@ -12,13 +18,20 @@
 //import com.codecool.poop.model.assignments.quiz.QuizAnswer;
 //import com.codecool.poop.model.assignments.quiz.QuizAssignment;
 //import com.codecool.poop.model.assignments.quiz.QuizQuestion;
-//import org.mindrot.jbcrypt.BCrypt;
+import org.mindrot.jbcrypt.BCrypt;
 //
 //import java.util.*;
 //
-//public class DummyDBInitializer {
+@Component
+public class DummyDBInitializer {
 //
-//    private UserManager userManager;
+    @Autowired
+    private UserService userService;
+
+    @PostConstruct
+    public void init() {
+        createUsers();
+    }
 //    private QuizQuestManager quizManager;
 //    private CodingQuestManager codingManager;
 //    private MasteryQuestManager masteryManager;
@@ -41,30 +54,30 @@
 //        createMasteryAssignments();
 //    }
 //
-//    private void createUsers() {
-//
-//        String name1 = "Aladár";
-//        String email1 = "aladar@poop.com";
-//        String password1 = "aaaaaaaa";
-//        String hashPW1 = BCrypt.hashpw(password1, BCrypt.gensalt(12));
-//        User user1 = new User(name1, hashPW1, email1);
-//
-//        String name2 = "Béla";
-//        String email2 = "bela@poop.com";
-//        String password2 = "bbbbbbbb";
-//        String hashPW2 = BCrypt.hashpw(password2, BCrypt.gensalt(12));
-//        User user2 = new User(name2, hashPW2, email2);
-//
-//        String name3 = "Cili";
-//        String email3 = "cili@poop.com";
-//        String password3 = "cccccccc";
-//        String hashPW3 = BCrypt.hashpw(password3, BCrypt.gensalt(12));
-//        User user3 = new User(name3, hashPW3, email3);
-//
-//        userManager.registerUser(user1);
-//        userManager.registerUser(user2);
-//        userManager.registerUser(user3);
-//    }
+    private void createUsers() {
+
+        String name1 = "Aladár";
+        String email1 = "aladar@poop.com";
+        String password1 = "aaaaaaaa";
+        String hashPW1 = BCrypt.hashpw(password1, BCrypt.gensalt(12));
+        User user1 = new User(name1, hashPW1, email1);
+
+        String name2 = "Béla";
+        String email2 = "bela@poop.com";
+        String password2 = "bbbbbbbb";
+        String hashPW2 = BCrypt.hashpw(password2, BCrypt.gensalt(12));
+        User user2 = new User(name2, hashPW2, email2);
+
+        String name3 = "Cili";
+        String email3 = "cili@poop.com";
+        String password3 = "cccccccc";
+        String hashPW3 = BCrypt.hashpw(password3, BCrypt.gensalt(12));
+        User user3 = new User(name3, hashPW3, email3);
+
+        userService.saveUser(user1);
+        userService.saveUser(user2);
+        userService.saveUser(user3);
+    }
 //
 //    private void createCodingAssignments() {
 //
@@ -390,4 +403,4 @@
 //
 //        masteryManager.addMasteryAssignmentToDB(assignment);
 //    }
-//}
+}
