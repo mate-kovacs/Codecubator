@@ -1,7 +1,7 @@
-package com.codecool.poop.service;
+package com.codecool.poop.service.CodingServices;
 
 import com.codecool.poop.model.assignments.coding.CodingAssignment;
-import com.codecool.poop.repository.CodingAssignmentRepository;
+import com.codecool.poop.repository.CodingRepositories.CodingAssignmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
