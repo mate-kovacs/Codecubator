@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface MasteryQuestRepository extends JpaRepository<MasteryAssignment, Long> {
 
-
+    public MasteryAssignment findById(int id);
 }
