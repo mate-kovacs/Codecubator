@@ -3,8 +3,10 @@ package com.codecool.poop.controller;
 import com.codecool.poop.dao.CodingQuestManager;
 import com.codecool.poop.dao.QuizQuestManager;
 import com.codecool.poop.dao.UserManager;
+import com.codecool.poop.model.User;
 import com.codecool.poop.model.assignments.Assignment;
 import com.codecool.poop.model.assignments.coding.CodingQuestion;
+import com.codecool.poop.model.assignments.quiz.QuizAnswer;
 import com.codecool.poop.model.assignments.quiz.QuizQuestion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,10 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 public class APIAssignmentController {
@@ -28,6 +27,8 @@ public class APIAssignmentController {
     private CodingQuestManager codingQuestManager;
     @Autowired
     private QuizQuestManager quizQuestManager;
+    @Autowired
+    private UserManager userManager;
     @Autowired
     private AssignmentUtility utility;
 
@@ -63,6 +64,58 @@ public class APIAssignmentController {
             Map<String, Object> nextQuestionData = utility.getNextQuizQuestionData(questionID, questionList);
             return new ResponseEntity(nextQuestionData, HttpStatus.OK);
         }
+    }
+
+    @RequestMapping(value = "/coding-answer", method = RequestMethod.POST)
+    public ResponseEntity<String> evaluateCodingAnswer(HttpServletRequest request,
+                                              @RequestParam("answers[]") String answers[],
+                                              @RequestParam("question_id") Integer questionID) {
+
+        List<String> answerTexts = new ArrayList<>(Arrays.asList(answers));
+        HttpSession session = request.getSession();
+        Map<String, Object> userData = (Map) session.getAttribute("user");
+        User user = userManager.getUserByName(userData.get("user_name").toString());
+
+
+        CodingQuestion question = codingQuestManager.getCodingQuestionByID(questionID);
+        int numberOfCorrectAnswers = question.checkSolution(answerTexts);
+        boolean correctAnswer = numberOfCorrectAnswers == question.getMaxPoints();
+        boolean death = utility.isUserDead(user, correctAnswer);
+
+        utility.savePointsToSession(session, numberOfCorrectAnswers);
+
+        Map<String, Object> answerEvaluation = utility.getAnswerEvaluation(correctAnswer, death);
+        return new ResponseEntity(answerEvaluation, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/quiz-answer", method = RequestMethod.POST)
+    public ResponseEntity<String> evaluateQuizAnswer(HttpServletRequest request,
+                                                    @RequestParam("answers[]") String answers[],
+                                                    @RequestParam("question_id") Integer questionID) {
+
+        List<String> answerTexts = new ArrayList<>(Arrays.asList(answers));
+        HttpSession session = request.getSession();
+        Map<String, Object> userData = (Map) session.getAttribute("user");
+        User user = userManager.getUserByName(userData.get("user_name").toString());
+
+
+        QuizQuestion question = quizQuestManager.getQuizQuestionByID(questionID);
+        List<QuizAnswer> correctAnswerList = question.getQuizAnswers();
+        int numberOfCorrectAnswers = 0;
+        for (int i = 0; i < correctAnswerList.size(); i++) {
+            if (Boolean.parseBoolean(answers[i]) == correctAnswerList.get(i).getAnswerValidity()) {
+                if (correctAnswerList.get(i).getAnswerValidity()) {
+                    numberOfCorrectAnswers++;
+                }
+            }
+        }
+        boolean correctAnswer = numberOfCorrectAnswers == question.getMaxPoints();
+        boolean death = utility.isUserDead(user, correctAnswer);
+
+        utility.savePointsToSession(session, numberOfCorrectAnswers);
+
+        Map<String, Object> answerEvaluation = utility.getAnswerEvaluation(correctAnswer, death);
+        return new ResponseEntity(answerEvaluation, HttpStatus.OK);
     }
 
 }
