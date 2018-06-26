@@ -11,6 +11,14 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    
+    public boolean saveUser(User entity) {
+        try {
+            userRepository.save(entity);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
 
 }
