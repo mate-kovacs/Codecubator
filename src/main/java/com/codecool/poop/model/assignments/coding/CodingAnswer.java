@@ -36,11 +36,6 @@ public class CodingAnswer {
         setCodingQuestionReference();
     }
 
-    public void addQuestion(CodingQuestion question) {
-        this.question = question;
-        question.addAnswer(this);
-    }
-
     private void setCodingQuestionReference(){
         question.addAnswer(this);
     }

@@ -27,11 +27,6 @@ public class CodingAssignment extends Assignment{
     public CodingAssignment(){
     }
 
-    public void addQuestion(CodingQuestion question) {
-        this.questions.add(question);
-        question.addAssignment(this);
-    }
-
     private void setCodingQuestionReferences(){
         for (CodingQuestion question: questions) {
             question.addAssignment(this);
