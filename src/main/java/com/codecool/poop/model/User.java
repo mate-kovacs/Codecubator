@@ -27,7 +27,7 @@ public class User {
     private LocalDateTime registrationDate;
 
     @CollectionTable(name = "users_skills")
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @MapKeyEnumerated(EnumType.STRING)
     private Map<Skills,Integer> experiences = new HashMap<>();
 
