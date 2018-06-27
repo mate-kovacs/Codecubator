@@ -1,61 +1,48 @@
 package com.codecool.poop.controller;
 
-import com.codecool.poop.dao.CodingQuestManager;
-import com.codecool.poop.dao.QuizQuestManager;
-import com.codecool.poop.dao.UserManager;
 import com.codecool.poop.model.User;
+import com.codecool.poop.model.assignments.Assignment;
 import com.codecool.poop.model.assignments.coding.CodingAssignment;
 import com.codecool.poop.model.assignments.quiz.QuizAssignment;
+import com.codecool.poop.service.SessionService;
+import com.codecool.poop.service.coding_services.CodingAssignmentService;
+import com.codecool.poop.service.quiz_services.QuizAssignmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.util.Map;
-
 @Controller
 public class HTMLAssignmentController {
 
     @Autowired
-    private CodingQuestManager codingQuestManager;
+    private CodingAssignmentService codingAssignmentService;
     @Autowired
-    private QuizQuestManager quizQuestManager;
+    private QuizAssignmentService quizAssignmentService;
     @Autowired
-    private UserManager userManager;
+    private SessionService sessionService;
 
     @RequestMapping(value = "/coding-assignment", method = RequestMethod.GET)
     public String renderCodingAssignment(Model model,
-                                         HttpServletRequest request,
                                          @RequestParam("assignment") int id) {
-        CodingAssignment assignment = codingQuestManager.getCodingAssignemntByID(id);
-
-        HttpSession session = request.getSession();
-        Map<String, Object> userData = (Map) session.getAttribute("user");
-        User user = userManager.getUserByName(userData.get("user_name").toString());
-
-        model.addAttribute("user_name", userData.get("user_name"));
-        model.addAttribute("assignment", assignment);
-        user.setHealthToMax();
-        session.setAttribute("points", 0);
+        CodingAssignment assignment = codingAssignmentService.getCodingAssignmentById(id);
+        baseSettingsForAssignment(model, assignment);
         return "assignments/coding_assignment";
     }
 
     @RequestMapping(value = "/quiz-assignment", method = RequestMethod.GET)
     public String renderQuizAssignment(Model model,
-                                         HttpServletRequest request,
                                          @RequestParam("assignment") int id) {
-        QuizAssignment assignment = quizQuestManager.getQuizAssignemntByID(id);
+        QuizAssignment assignment = quizAssignmentService.getQuizAssignmentById(id);
+        baseSettingsForAssignment(model, assignment);
+        return "assignments/quiz_assignment";
+    }
 
-        HttpSession session = request.getSession();
-        Map<String, Object> userData = (Map) session.getAttribute("user");
-        User user = userManager.getUserByName(userData.get("user_name").toString());
-
-        model.addAttribute("user_name", userData.get("user_name"));
+    private void baseSettingsForAssignment(Model model, Assignment assignment){
+        User user = sessionService.getCurrentUser();
+        model.addAttribute("user_name", user.getUsername());
         model.addAttribute("assignment", assignment);
         user.setHealthToMax();
-        session.setAttribute("points", 0);
-        return "assignments/quiz_assignment";
+        sessionService.setCurrentPoints(0);
     }
 }
