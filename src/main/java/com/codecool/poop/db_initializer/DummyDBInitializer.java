@@ -210,7 +210,7 @@ public class DummyDBInitializer {
     private void createQuizAssignment() {
         QuizQuestion question1 = new QuizQuestion("What are the principles of Object Oriented Programming?");
 //        quizQuestionService.addQuizQuestion(question1);
-        QuizAnswer answer11 = new QuizAnswer("Pemutation", false, question1);
+        QuizAnswer answer11 = new QuizAnswer("Permutation", false, question1);
 //        quizAnswerService.addQuizAnswer(answer11);
         QuizAnswer answer12 = new QuizAnswer("Polymophism", true, question1);
 //        quizAnswerService.addQuizAnswer(answer12);
@@ -284,7 +284,7 @@ public class DummyDBInitializer {
         QuizAnswer answer49 = new QuizAnswer("FileNotFoundException", true, question4);
 //        quizAnswerService.addQuizAnswer(answer49);
 
-        QuizQuestion question5 = new QuizQuestion("What does the first argument of invoke(Pbject obj, Object args...) represent inside the ivoked method?");
+        QuizQuestion question5 = new QuizQuestion("What does the first argument of invoke(Object obj, Object args...) represent inside the ivoked method?");
 //        quizQuestionService.addQuizQuestion(question5);
         QuizAnswer answer51 = new QuizAnswer("null", false, question5);
 //        quizAnswerService.addQuizAnswer(answer51);
