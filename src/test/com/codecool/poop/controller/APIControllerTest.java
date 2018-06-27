@@ -48,16 +48,23 @@ public class APIControllerTest {
     }
 
     @Test
-    public void login_post_request_with_valid_user_returns_success() throws Exception {
-
+    public void login_with_valid_user_returns_success() throws Exception {
         String password = BCrypt.hashpw("cccccccc", BCrypt.gensalt(12));
         User cili = new User("cili", password, "cili@cili.hu");
         when(userService.getUserByName("cili")).thenReturn(cili);
-
         mockMvc.perform(post("/login")
                 .param("name", "cili")
                 .param("password", "cccccccc"))
                 .andExpect(content().string("success"));
+    }
+
+    @Test
+    public void login_with_wrong_username_returns_not_matching() throws Exception {
+        when(userService.getUserByName("cili")).thenThrow(new NullPointerException());
+        mockMvc.perform(post("/login")
+                .param("name", "cili")
+                .param("password", "cccccccc"))
+                .andExpect(content().string("Not matching"));
     }
 
 }
