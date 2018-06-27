@@ -5,6 +5,7 @@ import com.codecool.poop.model.assignments.Assignment;
 import com.codecool.poop.model.assignments.coding.CodingQuestion;
 import com.codecool.poop.model.assignments.quiz.QuizAnswer;
 import com.codecool.poop.model.assignments.quiz.QuizQuestion;
+import com.codecool.poop.service.AssignmentUtilityService;
 import com.codecool.poop.service.SessionService;
 import com.codecool.poop.service.coding_services.CodingAssignmentService;
 import com.codecool.poop.service.coding_services.CodingQuestionService;
@@ -32,7 +33,7 @@ public class APIAssignmentController {
     @Autowired
     private QuizQuestionService quizQuestionService;
     @Autowired
-    private AssignmentUtility utility;
+    private AssignmentUtilityService utility;
     @Autowired
     private SessionService sessionService;
 

@@ -1,4 +1,4 @@
-package com.codecool.poop.controller;
+package com.codecool.poop.service;
 
 import com.codecool.poop.model.User;
 import com.codecool.poop.model.assignments.Assignment;
@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class AssignmentUtility {
+public class AssignmentUtilityService {
 
     @Autowired
     private UserService userService;
