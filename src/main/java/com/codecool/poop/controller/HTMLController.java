@@ -61,7 +61,44 @@ public class HTMLController {
     }
 
     @GetMapping(value = "/white-room")
-    public String whiteRoom() {
+    public String whiteRoom(Model model) {
+        if (sessionService.getCurrentUser() == null) {
+            return "redirect:/login";
+        }
+        User user = sessionService.getCurrentUser();
+        model.addAttribute("user_name", user.getUsername());
         return "rooms/white_room";
     }
+
+    @GetMapping(value = "/green-room")
+    public String greenRoom(Model model) {
+        if (sessionService.getCurrentUser() == null) {
+            return "redirect:/login";
+        }
+        User user = sessionService.getCurrentUser();
+        model.addAttribute("user_name", user.getUsername());
+        return "rooms/green_room";
+    }
+
+    @GetMapping(value = "/blue-room")
+    public String blueRoom(Model model) {
+        if (sessionService.getCurrentUser() == null) {
+            return "redirect:/login";
+        }
+        User user = sessionService.getCurrentUser();
+        model.addAttribute("user_name", user.getUsername());
+        return "rooms/blue_room";
+    }
+
+    @GetMapping(value = "/red-room")
+    public String redRoom(Model model) {
+        if (sessionService.getCurrentUser() == null) {
+            return "redirect:/login";
+        }
+        User user = sessionService.getCurrentUser();
+        model.addAttribute("user_name", user.getUsername());
+        return "rooms/red_room";
+    }
+
+
 }
