@@ -1,5 +1,6 @@
 package com.codecool.poop.model.assignments;
 
+import com.codecool.poop.model.Rooms;
 import com.codecool.poop.model.Skills;
 
 import javax.persistence.*;
@@ -25,9 +26,12 @@ public abstract class Assignment {
     private Integer codeCoinReward;
     private LocalDateTime creationDate;
 
+    @Enumerated(EnumType.STRING)
+    private Rooms room;
+
     protected Assignment() {}
 
-    public Assignment(String name, String description, Map<Skills, Integer> expRewards, Integer codeCoinReward) {
+    public Assignment(String name, String description, Map<Skills, Integer> expRewards, Integer codeCoinReward, Rooms room) {
         if (!isValidexpRewards(expRewards)) {
             throw new IllegalArgumentException("Invalid reward map");
         }
@@ -36,6 +40,7 @@ public abstract class Assignment {
         this.expRewards = expRewards;
         this.codeCoinReward = codeCoinReward;
         this.creationDate = LocalDateTime.now();
+        this.room = room;
     }
 
     public String getName() {
@@ -91,6 +96,14 @@ public abstract class Assignment {
             if (value < 0) return false;
         }
         return true;
+    }
+
+    public Rooms getRoom() {
+        return room;
+    }
+
+    public void setRoom(Rooms room) {
+        this.room = room;
     }
 
     @Override

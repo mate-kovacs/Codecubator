@@ -1,5 +1,6 @@
 package com.codecool.poop.model.assignments.quiz;
 
+import com.codecool.poop.model.Rooms;
 import com.codecool.poop.model.Skills;
 import com.codecool.poop.model.assignments.Assignment;
 
@@ -16,8 +17,8 @@ public class QuizAssignment extends Assignment {
 
     protected QuizAssignment() {}
 
-    public QuizAssignment(String name, String description, Map<Skills, Integer> expRewards, Integer codeCoinReward, List<QuizQuestion> questions) {
-        super(name, description, expRewards, codeCoinReward);
+    public QuizAssignment(String name, String description, Map<Skills, Integer> expRewards, Integer codeCoinReward, List<QuizQuestion> questions, Rooms room) {
+        super(name, description, expRewards, codeCoinReward, room);
         this.questions = questions;
         setQuestionReferences();
     }

@@ -1,5 +1,6 @@
 package com.codecool.poop.model.assignments.mastery;
 
+import com.codecool.poop.model.Rooms;
 import com.codecool.poop.model.Skills;
 import com.codecool.poop.model.assignments.Assignment;
 import com.codecool.poop.model.assignments.coding.CodingQuestion;
@@ -25,8 +26,9 @@ public class MasteryAssignment extends Assignment{
                              Map<Skills, Integer> expReward,
                              Integer codeCoinReward,
                              List<QuizQuestion> quizQuestions,
-                             Set<CodingQuestion> codingQuestions){
-        super(name, desciption, expReward, codeCoinReward);
+                             Set<CodingQuestion> codingQuestions,
+                             Rooms room){
+        super(name, desciption, expReward, codeCoinReward, room);
         this.codingQuestions = codingQuestions;
         this.quizQuestions = quizQuestions;
     }

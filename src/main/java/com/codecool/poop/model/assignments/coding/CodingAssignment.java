@@ -1,5 +1,6 @@
 package com.codecool.poop.model.assignments.coding;
 
+import com.codecool.poop.model.Rooms;
 import com.codecool.poop.model.assignments.Assignment;
 import com.codecool.poop.model.Skills;
 
@@ -18,8 +19,9 @@ public class CodingAssignment extends Assignment{
                             String description,
                             Map<Skills, Integer> expRewards,
                             Integer codeCoinReward,
-                            List<CodingQuestion> questions) {
-        super(name, description, expRewards, codeCoinReward);
+                            List<CodingQuestion> questions,
+                            Rooms room) {
+        super(name, description, expRewards, codeCoinReward, room);
         this.questions = questions;
         setCodingQuestionReferences();
     }
