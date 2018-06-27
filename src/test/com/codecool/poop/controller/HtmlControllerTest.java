@@ -18,7 +18,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
@@ -77,14 +76,6 @@ public class HtmlControllerTest {
     public void logout_url_redirects_to_login_page() throws Exception {
         mockMvc.perform(get("/logout"))
                 .andExpect(view().name("redirect:/login"));
-    }
-
-    @Test
-    public void logout_sets_session_to_null() throws Exception {
-        sessionService.setCurrentUser(new User("Cili", "cili", "cili@cili.hu"));
-        mockMvc.perform(get("/logout"));
-        assertTrue(sessionService.getCurrentUser() == null);
-
     }
 
     @Test
