@@ -21,6 +21,7 @@ public class CodingQuestion {
     private String question;
 
     @OneToMany(mappedBy = "question")
+    @ElementCollection
     private List<CodingAnswer> answers = new ArrayList<>();
 
     @ManyToMany
@@ -36,9 +37,9 @@ public class CodingQuestion {
 
     public Integer checkSolution(List<String> userAnswers){
         int numberOfCorrectAnswers = 0;
-        for (String userAnswer: userAnswers) {
-            CodingAnswer correctAnswer = answers.get(userAnswers.indexOf(userAnswer));
-            if (correctAnswer.isMatching(CodingAnswer.formatAnswer(userAnswer))){
+        for (int i = 0; i < answers.size(); i ++) {
+            CodingAnswer correctAnswer = answers.get(i);
+            if (correctAnswer.isMatching(CodingAnswer.formatAnswer(userAnswers.get(i)))){
                 numberOfCorrectAnswers ++;
             }
         }

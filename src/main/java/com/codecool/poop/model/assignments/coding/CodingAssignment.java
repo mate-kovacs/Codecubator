@@ -12,6 +12,7 @@ public class CodingAssignment extends Assignment{
 
 
     @ManyToMany(mappedBy = "assignments")
+    @ElementCollection
     private List<CodingQuestion> questions = new ArrayList<>();
 
     public CodingAssignment(String name,
