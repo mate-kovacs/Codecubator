@@ -1,16 +1,16 @@
 package com.codecool.poop.controller;
 
-import com.codecool.poop.dao.UserManager;
 import com.codecool.poop.model.User;
 import com.codecool.poop.model.assignments.Assignment;
 import com.codecool.poop.model.assignments.coding.CodingAnswer;
 import com.codecool.poop.model.assignments.coding.CodingQuestion;
 import com.codecool.poop.model.assignments.quiz.QuizAnswer;
 import com.codecool.poop.model.assignments.quiz.QuizQuestion;
+import com.codecool.poop.service.SessionService;
+import com.codecool.poop.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,16 +20,17 @@ import java.util.Map;
 public class AssignmentUtility {
 
     @Autowired
-    private UserManager userManager;
+    private UserService userService;
+    @Autowired
+    private SessionService sessionService;
 
-    public Map<String, Object> getAssignmentEvaluation(Assignment assignment, HttpSession session) {
+    public Map<String, Object> getAssignmentEvaluation(Assignment assignment) {
 
-        Map<String, Object> userData = (Map) session.getAttribute("user");
-        User user = userManager.getUserByName(userData.get("user_name").toString());
-        userManager.addRewardToUser(user, assignment);
+        User user = sessionService.getCurrentUser();
+        userService.addRewardToUser(user, assignment);
 
         Map<String, Object> assignmentEvaluation = new HashMap<>();
-        assignmentEvaluation.put("points_achieved", session.getAttribute("points").toString());
+        assignmentEvaluation.put("points_achieved", sessionService.getCurrentPoints());
         assignmentEvaluation.put("max_points", ((Integer) assignment.getMaxPoints()).toString());
         return assignmentEvaluation;
     }
@@ -115,11 +116,8 @@ public class AssignmentUtility {
         return death;
     }
 
-    public void savePointsToSession(HttpSession session, int numberOfCorrectAnswers) {
-        Integer currentPoints = (Integer) session.getAttribute("points");
-        if (currentPoints == null) {
-            currentPoints = 0;
-        }
-        session.setAttribute("points", currentPoints + numberOfCorrectAnswers);
+    public void savePointsToSession(int numberOfCorrectAnswers) {
+        int currentPoints = sessionService.getCurrentPoints();
+        sessionService.setCurrentPoints(currentPoints + numberOfCorrectAnswers);
     }
 }
