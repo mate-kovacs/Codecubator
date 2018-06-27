@@ -36,9 +36,6 @@ public class User {
     @Transient
     private int health;
 
-    @Enumerated(EnumType.STRING)
-    private Rooms actualRoom;
-
     public User() {
     }
 
@@ -47,7 +44,6 @@ public class User {
         this.password = password;
         this.email = email;
         registrationDate = LocalDateTime.now();
-        actualRoom = Rooms.WHITE_ROOM;
         this.initExperiences();
     }
 
@@ -139,13 +135,5 @@ public class User {
         for (Skills skill : Skills.values()) {
             experiences.put(skill, 0);
         }
-    }
-
-    public Rooms getActualRoom() {
-        return actualRoom;
-    }
-
-    public void setActualRoom(Rooms actualRoom) {
-        this.actualRoom = actualRoom;
     }
 }
