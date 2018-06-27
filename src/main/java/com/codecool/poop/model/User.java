@@ -23,7 +23,6 @@ public class User {
     private String email;
 
     private int codeCoins;
-    private Date lastLogin;
     private LocalDateTime registrationDate;
 
     @CollectionTable(name = "users_skills")
@@ -37,6 +36,9 @@ public class User {
     @Transient
     private int health;
 
+    @Enumerated(EnumType.STRING)
+    private Rooms actualRoom;
+
     public User() {
     }
 
@@ -45,6 +47,7 @@ public class User {
         this.password = password;
         this.email = email;
         registrationDate = LocalDateTime.now();
+        actualRoom = Rooms.WHITE_ROOM;
         this.initExperiences();
     }
 
@@ -86,14 +89,6 @@ public class User {
 
     public void setCodeCoins(int codeCoins) {
         this.codeCoins = codeCoins;
-    }
-
-    public Date getLastLogin() {
-        return lastLogin;
-    }
-
-    public void setLastLogin(Date lastLogin) {
-        this.lastLogin = lastLogin;
     }
 
     public LocalDateTime getRegistrationDate() {
@@ -144,5 +139,13 @@ public class User {
         for (Skills skill : Skills.values()) {
             experiences.put(skill, 0);
         }
+    }
+
+    public Rooms getActualRoom() {
+        return actualRoom;
+    }
+
+    public void setActualRoom(Rooms actualRoom) {
+        this.actualRoom = actualRoom;
     }
 }
