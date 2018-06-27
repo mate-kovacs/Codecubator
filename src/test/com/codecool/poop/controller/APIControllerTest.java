@@ -15,9 +15,11 @@ import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -76,6 +78,35 @@ public class APIControllerTest {
                 .param("name", "cili")
                 .param("password", "aaaaaaaaaa"))
                 .andExpect(content().string("Not matching"));
+    }
+
+    @Test
+    public void registration_returns_false() throws Exception {
+        String password = BCrypt.hashpw("cccccccc", BCrypt.gensalt(12));
+        when(userService.saveUser(any(User.class))).thenReturn(false);
+
+        mockMvc.perform(post("/registration")
+                .param("name", "cili")
+                .param("password", "cccccccc")
+                .param("email", "cili@cili.hu"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType("application/json;charset=UTF-8"))
+                .andExpect(content().json("{isNameAddedToDB:false}"));
+    }
+
+
+    @Test
+    public void registration_returns_true() throws Exception {
+        String password = BCrypt.hashpw("cccccccc", BCrypt.gensalt(12));
+        when(userService.saveUser(any(User.class))).thenReturn(true);
+
+        mockMvc.perform(post("/registration")
+                .param("name", "cili")
+                .param("password", "cccccccc")
+                .param("email", "cili@cili.hu"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType("application/json;charset=UTF-8"))
+                .andExpect(content().json("{isNameAddedToDB:true}"));
     }
 
 }
