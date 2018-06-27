@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="common_head.html :: common_head(~{::title}, ~{::script})">
+<head th:replace="fragments/common_head.html :: common_head(~{::title}, ~{::script})">
     <title>User Profile</title>
     <script></script>
 </head>
@@ -10,7 +10,7 @@
     <div id="user-wrapper">
         <div id="user-profile-avatar">
             <div id="avatar">
-                <img id="avatar-img" src="/static/img/default_avatar.png" alt="Profile picture">
+                <img id="avatar-img" src="img/default_avatar.png" alt="Profile picture">
             </div>
         </div>
         <div id="skills" class="lots-box">

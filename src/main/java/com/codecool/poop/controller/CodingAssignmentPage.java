@@ -1,14 +1,10 @@
 //package com.codecool.poop.controller;
 //
-//import com.codecool.poop.config.TemplateEngineUtil;
-//import com.codecool.poop.dao.CodingQuestManager;
-//import com.codecool.poop.dao.UserManager;
 //import com.codecool.poop.model.User;
 //import com.codecool.poop.model.assignments.Assignment;
 //import com.codecool.poop.model.assignments.coding.CodingAnswer;
 //import com.codecool.poop.model.assignments.coding.CodingAssignment;
 //import com.codecool.poop.model.assignments.coding.CodingQuestion;
-//import org.json.JSONObject;
 //import org.thymeleaf.TemplateEngine;
 //import org.thymeleaf.context.WebContext;
 //
@@ -233,18 +229,4 @@
 //        user.loseOneHealth();
 //    }
 //
-//    private boolean isUserDead(HttpSession session, boolean correctAnswer) {
-//        boolean death = false;
-//
-//        if (!correctAnswer) {
-//            userLoseHealth(session);
-//            Map userMap = (Map) session.getAttribute("user");
-//            String userName = (String) userMap.get("user_name");
-//            User user = userManager.getUserByName(userName);
-//            if (user.getHealth() == 0) {
-//                death = true;
-//            }
-//        }
-//        return death;
-//    }
 //}
