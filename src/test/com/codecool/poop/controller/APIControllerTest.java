@@ -67,4 +67,15 @@ public class APIControllerTest {
                 .andExpect(content().string("Not matching"));
     }
 
+    @Test
+    public void login_with_wrong_password_returns_not_matching() throws Exception {
+        String password = BCrypt.hashpw("cccccccc", BCrypt.gensalt(12));
+        User cili = new User("cili", password, "cili@cili.hu");
+        when(userService.getUserByName("cili")).thenReturn(cili);
+        mockMvc.perform(post("/login")
+                .param("name", "cili")
+                .param("password", "aaaaaaaaaa"))
+                .andExpect(content().string("Not matching"));
+    }
+
 }
