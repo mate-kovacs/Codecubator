@@ -1,0 +1,26 @@
+.assignments {
+    margin-top: 2rem;
+    display: grid;
+    grid-template-rows: 1fr 2fr;
+    grid-template-columns: 1fr 1fr;
+
+}
+
+.assignment-box-title {
+    text-align: center;
+    grid-column: 1/3;
+    grid-row: 1/2;
+    margin-bottom: 3rem;
+}
+
+.quiz-assignments {
+    text-align: center;
+    grid-column: 1/2;
+    grid-row: 2/3;
+    border-right: 1px solid rgb(255, 255, 255, 0.3);
+}
+
+.coding-assignments {
+    grid-column: 2/2;
+    grid-row: 2/3;
+}

@@ -58,6 +58,10 @@ public class HTMLController {
     public String logout() {
         sessionService.setCurrentUser(null);
         return "redirect:/login";
+    }
 
+    @GetMapping(value = "/white-room")
+    public String whiteRoom() {
+        return "rooms/white_room";
     }
 }
