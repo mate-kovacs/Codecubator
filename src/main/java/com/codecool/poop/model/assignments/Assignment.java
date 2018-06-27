@@ -38,6 +38,8 @@ public abstract class Assignment {
         this.creationDate = LocalDateTime.now();
     }
 
+    public abstract Integer getMaxPoints();
+
     public String getName() {
         return name;
     }

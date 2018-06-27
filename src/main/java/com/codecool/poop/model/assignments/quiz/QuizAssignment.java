@@ -16,6 +16,13 @@ public class QuizAssignment extends Assignment {
 
     protected QuizAssignment() {}
 
+    @Override
+    public Integer getMaxPoints() {
+        return questions.stream()
+                .mapToInt(QuizQuestion::getMaxPoints)
+                .sum();
+    }
+
     public QuizAssignment(String name, String description, Map<Skills, Integer> expRewards, Integer codeCoinReward, List<QuizQuestion> questions) {
         super(name, description, expRewards, codeCoinReward);
         this.questions = questions;
@@ -36,9 +43,4 @@ public class QuizAssignment extends Assignment {
         this.questions = questions;
     }
 
-    public Integer getMaxPoint() {
-        return questions.stream()
-                .mapToInt(QuizQuestion::getMaxPoints)
-                .sum();
-    }
 }

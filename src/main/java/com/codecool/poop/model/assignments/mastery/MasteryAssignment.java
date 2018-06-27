@@ -34,6 +34,11 @@ public class MasteryAssignment extends Assignment{
     public MasteryAssignment(){
     }
 
+    @Override
+    public Integer getMaxPoints() {
+        return 0;
+    }
+
     private void setQuestionReferences(){
         for (QuizQuestion question: quizQuestions) {
             question.addAssigment(this);

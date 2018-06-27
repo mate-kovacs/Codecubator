@@ -33,7 +33,8 @@ public class CodingAssignment extends Assignment{
         }
     }
 
-    public int getMaxPoints(){
+    @Override
+    public Integer getMaxPoints(){
         int points = 0;
         for (CodingQuestion question: questions) {
             points += question.getMaxPoints();
