@@ -11,8 +11,7 @@ import java.util.*;
 public class CodingAssignment extends Assignment{
 
 
-    @ManyToMany(mappedBy = "assignments")
-    @ElementCollection
+    @ManyToMany(mappedBy = "assignments", cascade = CascadeType.PERSIST)
     private List<CodingQuestion> questions = new ArrayList<>();
 
     public CodingAssignment(String name,
@@ -26,6 +25,11 @@ public class CodingAssignment extends Assignment{
     }
 
     public CodingAssignment(){
+    }
+
+    public void addQuestion(CodingQuestion question) {
+        this.questions.add(question);
+        question.addAssignment(this);
     }
 
     private void setCodingQuestionReferences(){

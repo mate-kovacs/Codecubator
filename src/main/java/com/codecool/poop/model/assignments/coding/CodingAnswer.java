@@ -38,7 +38,7 @@ public class CodingAnswer {
 
     public void addQuestion(CodingQuestion question) {
         this.question = question;
-        question.getAnswers().add(this);
+        question.addAnswer(this);
     }
 
     private void setCodingQuestionReference(){

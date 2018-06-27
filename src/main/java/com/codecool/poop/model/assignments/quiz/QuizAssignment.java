@@ -12,10 +12,10 @@ import java.util.Map;
 @DiscriminatorValue("QUIZ")
 public class QuizAssignment extends Assignment {
 
-    @ManyToMany (mappedBy = "assignments", fetch = FetchType.EAGER)
+    @ManyToMany (mappedBy = "assignments", cascade = CascadeType.PERSIST)
     private List<QuizQuestion> questions = new ArrayList<>();
 
-    protected QuizAssignment() {}
+    public QuizAssignment() {}
 
     @Override
     public Integer getMaxPoints() {

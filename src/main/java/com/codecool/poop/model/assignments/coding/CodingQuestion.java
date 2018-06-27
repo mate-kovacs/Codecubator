@@ -20,7 +20,7 @@ public class CodingQuestion {
     @Column(name = "question_text", nullable = false)
     private String question;
 
-    @OneToMany(mappedBy = "question")
+    @OneToMany(mappedBy = "question", cascade = CascadeType.PERSIST)
     private List<CodingAnswer> answers = new ArrayList<>();
 
     @ManyToMany

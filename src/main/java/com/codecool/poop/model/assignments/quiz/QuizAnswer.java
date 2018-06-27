@@ -22,7 +22,7 @@ public class QuizAnswer {
         question.addAnswer(this);
     }
 
-    protected QuizAnswer() {}
+    public QuizAnswer() {}
 
     public String getAnswerText() {
         return answerText;
