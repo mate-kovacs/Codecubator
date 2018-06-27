@@ -52,5 +52,11 @@ public class HTMLController implements LoginHandler{
         model.addAttribute("user_name", user.getUsername());
         model.addAttribute("skills", skills);
         return "user_profile";
+
+    @GetMapping(value = "/logout")
+    public String logout() {
+        sessionService.setCurrentUser(null);
+        return "redirect:/login";
+
     }
 }
