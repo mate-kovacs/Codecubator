@@ -12,6 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 public class HTMLAssignmentController {
 
@@ -21,6 +23,30 @@ public class HTMLAssignmentController {
     private QuizAssignmentService quizAssignmentService;
     @Autowired
     private SessionService sessionService;
+
+    @RequestMapping(value = "/quiz-assignments", method = RequestMethod.GET)
+    public String renderQuizAssignmentList(Model model){
+        if (sessionService.getCurrentUser() == null) {
+            return "redirect:/login";
+        }
+        List<QuizAssignment> assignments = quizAssignmentService.getAllQuizAssignment();
+        model.addAttribute("assignments", assignments);
+        model.addAttribute("header", "Quiz assignments");
+
+        return "assignments";
+    }
+
+    @RequestMapping(value = "/coding-assignments", method = RequestMethod.GET)
+    public String renderCodingAssignmentList(Model model){
+        if (sessionService.getCurrentUser() == null) {
+            return "redirect:/login";
+        }
+        List<CodingAssignment> assignments = codingAssignmentService.getAllCodingAssignment();
+        model.addAttribute("assignments", assignments);
+        model.addAttribute("header", "Coding assignments");
+
+        return "assignments";
+    }
 
     @RequestMapping(value = "/coding-assignment", method = RequestMethod.GET)
     public String renderCodingAssignment(Model model,
