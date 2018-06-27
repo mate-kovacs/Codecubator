@@ -14,7 +14,7 @@ import java.util.Map;
 
 
 @Controller
-public class HTMLController implements LoginHandler{
+public class HTMLController {
 
     @Autowired
     private UserService userService;
@@ -52,6 +52,7 @@ public class HTMLController implements LoginHandler{
         model.addAttribute("user_name", user.getUsername());
         model.addAttribute("skills", skills);
         return "user_profile";
+    }
 
     @GetMapping(value = "/logout")
     public String logout() {
