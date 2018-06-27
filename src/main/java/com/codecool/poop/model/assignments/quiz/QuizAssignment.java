@@ -4,6 +4,7 @@ import com.codecool.poop.model.Skills;
 import com.codecool.poop.model.assignments.Assignment;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -11,8 +12,8 @@ import java.util.Map;
 @DiscriminatorValue("QUIZ")
 public class QuizAssignment extends Assignment {
 
-    @ManyToMany (mappedBy = "assignments")
-    private List<QuizQuestion> questions;
+    @ManyToMany (mappedBy = "assignments", fetch = FetchType.EAGER)
+    private List<QuizQuestion> questions = new ArrayList<>();
 
     protected QuizAssignment() {}
 
@@ -35,7 +36,7 @@ public class QuizAssignment extends Assignment {
 
     private void setQuestionReferences(){
         for (QuizQuestion question : questions){
-            question.addAssigment(this);
+            question.addAssignment(this);
         }
     }
 

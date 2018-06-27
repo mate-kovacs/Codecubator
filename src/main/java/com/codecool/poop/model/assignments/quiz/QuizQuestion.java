@@ -16,6 +16,7 @@ public class QuizQuestion {
     private int id;
     private String questionText;
     @ManyToMany
+    @JoinColumn(name = "assignment_id")
     private Set<Assignment> assignments = new HashSet<>();
     @OneToMany(mappedBy = "question")
     private List<QuizAnswer> quizAnswers = new ArrayList<>();
@@ -60,11 +61,11 @@ public class QuizQuestion {
         }
     }
 
-    public void addAssigment(Assignment assignment){
+    public void addAssignment(Assignment assignment){
         assignments.add(assignment);
     }
 
-    public void removeAssigment(Assignment assignment){
+    public void removeAssignment(Assignment assignment){
         assignments.remove(assignment);
     }
 

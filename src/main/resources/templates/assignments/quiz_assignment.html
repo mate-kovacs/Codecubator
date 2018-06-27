@@ -3,14 +3,14 @@
 <head th:replace="fragments/common_head.html :: common_head(~{::title}, ~{::script})">
     <meta charset="UTF-8">
     <title>Quiz Assignment</title>
-    <script src="/static/js/quiz_assignment.js" defer></script>
-    <script src="/static/js/pixi.min.js" defer></script>
-    <script src="/static/js/dragonBones.js" defer></script>
-    <script src="/static/js/fight_animator.js" defer></script>
+    <script src="js/quiz_assignment.js" defer></script>
+    <script src="js/pixi.min.js" defer></script>
+    <script src="js/dragonBones.js" defer></script>
+    <script src="js/fight_animator.js" defer></script>
 </head>
 <body class="lots-main-page-body">
 <div th:include="fragments/navbar.html"></div>
-<div class="container" th:attr="data-assignment-id=${assignment_id}">
+<div class="container" th:attr="data-assignment-id=${assignment.getId()}">
     <div id="assignment-form-box">
         <div id="question-title" data-question-id="">
 

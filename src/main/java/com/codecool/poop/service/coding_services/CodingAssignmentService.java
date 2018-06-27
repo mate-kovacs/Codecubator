@@ -23,7 +23,7 @@ public class CodingAssignmentService {
     }
 
     public CodingAssignment getCodingAssignmentById(Integer id) {
-        Optional<CodingAssignment> valami = codingAssignmentRepository.findById(id);
-        return valami.orElse(null);
+        Optional<CodingAssignment> assignment = codingAssignmentRepository.findById(id);
+        return assignment.orElse(null);
     }
 }

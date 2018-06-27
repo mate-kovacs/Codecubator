@@ -47,6 +47,7 @@ public class DummyDBInitializer {
     @PostConstruct
     public void init() {
         createUsers();
+        createQuizAssignment();
         createCodingAssignments();
     }
 //    private QuizQuestManager quizManager;
@@ -157,6 +158,9 @@ public class DummyDBInitializer {
                 4,
                 questions1
         );
+        for (CodingQuestion question: questions1) {
+            question.addAssignment(codingAssignment1);
+        }
         codingAssignmentService.addCodingAssignment(codingAssignment1);
 
 
@@ -201,195 +205,204 @@ public class DummyDBInitializer {
                 2,
                 questions2
         );
+        for (CodingQuestion question: questions2) {
+            question.addAssignment(codingAssignment2);
+        }
         codingAssignmentService.addCodingAssignment(codingAssignment2);
 
 
     }
 //
-//    private void createQuizAssignment() {
-//        QuizQuestion question1 = new QuizQuestion("What are the principles of Object Oriented Programming?");
-//        quizManager.addQuizQuestionToDB(question1);
-//        QuizAnswer answer11 = new QuizAnswer("Pemutation", false, question1);
-//        quizManager.addQuizAnswerToDB(answer11);
-//        QuizAnswer answer12 = new QuizAnswer("Polymophism", true, question1);
-//        quizManager.addQuizAnswerToDB(answer12);
-//        QuizAnswer answer13 = new QuizAnswer("Inheritance", true, question1);
-//        quizManager.addQuizAnswerToDB(answer13);
-//        QuizAnswer answer14 = new QuizAnswer("Implementation", false, question1);
-//        quizManager.addQuizAnswerToDB(answer14);
-//        QuizAnswer answer15 = new QuizAnswer("Design Pattern", false, question1);
-//        quizManager.addQuizAnswerToDB(answer15);
-//        QuizAnswer answer16 = new QuizAnswer("Encapsulation", true, question1);
-//        quizManager.addQuizAnswerToDB(answer16);
-//        QuizAnswer answer17 = new QuizAnswer("Abstraction", true, question1);
-//        quizManager.addQuizAnswerToDB(answer17);
-//        QuizAnswer answer18 = new QuizAnswer("Destruction", false, question1);
-//        quizManager.addQuizAnswerToDB(answer18);
-//
-//        QuizQuestion question2 = new QuizQuestion("Which of the following are basic types in Java?");
-//        quizManager.addQuizQuestionToDB(question2);
-//        QuizAnswer answer21 = new QuizAnswer("int", true, question2);
-//        quizManager.addQuizAnswerToDB(answer21);
-//        QuizAnswer answer22 = new QuizAnswer("Double", false, question2);
-//        quizManager.addQuizAnswerToDB(answer22);
-//        QuizAnswer answer23 = new QuizAnswer("boolean", true, question2);
-//        quizManager.addQuizAnswerToDB(answer23);
-//        QuizAnswer answer24 = new QuizAnswer("Object", false, question2);
-//        quizManager.addQuizAnswerToDB(answer24);
-//        QuizAnswer answer25 = new QuizAnswer("String", false, question2);
-//        quizManager.addQuizAnswerToDB(answer25);
-//        QuizAnswer answer26 = new QuizAnswer("Array", false, question2);
-//        quizManager.addQuizAnswerToDB(answer26);
-//        QuizAnswer answer27 = new QuizAnswer("char", true, question2);
-//        quizManager.addQuizAnswerToDB(answer27);
-//        QuizAnswer answer28 = new QuizAnswer("Boolean", false, question2);
-//        quizManager.addQuizAnswerToDB(answer28);
-//
-//        QuizQuestion question3 = new QuizQuestion("Which of the following are implementations of Collection?");
-//        quizManager.addQuizQuestionToDB(question3);
-//        QuizAnswer answer31 = new QuizAnswer("ArrayList", true, question3);
-//        quizManager.addQuizAnswerToDB(answer31);
-//        QuizAnswer answer32 = new QuizAnswer("LinkedList", true, question3);
-//        quizManager.addQuizAnswerToDB(answer32);
-//        QuizAnswer answer33 = new QuizAnswer("Array", false, question3);
-//        quizManager.addQuizAnswerToDB(answer33);
-//        QuizAnswer answer34 = new QuizAnswer("TreeSet", true, question3);
-//        quizManager.addQuizAnswerToDB(answer34);
-//        QuizAnswer answer35 = new QuizAnswer("InputStream", false, question3);
-//        quizManager.addQuizAnswerToDB(answer35);
-//        QuizAnswer answer36 = new QuizAnswer("Instant", false, question3);
-//        quizManager.addQuizAnswerToDB(answer36);
-//        QuizAnswer answer37 = new QuizAnswer("Vector", true, question3);
-//        quizManager.addQuizAnswerToDB(answer37);
-//
-//        QuizQuestion question4 = new QuizQuestion("Which of the following are Checked Exceptions?");
-//        quizManager.addQuizQuestionToDB(question4);
-//        QuizAnswer answer41 = new QuizAnswer("IllegalArgumentException", false, question4);
-//        quizManager.addQuizAnswerToDB(answer41);
-//        QuizAnswer answer42 = new QuizAnswer("NullPointerException", false, question4);
-//        quizManager.addQuizAnswerToDB(answer42);
-//        QuizAnswer answer43 = new QuizAnswer("SQLException", true, question4);
-//        quizManager.addQuizAnswerToDB(answer43);
-//        QuizAnswer answer44 = new QuizAnswer("IndexOutOfBoundsException", false, question4);
-//        quizManager.addQuizAnswerToDB(answer44);
-//        QuizAnswer answer45 = new QuizAnswer("IOException", true, question4);
-//        quizManager.addQuizAnswerToDB(answer45);
-//        QuizAnswer answer46 = new QuizAnswer("IllegalAccessException", true, question4);
-//        quizManager.addQuizAnswerToDB(answer46);
-//        QuizAnswer answer47 = new QuizAnswer("UnsupportedOperationException", false, question4);
-//        quizManager.addQuizAnswerToDB(answer47);
-//        QuizAnswer answer48 = new QuizAnswer("NegativeArraySizeException", false, question4);
-//        quizManager.addQuizAnswerToDB(answer48);
-//        QuizAnswer answer49 = new QuizAnswer("FileNotFoundException", true, question4);
-//        quizManager.addQuizAnswerToDB(answer49);
-//
-//        QuizQuestion question5 = new QuizQuestion("What does the first argument of invoke(Pbject obj, Object args...) represent inside the ivoked method?");
-//        quizManager.addQuizQuestionToDB(question5);
-//        QuizAnswer answer51 = new QuizAnswer("null", false, question5);
-//        quizManager.addQuizAnswerToDB(answer51);
-//        QuizAnswer answer52 = new QuizAnswer("this", true, question5);
-//        quizManager.addQuizAnswerToDB(answer52);
-//        QuizAnswer answer53 = new QuizAnswer("super", false, question5);
-//        quizManager.addQuizAnswerToDB(answer53);
-//        QuizAnswer answer54 = new QuizAnswer("class", false, question5);
-//        quizManager.addQuizAnswerToDB(answer54);
-//        QuizAnswer answer55 = new QuizAnswer("method", false, question5);
-//        quizManager.addQuizAnswerToDB(answer55);
-//
-//        List<QuizQuestion> questions1 = new ArrayList<>();
-//        questions1.add(question1);
-//        questions1.add(question2);
-//        questions1.add(question3);
-//        questions1.add(question4);
-//        questions1.add(question5);
-//
-//        Map<Skills, Integer> rewardMap1 = new HashMap<>();
-//        rewardMap1.put(Skills.JAVA_BASIC, 25);
-//        rewardMap1.put(Skills.OBJECT_ORIENTED_PROGRAMMING, 10);
-//        QuizAssignment quizAssignment1 = new QuizAssignment(
-//                "Java OOP intermediate",
-//                "A series of multiple choice questions regarding deeper knowledge of the Java language and Object Oriented Programming.",
-//                rewardMap1,
-//                4,
-//                questions1
-//        );
-//        quizManager.addQuizAssignmentToDB(quizAssignment1);
-//
-//        QuizQuestion question6 = new QuizQuestion("What is the O complexity of inserting an element into an ArrayList?");
-//        quizManager.addQuizQuestionToDB(question6);
-//        QuizAnswer answer61 = new QuizAnswer("O(1) ", false, question6);
-//        quizManager.addQuizAnswerToDB(answer61);
-//        QuizAnswer answer62 = new QuizAnswer("O(n) ", true, question6);
-//        quizManager.addQuizAnswerToDB(answer62);
-//        QuizAnswer answer63 = new QuizAnswer("O(n^2) ", false, question6);
-//        quizManager.addQuizAnswerToDB(answer63);
-//
-//        QuizQuestion question7 = new QuizQuestion("Which of the following algorythms work by switching adjacentelements in a list?");
-//        quizManager.addQuizQuestionToDB(question7);
-//        QuizAnswer answer71 = new QuizAnswer("Bubble sort ", true, question7);
-//        quizManager.addQuizAnswerToDB(answer71);
-//        QuizAnswer answer72 = new QuizAnswer("Selection sort ", false, question7);
-//        quizManager.addQuizAnswerToDB(answer72);
-//        QuizAnswer answer73 = new QuizAnswer("Bogo sort ", false, question7);
-//        quizManager.addQuizAnswerToDB(answer73);
-//
-//        QuizQuestion question8 = new QuizQuestion("To which of the following groups does 'top-margin' belong?");
-//        quizManager.addQuizQuestionToDB(question8);
-//        QuizAnswer answer81 = new QuizAnswer("HTML tag ", false, question8);
-//        quizManager.addQuizAnswerToDB(answer81);
-//        QuizAnswer answer82 = new QuizAnswer("CSS selector ", false, question8);
-//        quizManager.addQuizAnswerToDB(answer82);
-//        QuizAnswer answer83 = new QuizAnswer("CSS property ", true, question8);
-//        quizManager.addQuizAnswerToDB(answer83);
-//
-//        QuizQuestion question9 = new QuizQuestion("To which of the following groups does '#class' belong?");
-//        quizManager.addQuizQuestionToDB(question9);
-//        QuizAnswer answer91 = new QuizAnswer("HTML tag ", false, question9);
-//        quizManager.addQuizAnswerToDB(answer91);
-//        QuizAnswer answer92 = new QuizAnswer("CSS selector ", true, question9);
-//        quizManager.addQuizAnswerToDB(answer92);
-//        QuizAnswer answer93 = new QuizAnswer("CSS property ", false, question9);
-//        quizManager.addQuizAnswerToDB(answer93);
-//
-//        QuizQuestion question10 = new QuizQuestion("Select the TRUE statements!");
-//        quizManager.addQuizQuestionToDB(question10);
-//        QuizAnswer answer101 = new QuizAnswer("HTML stands for Hypertext Markup Language ", true, question10);
-//        quizManager.addQuizAnswerToDB(answer101);
-//        QuizAnswer answer102 = new QuizAnswer("CSS stands for Cascading Style Sheet ", true, question10);
-//        quizManager.addQuizAnswerToDB(answer102);
-//        QuizAnswer answer103 = new QuizAnswer("JSON stands for Java Script Object Notation ", true, question10);
-//        quizManager.addQuizAnswerToDB(answer103);
-//
-//        QuizQuestion question11 = new QuizQuestion("Select the TRUE statements!");
-//        quizManager.addQuizQuestionToDB(question11);
-//        QuizAnswer answer111 = new QuizAnswer("GNU is not Unix ", true, question11);
-//        quizManager.addQuizAnswerToDB(answer111);
-//        QuizAnswer answer112 = new QuizAnswer("GNU is Unix ", false, question11);
-//        quizManager.addQuizAnswerToDB(answer112);
-//
-//        List<QuizQuestion> questions2 = new ArrayList<>();
-//        questions2.add(question6);
-//        questions2.add(question7);
-//        questions2.add(question8);
-//        questions2.add(question9);
-//        questions2.add(question10);
-//        questions2.add(question11);
-//
-//        Map<Skills, Integer> rewardMap2 = new HashMap<>();
-//        rewardMap2.put(Skills.ALGORITHMS, 12);
-//        rewardMap2.put(Skills.CSS_BASIC, 5);
-//        rewardMap2.put(Skills.HTML_BASIC, 5);
-//        QuizAssignment quizAssignment2 = new QuizAssignment(
-//                "A little bit of everything",
-//                "A series of very short questions regarding algorythms, web design, and touching on Operation Systems.",
-//                rewardMap2,
-//                3,
-//                questions2
-//        );
-//        quizManager.addQuizAssignmentToDB(quizAssignment2);
-//
-//
-//    }
+    private void createQuizAssignment() {
+        QuizQuestion question1 = new QuizQuestion("What are the principles of Object Oriented Programming?");
+        quizQuestionService.addQuizQuestion(question1);
+        QuizAnswer answer11 = new QuizAnswer("Pemutation", false, question1);
+        quizAnswerService.addQuizAnswer(answer11);
+        QuizAnswer answer12 = new QuizAnswer("Polymophism", true, question1);
+        quizAnswerService.addQuizAnswer(answer12);
+        QuizAnswer answer13 = new QuizAnswer("Inheritance", true, question1);
+        quizAnswerService.addQuizAnswer(answer13);
+        QuizAnswer answer14 = new QuizAnswer("Implementation", false, question1);
+        quizAnswerService.addQuizAnswer(answer14);
+        QuizAnswer answer15 = new QuizAnswer("Design Pattern", false, question1);
+        quizAnswerService.addQuizAnswer(answer15);
+        QuizAnswer answer16 = new QuizAnswer("Encapsulation", true, question1);
+        quizAnswerService.addQuizAnswer(answer16);
+        QuizAnswer answer17 = new QuizAnswer("Abstraction", true, question1);
+        quizAnswerService.addQuizAnswer(answer17);
+        QuizAnswer answer18 = new QuizAnswer("Destruction", false, question1);
+        quizAnswerService.addQuizAnswer(answer18);
+
+        QuizQuestion question2 = new QuizQuestion("Which of the following are basic types in Java?");
+        quizQuestionService.addQuizQuestion(question2);
+        QuizAnswer answer21 = new QuizAnswer("int", true, question2);
+        quizAnswerService.addQuizAnswer(answer21);
+        QuizAnswer answer22 = new QuizAnswer("Double", false, question2);
+        quizAnswerService.addQuizAnswer(answer22);
+        QuizAnswer answer23 = new QuizAnswer("boolean", true, question2);
+        quizAnswerService.addQuizAnswer(answer23);
+        QuizAnswer answer24 = new QuizAnswer("Object", false, question2);
+        quizAnswerService.addQuizAnswer(answer24);
+        QuizAnswer answer25 = new QuizAnswer("String", false, question2);
+        quizAnswerService.addQuizAnswer(answer25);
+        QuizAnswer answer26 = new QuizAnswer("Array", false, question2);
+        quizAnswerService.addQuizAnswer(answer26);
+        QuizAnswer answer27 = new QuizAnswer("char", true, question2);
+        quizAnswerService.addQuizAnswer(answer27);
+        QuizAnswer answer28 = new QuizAnswer("Boolean", false, question2);
+        quizAnswerService.addQuizAnswer(answer28);
+
+        QuizQuestion question3 = new QuizQuestion("Which of the following are implementations of Collection?");
+        quizQuestionService.addQuizQuestion(question3);
+        QuizAnswer answer31 = new QuizAnswer("ArrayList", true, question3);
+        quizAnswerService.addQuizAnswer(answer31);
+        QuizAnswer answer32 = new QuizAnswer("LinkedList", true, question3);
+        quizAnswerService.addQuizAnswer(answer32);
+        QuizAnswer answer33 = new QuizAnswer("Array", false, question3);
+        quizAnswerService.addQuizAnswer(answer33);
+        QuizAnswer answer34 = new QuizAnswer("TreeSet", true, question3);
+        quizAnswerService.addQuizAnswer(answer34);
+        QuizAnswer answer35 = new QuizAnswer("InputStream", false, question3);
+        quizAnswerService.addQuizAnswer(answer35);
+        QuizAnswer answer36 = new QuizAnswer("Instant", false, question3);
+        quizAnswerService.addQuizAnswer(answer36);
+        QuizAnswer answer37 = new QuizAnswer("Vector", true, question3);
+        quizAnswerService.addQuizAnswer(answer37);
+
+        QuizQuestion question4 = new QuizQuestion("Which of the following are Checked Exceptions?");
+        quizQuestionService.addQuizQuestion(question4);
+        QuizAnswer answer41 = new QuizAnswer("IllegalArgumentException", false, question4);
+        quizAnswerService.addQuizAnswer(answer41);
+        QuizAnswer answer42 = new QuizAnswer("NullPointerException", false, question4);
+        quizAnswerService.addQuizAnswer(answer42);
+        QuizAnswer answer43 = new QuizAnswer("SQLException", true, question4);
+        quizAnswerService.addQuizAnswer(answer43);
+        QuizAnswer answer44 = new QuizAnswer("IndexOutOfBoundsException", false, question4);
+        quizAnswerService.addQuizAnswer(answer44);
+        QuizAnswer answer45 = new QuizAnswer("IOException", true, question4);
+        quizAnswerService.addQuizAnswer(answer45);
+        QuizAnswer answer46 = new QuizAnswer("IllegalAccessException", true, question4);
+        quizAnswerService.addQuizAnswer(answer46);
+        QuizAnswer answer47 = new QuizAnswer("UnsupportedOperationException", false, question4);
+        quizAnswerService.addQuizAnswer(answer47);
+        QuizAnswer answer48 = new QuizAnswer("NegativeArraySizeException", false, question4);
+        quizAnswerService.addQuizAnswer(answer48);
+        QuizAnswer answer49 = new QuizAnswer("FileNotFoundException", true, question4);
+        quizAnswerService.addQuizAnswer(answer49);
+
+        QuizQuestion question5 = new QuizQuestion("What does the first argument of invoke(Pbject obj, Object args...) represent inside the ivoked method?");
+        quizQuestionService.addQuizQuestion(question5);
+        QuizAnswer answer51 = new QuizAnswer("null", false, question5);
+        quizAnswerService.addQuizAnswer(answer51);
+        QuizAnswer answer52 = new QuizAnswer("this", true, question5);
+        quizAnswerService.addQuizAnswer(answer52);
+        QuizAnswer answer53 = new QuizAnswer("super", false, question5);
+        quizAnswerService.addQuizAnswer(answer53);
+        QuizAnswer answer54 = new QuizAnswer("class", false, question5);
+        quizAnswerService.addQuizAnswer(answer54);
+        QuizAnswer answer55 = new QuizAnswer("method", false, question5);
+        quizAnswerService.addQuizAnswer(answer55);
+
+        List<QuizQuestion> questions1 = new ArrayList<>();
+        questions1.add(question1);
+        questions1.add(question2);
+        questions1.add(question3);
+        questions1.add(question4);
+        questions1.add(question5);
+
+        Map<Skills, Integer> rewardMap1 = new HashMap<>();
+        rewardMap1.put(Skills.JAVA_BASIC, 25);
+        rewardMap1.put(Skills.OBJECT_ORIENTED_PROGRAMMING, 10);
+        QuizAssignment quizAssignment1 = new QuizAssignment(
+                "Java OOP intermediate",
+                "A series of multiple choice questions regarding deeper knowledge of the Java language and Object Oriented Programming.",
+                rewardMap1,
+                4,
+                questions1
+        );
+        for (QuizQuestion question: questions1) {
+            question.addAssignment(quizAssignment1);
+        }
+        quizAssignmentService.addQuizAssignment(quizAssignment1);
+
+        QuizQuestion question6 = new QuizQuestion("What is the O complexity of inserting an element into an ArrayList?");
+        quizQuestionService.addQuizQuestion(question6);
+        QuizAnswer answer61 = new QuizAnswer("O(1) ", false, question6);
+        quizAnswerService.addQuizAnswer(answer61);
+        QuizAnswer answer62 = new QuizAnswer("O(n) ", true, question6);
+        quizAnswerService.addQuizAnswer(answer62);
+        QuizAnswer answer63 = new QuizAnswer("O(n^2) ", false, question6);
+        quizAnswerService.addQuizAnswer(answer63);
+
+        QuizQuestion question7 = new QuizQuestion("Which of the following algorythms work by switching adjacentelements in a list?");
+        quizQuestionService.addQuizQuestion(question7);
+        QuizAnswer answer71 = new QuizAnswer("Bubble sort ", true, question7);
+        quizAnswerService.addQuizAnswer(answer71);
+        QuizAnswer answer72 = new QuizAnswer("Selection sort ", false, question7);
+        quizAnswerService.addQuizAnswer(answer72);
+        QuizAnswer answer73 = new QuizAnswer("Bogo sort ", false, question7);
+        quizAnswerService.addQuizAnswer(answer73);
+
+        QuizQuestion question8 = new QuizQuestion("To which of the following groups does 'top-margin' belong?");
+        quizQuestionService.addQuizQuestion(question8);
+        QuizAnswer answer81 = new QuizAnswer("HTML tag ", false, question8);
+        quizAnswerService.addQuizAnswer(answer81);
+        QuizAnswer answer82 = new QuizAnswer("CSS selector ", false, question8);
+        quizAnswerService.addQuizAnswer(answer82);
+        QuizAnswer answer83 = new QuizAnswer("CSS property ", true, question8);
+        quizAnswerService.addQuizAnswer(answer83);
+
+        QuizQuestion question9 = new QuizQuestion("To which of the following groups does '#class' belong?");
+        quizQuestionService.addQuizQuestion(question9);
+        QuizAnswer answer91 = new QuizAnswer("HTML tag ", false, question9);
+        quizAnswerService.addQuizAnswer(answer91);
+        QuizAnswer answer92 = new QuizAnswer("CSS selector ", true, question9);
+        quizAnswerService.addQuizAnswer(answer92);
+        QuizAnswer answer93 = new QuizAnswer("CSS property ", false, question9);
+        quizAnswerService.addQuizAnswer(answer93);
+
+        QuizQuestion question10 = new QuizQuestion("Select the TRUE statements!");
+        quizQuestionService.addQuizQuestion(question10);
+        QuizAnswer answer101 = new QuizAnswer("HTML stands for Hypertext Markup Language ", true, question10);
+        quizAnswerService.addQuizAnswer(answer101);
+        QuizAnswer answer102 = new QuizAnswer("CSS stands for Cascading Style Sheet ", true, question10);
+        quizAnswerService.addQuizAnswer(answer102);
+        QuizAnswer answer103 = new QuizAnswer("JSON stands for Java Script Object Notation ", true, question10);
+        quizAnswerService.addQuizAnswer(answer103);
+
+        QuizQuestion question11 = new QuizQuestion("Select the TRUE statements!");
+        quizQuestionService.addQuizQuestion(question11);
+        QuizAnswer answer111 = new QuizAnswer("GNU is not Unix ", true, question11);
+        quizAnswerService.addQuizAnswer(answer111);
+        QuizAnswer answer112 = new QuizAnswer("GNU is Unix ", false, question11);
+        quizAnswerService.addQuizAnswer(answer112);
+
+        List<QuizQuestion> questions2 = new ArrayList<>();
+        questions2.add(question6);
+        questions2.add(question7);
+        questions2.add(question8);
+        questions2.add(question9);
+        questions2.add(question10);
+        questions2.add(question11);
+
+        Map<Skills, Integer> rewardMap2 = new HashMap<>();
+        rewardMap2.put(Skills.ALGORITHMS, 12);
+        rewardMap2.put(Skills.CSS_BASIC, 5);
+        rewardMap2.put(Skills.HTML_BASIC, 5);
+        QuizAssignment quizAssignment2 = new QuizAssignment(
+                "A little bit of everything",
+                "A series of very short questions regarding algorythms, web design, and touching on Operation Systems.",
+                rewardMap2,
+                3,
+                questions2
+        );
+        for (QuizQuestion question: questions2) {
+            question.addAssignment(quizAssignment2);
+        }
+        quizAssignmentService.addQuizAssignment(quizAssignment2);
+
+
+    }
 //
 //    private void createMasteryAssignments() {
 //        Map<Skills, Integer> reward = new HashMap<>();

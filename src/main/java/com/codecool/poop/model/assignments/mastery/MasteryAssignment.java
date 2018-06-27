@@ -41,7 +41,7 @@ public class MasteryAssignment extends Assignment{
 
     private void setQuestionReferences(){
         for (QuizQuestion question: quizQuestions) {
-            question.addAssigment(this);
+            question.addAssignment(this);
         }
         for (CodingQuestion question: codingQuestions) {
             question.addAssignment(this);

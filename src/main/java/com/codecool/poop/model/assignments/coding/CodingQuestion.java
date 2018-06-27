@@ -21,7 +21,6 @@ public class CodingQuestion {
     private String question;
 
     @OneToMany(mappedBy = "question")
-    @ElementCollection
     private List<CodingAnswer> answers = new ArrayList<>();
 
     @ManyToMany
