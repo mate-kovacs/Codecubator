@@ -73,14 +73,14 @@ public class AssignmentUtilityService {
             }
         }
 
-        List<Integer> answerIdList = new ArrayList<>();
+        List<String> answerList = new ArrayList<>();
         for (QuizAnswer answer : nextQuestion.getQuizAnswers()) {
-            answerIdList.add(answer.getId());
+            answerList.add(answer.getAnswerText());
         }
         Map<String, Object> nextQuestionData = new HashMap<>();
         nextQuestionData.put("question_id", nextQuestion.getId());
         nextQuestionData.put("question_text", nextQuestion.getQuestionText());
-        nextQuestionData.put("answer_ids", answerIdList);
+        nextQuestionData.put("answers", answerList);
 
         return nextQuestionData;
     }
