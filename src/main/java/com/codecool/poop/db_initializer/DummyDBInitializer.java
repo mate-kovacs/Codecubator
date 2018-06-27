@@ -1,36 +1,53 @@
 package com.codecool.poop.db_initializer;
 
+import com.codecool.poop.model.assignments.coding.CodingQuestion;
+import com.codecool.poop.model.assignments.quiz.QuizAnswer;
 import com.codecool.poop.service.UserService;
+import com.codecool.poop.service.coding_services.CodingAnswerService;
+import com.codecool.poop.service.coding_services.CodingAssignmentService;
+import com.codecool.poop.service.coding_services.CodingQuestionService;
+import com.codecool.poop.service.quiz_services.QuizAnswerService;
+import com.codecool.poop.service.quiz_services.QuizAssignmentService;
+import com.codecool.poop.service.quiz_services.QuizQuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 
-//import com.codecool.poop.dao.CodingQuestManager;
-//import com.codecool.poop.dao.MasteryQuestManager;
-//import com.codecool.poop.dao.UserManager;
-//import com.codecool.poop.model.Skills;
+import com.codecool.poop.model.Skills;
 import com.codecool.poop.model.User;
-//import com.codecool.poop.model.assignments.coding.CodingAnswer;
-//import com.codecool.poop.model.assignments.coding.CodingAssignment;
-//import com.codecool.poop.model.assignments.coding.CodingQuestion;
-//import com.codecool.poop.model.assignments.mastery.MasteryAssignment;
-//import com.codecool.poop.model.assignments.quiz.QuizAnswer;
-//import com.codecool.poop.model.assignments.quiz.QuizAssignment;
-//import com.codecool.poop.model.assignments.quiz.QuizQuestion;
+import com.codecool.poop.model.assignments.coding.CodingAnswer;
+import com.codecool.poop.model.assignments.coding.CodingAssignment;
+import com.codecool.poop.model.assignments.coding.CodingQuestion;
+import com.codecool.poop.model.assignments.quiz.QuizAnswer;
+import com.codecool.poop.model.assignments.quiz.QuizAssignment;
+import com.codecool.poop.model.assignments.quiz.QuizQuestion;
 import org.mindrot.jbcrypt.BCrypt;
 //
-//import java.util.*;
+import java.util.*;
 //
 @Component
 public class DummyDBInitializer {
 //
     @Autowired
     private UserService userService;
+    @Autowired
+    private CodingAssignmentService codingAssignmentService;
+    @Autowired
+    private CodingQuestionService codingQuestionService;
+    @Autowired
+    private CodingAnswerService codingAnswerService;
+    @Autowired
+    private QuizAssignmentService quizAssignmentService;
+    @Autowired
+    private QuizQuestionService quizQuestionService;
+    @Autowired
+    private QuizAnswerService quizAnswerService;
 
     @PostConstruct
     public void init() {
         createUsers();
+        createCodingAssignments();
     }
 //    private QuizQuestManager quizManager;
 //    private CodingQuestManager codingManager;
@@ -78,116 +95,116 @@ public class DummyDBInitializer {
         userService.saveUser(user2);
         userService.saveUser(user3);
     }
-//
-//    private void createCodingAssignments() {
-//
-//        CodingQuestion question1 = new CodingQuestion("SELECT * $ users $ id=1;");
-//        codingManager.addCodingQuestionToDB(question1);
-//        CodingAnswer answer11 = new CodingAnswer("FROM", question1);
-//        codingManager.addCodingAnswerToDB(answer11);
-//        CodingAnswer answer12 = new CodingAnswer("WHERE", question1);
-//        codingManager.addCodingAnswerToDB(answer12);
-//
-//        CodingQuestion question2 = new CodingQuestion("INSERT $ products (product_name, product_description) $ ('USB charger', 'Provides much needed electricity to your beloved gadget.'$");
-//        codingManager.addCodingQuestionToDB(question2);
-//        CodingAnswer answer21 = new CodingAnswer("INTO", question2);
-//        codingManager.addCodingAnswerToDB(answer21);
-//        CodingAnswer answer22 = new CodingAnswer("VALUES", question2);
-//        codingManager.addCodingAnswerToDB(answer22);
-//        CodingAnswer answer23 = new CodingAnswer(");", question2);
-//        codingManager.addCodingAnswerToDB(answer23);
-//
-//        CodingQuestion question3 = new CodingQuestion("DELETE $ friends WHERE name $ 'Bob%';");
-//        codingManager.addCodingQuestionToDB(question3);
-//        CodingAnswer answer31 = new CodingAnswer("FROM", question3);
-//        codingManager.addCodingAnswerToDB(answer31);
-//        CodingAnswer answer32 = new CodingAnswer("LIKE", question3);
-//        codingManager.addCodingAnswerToDB(answer32);
-//
-//        CodingQuestion question4 = new CodingQuestion("UPDATE addresses $ city='Budapest' WHERE zip LIKE '1$");
-//        codingManager.addCodingQuestionToDB(question4);
-//        CodingAnswer answer41 = new CodingAnswer("SET", question4);
-//        codingManager.addCodingAnswerToDB(answer41);
-//        CodingAnswer answer42 = new CodingAnswer("%';", question4);
-//        codingManager.addCodingAnswerToDB(answer42);
-//
-//        CodingQuestion question5 = new CodingQuestion("SELECT name, movie_title FROM actors INNER $ ON $.movie=movies.protagonist WHERE release_date=1392;");
-//        codingManager.addCodingQuestionToDB(question5);
-//        CodingAnswer answer51 = new CodingAnswer("JOIN", question5);
-//        codingManager.addCodingAnswerToDB(answer51);
-//        CodingAnswer answer52 = new CodingAnswer("actors", question5);
-//        codingManager.addCodingAnswerToDB(answer52);
-//
-//        CodingQuestion question6 = new CodingQuestion("INSERT INTO users (name, email, password) VALUES ('Robert $ DROP TABLE users;");
-//        codingManager.addCodingQuestionToDB(question6);
-//        CodingAnswer answer61 = new CodingAnswer("','','');", question6);
-//        codingManager.addCodingAnswerToDB(answer61);
-//
-//        List<CodingQuestion> questions1 = new ArrayList<>();
-//        questions1.add(question1);
-//        questions1.add(question2);
-//        questions1.add(question3);
-//        questions1.add(question4);
-//        questions1.add(question5);
-//        questions1.add(question6);
-//
-//        Map<Skills, Integer> rewardMap1 = new HashMap<>();
-//        rewardMap1.put(Skills.DATA_STRUCTURES, 25);
-//        CodingAssignment codingAssignment1 = new CodingAssignment(
-//                "SQL basics",
-//                "A series of code completion assignments that cover most of the basic SQL queries and require a little extra knowledge.",
-//                rewardMap1,
-//                4,
-//                questions1
-//        );
-//        codingManager.addCodingAssignmentToDB(codingAssignment1);
-//
-//
-//        CodingQuestion question7 = new CodingQuestion("List$ stringList = $ ArrayList<>();");
-//        codingManager.addCodingQuestionToDB(question7);
-//        CodingAnswer answer71 = new CodingAnswer("<String>", question7);
-//        codingManager.addCodingAnswerToDB(answer71);
-//        CodingAnswer answer72 = new CodingAnswer("new", question7);
-//        codingManager.addCodingAnswerToDB(answer72);
-//
-//        CodingQuestion question8 = new CodingQuestion("public $ HelloWorld {\n  public" +
-//                " $(String asrgs[]) {\n    $.println(\"Hello World!\");\n  }\n}");
-//        codingManager.addCodingQuestionToDB(question8);
-//        CodingAnswer answer81 = new CodingAnswer("class", question8);
-//        codingManager.addCodingAnswerToDB(answer81);
-//        CodingAnswer answer82 = new CodingAnswer("static void main", question8);
-//        codingManager.addCodingAnswerToDB(answer82);
-//        CodingAnswer answer83 = new CodingAnswer("System.out", question8);
-//        codingManager.addCodingAnswerToDB(answer83);
-//
-//        CodingQuestion question9 = new CodingQuestion("public $ factorial(int n) {\n  " +
-//                "int result = 1;\n  for ($; i <= n; i++) {\n    " +
-//                "result *= i;\n  }\n  return result;");
-//        codingManager.addCodingQuestionToDB(question9);
-//        CodingAnswer answer91 = new CodingAnswer("int", question9);
-//        codingManager.addCodingAnswerToDB(answer91);
-//        CodingAnswer answer92 = new CodingAnswer("int i = 1", question9);
-//        codingManager.addCodingAnswerToDB(answer92);
-//
-//        List<CodingQuestion> questions2 = new ArrayList<>();
-//        questions2.add(question7);
-//        questions2.add(question8);
-//        questions2.add(question9);
-//
-//        Map<Skills, Integer> rewardMap2 = new HashMap<>();
-//        rewardMap2.put(Skills.JAVA_BASIC, 12);
-//        rewardMap2.put(Skills.OBJECT_ORIENTED_PROGRAMMING, 4);
-//        CodingAssignment codingAssignment2 = new CodingAssignment(
-//                "Java basics",
-//                "A series of very simple code completion tasks. Fill in all the blanks in the Java code correctly.",
-//                rewardMap2,
-//                2,
-//                questions2
-//        );
-//        codingManager.addCodingAssignmentToDB(codingAssignment2);
-//
-//
-//    }
+
+    private void createCodingAssignments() {
+
+        CodingQuestion question1 = new CodingQuestion("SELECT * $ users $ id=1;");
+        codingQuestionService.addCodingQuestion(question1);
+        CodingAnswer answer11 = new CodingAnswer("FROM", question1);
+        codingAnswerService.addCodingAnswer(answer11);
+        CodingAnswer answer12 = new CodingAnswer("WHERE", question1);
+        codingAnswerService.addCodingAnswer(answer12);
+
+        CodingQuestion question2 = new CodingQuestion("INSERT $ products (product_name, product_description) $ ('USB charger', 'Provides much needed electricity to your beloved gadget.'$");
+        codingQuestionService.addCodingQuestion(question2);
+        CodingAnswer answer21 = new CodingAnswer("INTO", question2);
+        codingAnswerService.addCodingAnswer(answer21);
+        CodingAnswer answer22 = new CodingAnswer("VALUES", question2);
+        codingAnswerService.addCodingAnswer(answer22);
+        CodingAnswer answer23 = new CodingAnswer(");", question2);
+        codingAnswerService.addCodingAnswer(answer23);
+
+        CodingQuestion question3 = new CodingQuestion("DELETE $ friends WHERE name $ 'Bob%';");
+        codingQuestionService.addCodingQuestion(question3);
+        CodingAnswer answer31 = new CodingAnswer("FROM", question3);
+        codingAnswerService.addCodingAnswer(answer31);
+        CodingAnswer answer32 = new CodingAnswer("LIKE", question3);
+        codingAnswerService.addCodingAnswer(answer32);
+
+        CodingQuestion question4 = new CodingQuestion("UPDATE addresses $ city='Budapest' WHERE zip LIKE '1$");
+        codingQuestionService.addCodingQuestion(question4);
+        CodingAnswer answer41 = new CodingAnswer("SET", question4);
+        codingAnswerService.addCodingAnswer(answer41);
+        CodingAnswer answer42 = new CodingAnswer("%';", question4);
+        codingAnswerService.addCodingAnswer(answer42);
+
+        CodingQuestion question5 = new CodingQuestion("SELECT name, movie_title FROM actors INNER $ ON $.movie=movies.protagonist WHERE release_date=1392;");
+        codingQuestionService.addCodingQuestion(question5);
+        CodingAnswer answer51 = new CodingAnswer("JOIN", question5);
+        codingAnswerService.addCodingAnswer(answer51);
+        CodingAnswer answer52 = new CodingAnswer("actors", question5);
+        codingAnswerService.addCodingAnswer(answer52);
+
+        CodingQuestion question6 = new CodingQuestion("INSERT INTO users (name, email, password) VALUES ('Robert $ DROP TABLE users;");
+        codingQuestionService.addCodingQuestion(question6);
+        CodingAnswer answer61 = new CodingAnswer("','','');", question6);
+        codingAnswerService.addCodingAnswer(answer61);
+
+        List<CodingQuestion> questions1 = new ArrayList<>();
+        questions1.add(question1);
+        questions1.add(question2);
+        questions1.add(question3);
+        questions1.add(question4);
+        questions1.add(question5);
+        questions1.add(question6);
+
+        Map<Skills, Integer> rewardMap1 = new HashMap<>();
+        rewardMap1.put(Skills.DATA_STRUCTURES, 25);
+        CodingAssignment codingAssignment1 = new CodingAssignment(
+                "SQL basics",
+                "A series of code completion assignments that cover most of the basic SQL queries and require a little extra knowledge.",
+                rewardMap1,
+                4,
+                questions1
+        );
+        codingAssignmentService.addCodingAssignment(codingAssignment1);
+
+
+        CodingQuestion question7 = new CodingQuestion("List$ stringList = $ ArrayList<>();");
+        codingQuestionService.addCodingQuestion(question7);
+        CodingAnswer answer71 = new CodingAnswer("<String>", question7);
+        codingAnswerService.addCodingAnswer(answer71);
+        CodingAnswer answer72 = new CodingAnswer("new", question7);
+        codingAnswerService.addCodingAnswer(answer72);
+
+        CodingQuestion question8 = new CodingQuestion("public $ HelloWorld {\n  public" +
+                " $(String asrgs[]) {\n    $.println(\"Hello World!\");\n  }\n}");
+        codingQuestionService.addCodingQuestion(question8);
+        CodingAnswer answer81 = new CodingAnswer("class", question8);
+        codingAnswerService.addCodingAnswer(answer81);
+        CodingAnswer answer82 = new CodingAnswer("static void main", question8);
+        codingAnswerService.addCodingAnswer(answer82);
+        CodingAnswer answer83 = new CodingAnswer("System.out", question8);
+        codingAnswerService.addCodingAnswer(answer83);
+
+        CodingQuestion question9 = new CodingQuestion("public $ factorial(int n) {\n  " +
+                "int result = 1;\n  for ($; i <= n; i++) {\n    " +
+                "result *= i;\n  }\n  return result;");
+        codingQuestionService.addCodingQuestion(question9);
+        CodingAnswer answer91 = new CodingAnswer("int", question9);
+        codingAnswerService.addCodingAnswer(answer91);
+        CodingAnswer answer92 = new CodingAnswer("int i = 1", question9);
+        codingAnswerService.addCodingAnswer(answer92);
+
+        List<CodingQuestion> questions2 = new ArrayList<>();
+        questions2.add(question7);
+        questions2.add(question8);
+        questions2.add(question9);
+
+        Map<Skills, Integer> rewardMap2 = new HashMap<>();
+        rewardMap2.put(Skills.JAVA_BASIC, 12);
+        rewardMap2.put(Skills.OBJECT_ORIENTED_PROGRAMMING, 4);
+        CodingAssignment codingAssignment2 = new CodingAssignment(
+                "Java basics",
+                "A series of very simple code completion tasks. Fill in all the blanks in the Java code correctly.",
+                rewardMap2,
+                2,
+                questions2
+        );
+        codingAssignmentService.addCodingAssignment(codingAssignment2);
+
+
+    }
 //
 //    private void createQuizAssignment() {
 //        QuizQuestion question1 = new QuizQuestion("What are the principles of Object Oriented Programming?");
