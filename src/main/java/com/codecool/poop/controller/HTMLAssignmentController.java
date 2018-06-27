@@ -25,6 +25,9 @@ public class HTMLAssignmentController {
     @RequestMapping(value = "/coding-assignment", method = RequestMethod.GET)
     public String renderCodingAssignment(Model model,
                                          @RequestParam("assignment_id") int id) {
+        if (sessionService.getCurrentUser() == null) {
+            return "redirect:/login";
+        }
         CodingAssignment assignment = codingAssignmentService.getCodingAssignmentById(id);
         baseSettingsForAssignment(model, assignment);
         return "assignments/coding_assignment";
@@ -33,6 +36,9 @@ public class HTMLAssignmentController {
     @RequestMapping(value = "/quiz-assignment", method = RequestMethod.GET)
     public String renderQuizAssignment(Model model,
                                          @RequestParam("assignment_id") int id) {
+        if (sessionService.getCurrentUser() == null) {
+            return "redirect:/login";
+        }
         QuizAssignment assignment = quizAssignmentService.getQuizAssignmentById(id);
         baseSettingsForAssignment(model, assignment);
         return "assignments/quiz_assignment";
