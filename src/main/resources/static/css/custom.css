@@ -220,6 +220,8 @@ body {
 
 .lots-main-page-body {
     background: url("../img/background_image.jpg") no-repeat fixed center;
+    background-size: cover;
+    background-attachment: fixed;
 }
 
 .lots-title-image {
@@ -592,6 +594,17 @@ body {
 #assignment-finished {
     font-size: 1.5rem;
 }
+
+#map-image, #mapster_wrap_0 {
+    visibility: hidden;
+}
+
+#map_page_h1 {
+    text-align: center;
+    margin-top: 40px;
+}
+
+
 
 .my-dropdown {
     margin-left: -175px;
