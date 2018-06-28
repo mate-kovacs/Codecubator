@@ -35,7 +35,7 @@ index = {
 
         let wrapObject = document.getElementById("mapster_wrap_0");
         let margin = ($(window).width() - wrapObject.offsetWidth) / 2;
-        wrapObject.style.marginTop = "100px";
+        wrapObject.style.marginTop = "40px";
         wrapObject.style.marginLeft = `${margin}px`;
         wrapObject.style.visibility = "visible";
         document.getElementById("map-image").style.visibility = "visible";
