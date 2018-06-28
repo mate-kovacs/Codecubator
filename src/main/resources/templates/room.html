@@ -16,7 +16,11 @@
         <div class="coding-assignments-title">
             <h2>Coding Assignments</h2>
         </div>
-        <div class="" th:each="assignment : ${assignments}" th:classappend="${assignment.getClassName() == 'QuizAssignment'} ? quiz : coding" th:id="${assignment.id}">
+        <div class=""
+             th:id="'assignment_' + ${assignment.id}"
+             th:each="assignment : ${assignments}"
+             th:classappend="${assignment.getClassName() == 'QuizAssignment'} ? quiz : coding"
+            th:data-id="${assignment.id}">
             <h3 class="assignment-name" th:text="${assignment.name}">Product name</h3>
             <div class="assignment-body">
                 <p class="assignment-description" th:text="${assignment.description}">Assignment description...</p>
