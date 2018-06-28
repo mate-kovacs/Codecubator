@@ -41,7 +41,7 @@ function submit_question_listener() {
 function submit_answer(assignment_id, question_id, answers) {
     $.ajax({
         type: "POST",
-        url: "/coding-assignment",
+        url: "/coding-answer",
         data: {
             "question_id": question_id,
             "assignment_id": assignment_id,

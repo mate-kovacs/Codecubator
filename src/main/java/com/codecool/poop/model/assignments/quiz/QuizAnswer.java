@@ -7,10 +7,12 @@ import javax.persistence.*;
 public class QuizAnswer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "quiz_answer_id")
     private int id;
     private String answerText;
     private Boolean answerValidity;
     @ManyToOne
+    @JoinColumn(name = "question_id")
     private QuizQuestion question;
 
     public QuizAnswer(String answerText, Boolean answerValidity, QuizQuestion question) {
@@ -20,7 +22,7 @@ public class QuizAnswer {
         question.addAnswer(this);
     }
 
-    protected QuizAnswer() {}
+    public QuizAnswer() {}
 
     public String getAnswerText() {
         return answerText;
