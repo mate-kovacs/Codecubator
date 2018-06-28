@@ -64,6 +64,7 @@ class FightAnimator extends PIXI.Container {
         ];
 
         this.currentEvent = null;
+        this.currentCallback = null;
         this.storyPartInProgress = false;
         this.storyLineCounter = 0;
         this.player = playerCharacter;
@@ -202,12 +203,14 @@ class FightAnimator extends PIXI.Container {
         this.enemy.updateAnimation();
     }*/
 
-    playSuccefulAttack() {
+    playSuccefulAttack(callback) {
         this.currentEvent = this.fightEvents.SUCCESFUL_ATTACK;
+        this.currentCallback = callback;
     }
 
-    playUnsuccessfulAttack() {
+    playUnsuccessfulAttack(callback) {
         this.currentEvent = this.fightEvents.UNSUCCESFUL_ATTACK;
+        this.currentCallback = callback;
     }
 
     playGetRekt() {
@@ -256,6 +259,8 @@ class FightAnimator extends PIXI.Container {
         this.storyPartInProgress = false;
         this.player.armatureDisplay.animation.play("idle");
         this.enemy.armatureDisplay.animation.play("idle");
+        this.currentCallback();
+        this.currentCallback = null;
     }
 }
 
