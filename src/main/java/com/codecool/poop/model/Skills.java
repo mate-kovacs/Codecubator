@@ -7,7 +7,7 @@ public enum Skills {
     HTML_BASIC ("HTML basic", "HTML basic language knowledge"),
     CSS_BASIC ("CSS basic", "CSS basic language knowledge"),
     OBJECT_ORIENTED_PROGRAMMING ("OOP", "Object Oriented Programming paradigm knowledge"),
-    FUNCTIONAL_PROGRAMMING ("Functional Programming", "Functional PRogramming paradigm knowledge"),
+    FUNCTIONAL_PROGRAMMING ("Functional Programming", "Functional Programming paradigm knowledge"),
     ALGORITHMS ("Algorythm", "Algorythm knowledge"),
     PATTERNS ("Patterns", "Programming patterns knowledge"),
     DATA_STRUCTURES ("Data structures", "Data structures knowledge");

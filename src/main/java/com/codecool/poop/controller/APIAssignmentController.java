@@ -90,7 +90,6 @@ public class APIAssignmentController {
     public ResponseEntity<String> evaluateQuizAnswer(@RequestParam("answers[]") String answers[],
                                                      @RequestParam("question_id") Integer questionID) {
 
-        List<String> answerTexts = new ArrayList<>(Arrays.asList(answers));
         User user = sessionService.getCurrentUser();
 
 

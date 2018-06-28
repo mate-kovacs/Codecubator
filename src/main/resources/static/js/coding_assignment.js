@@ -1,16 +1,11 @@
-function take_assignment_listener() {
-    let take_asssignment_button = document.getElementById("take-assignment-button");
-    take_asssignment_button.addEventListener("click", function () {
-        document.getElementById("assignment-start").style.display = "none";
-        document.getElementById("question-list").style.display = "block";
-        document.getElementById("coding-question").style.display = "block";
-        document.getElementById("submit_question_button").style.display = "block";
-        document.getElementById("submit_error_message").style.display = "none";
-        document.getElementById("assignment-finished").style.display = "none";
-
-        let assignment_id = document.getElementById("assignment_id").getAttribute("data-assignment_id");
-        get_next_question(0, assignment_id);
-    })
+function init() {
+    document.getElementById("question-list").style.display = "block";
+    document.getElementById("coding-question").style.display = "block";
+    document.getElementById("submit_question_button").style.display = "block";
+    document.getElementById("submit_error_message").style.display = "none";
+    document.getElementById("assignment-finished").style.display = "none";
+    let assignment_id = document.getElementById("assignment_id").getAttribute("data-assignment_id");
+    get_next_question(0, assignment_id);
 }
 
 function submit_question_listener() {
@@ -50,14 +45,19 @@ function submit_answer(assignment_id, question_id, answers) {
         success: function (response) {
             console.log(response);
             if (response.correct_answer) {
-                fight.playSuccefulAttack();
+                fight.playSuccefulAttack(function () {
+                    get_next_question(question_id, assignment_id);
+                });
             } else {
-                fight.playUnsuccessfulAttack();
-            }
-            if (response.death) {
-                create_and_show_html_failed_assignment();
-            } else {
-                get_next_question(question_id, assignment_id);
+                if (response.death){
+                    fight.playUnsuccessfulAttack(function () {
+                        create_and_show_html_failed_assignment();
+                    });
+                } else {
+                    fight.playUnsuccessfulAttack(function () {
+                        get_next_question(question_id, assignment_id);
+                    });
+                }
             }
         },
     });
@@ -100,7 +100,6 @@ function create_and_show_html_failed_assignment() {
     let finished_template = document.getElementById("assignment-finished");
     finished_template.innerHTML = "<div id='assignment_finished_text'>You have failed this assignment!</div>";
     document.getElementById("assignment-finished").style.display = "block";
-    // document.getElementById("assignment-finished").style.visibility = "visible";
 }
 
 function create_and_show_html_completed_assignment(max_points, points_achieved) {
@@ -110,7 +109,6 @@ function create_and_show_html_completed_assignment(max_points, points_achieved) 
         points_achieved + " / " + max_points +
         " points on this assignment.";
     document.getElementById("assignment-finished").style.display = "block";
-    // document.getElementById("assignment-finished").style.visibility = "visible";
 }
 
 function set_html_next_question(question_parts, answer_ids) {
@@ -130,5 +128,5 @@ function set_html_next_question(question_parts, answer_ids) {
     coding_question_body.innerHTML = html_string;
 }
 
-take_assignment_listener();
+init();
 submit_question_listener();
