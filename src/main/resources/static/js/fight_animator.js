@@ -82,7 +82,6 @@ class FightAnimator extends PIXI.Container {
                 this.storyPartInProgress = true;
                 this.player.armatureDisplay.animation.play("die", 1);
             },
-            this.moveEnemyToStart
         ];
 
         this.currentEvent = null;
@@ -221,7 +220,7 @@ class FightAnimator extends PIXI.Container {
             case this.fightEvents.UNSUCCESFUL_ATTACK_DEATH:
                 if (this.storyLineCounter === this.unsuccAttackDeathStoryLine.length) {
                     this.eventCompleted();
-                    this.enemy.armatureDisplay.animation.play("idle");
+                    this.enemy.armatureDisplay.animation.play("win");
                 } else {
                     this.storyPartInProgress = true;
                     this.unsuccAttackDeathStoryLine[this.storyLineCounter].call(this);
