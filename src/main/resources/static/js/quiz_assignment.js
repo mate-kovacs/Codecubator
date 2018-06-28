@@ -7,7 +7,8 @@ quizAssignment = {
     },
 
     submit_answer_listener: function () {
-        let submit_answer_button = document.getElementById("submit-button");
+        let submit_answer_button = document.getElementById("submit_question_button" +
+            "");
         submit_answer_button.addEventListener("click", function () {
 
             if (false) {
@@ -71,7 +72,8 @@ quizAssignment = {
             },
             success: function (response) {
                 if (response.points_achieved != null) {
-                    document.getElementById("submit-button").style.visibility = "hidden";
+                    document.getElementById("submit_question_button" +
+                        "").style.visibility = "hidden";
                     let max_points = response.max_points;
                     let points_achieved = response.points_achieved;
                     quizAssignment.create_and_show_html_completed_assignment(max_points, points_achieved);
@@ -102,14 +104,16 @@ quizAssignment = {
 
     create_and_show_html_failed_assignment: function () {
         document.getElementById("question-title").style.display = "none";
-        document.getElementById("submit-button").style.display = "none";
+        document.getElementById("submit_question_button" +
+            "").style.display = "none";
         let finished_template = document.getElementById("answer-container");
         finished_template.innerHTML = "You have failed this assignment!";
     },
 
     create_and_show_html_completed_assignment: function (max_points, points_achieved) {
         document.getElementById("question-title").style.display = "none";
-        document.getElementById("submit-button").style.display = "none";
+        document.getElementById("submit_question_button" +
+            "").style.display = "none";
         document.getElementById("answer-container").style.display = "none";
         let score = document.getElementById("assignment-score");
         score.innerHTML = "You have scored " +
