@@ -50,14 +50,19 @@ function submit_answer(assignment_id, question_id, answers) {
         success: function (response) {
             console.log(response);
             if (response.correct_answer) {
-                fight.playSuccefulAttack();
+                fight.playSuccefulAttack(function () {
+                    get_next_question(question_id, assignment_id);
+                });
             } else {
-                fight.playUnsuccessfulAttack();
-            }
-            if (response.death) {
-                create_and_show_html_failed_assignment();
-            } else {
-                get_next_question(question_id, assignment_id);
+                if (response.death){
+                    fight.playUnsuccessfulAttack(function () {
+                        create_and_show_html_failed_assignment();
+                    });
+                } else {
+                    fight.playUnsuccessfulAttack(function () {
+                        get_next_question(question_id, assignment_id);
+                    });
+                }
             }
         },
     });
