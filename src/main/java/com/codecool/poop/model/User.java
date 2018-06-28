@@ -23,7 +23,6 @@ public class User {
     private String email;
 
     private int codeCoins;
-    private Date lastLogin;
     private LocalDateTime registrationDate;
 
     @CollectionTable(name = "users_skills")
@@ -86,14 +85,6 @@ public class User {
 
     public void setCodeCoins(int codeCoins) {
         this.codeCoins = codeCoins;
-    }
-
-    public Date getLastLogin() {
-        return lastLogin;
-    }
-
-    public void setLastLogin(Date lastLogin) {
-        this.lastLogin = lastLogin;
     }
 
     public LocalDateTime getRegistrationDate() {
