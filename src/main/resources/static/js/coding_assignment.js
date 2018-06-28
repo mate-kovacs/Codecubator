@@ -115,13 +115,13 @@ function set_html_next_question(question_parts, answer_ids) {
     let coding_question_body = document.getElementById("question_holder");
 
     let html_string =
-        "<div class='question_part'>" +
+        "<div class='question_part inline-div'>" +
         question_parts[0] +
         "</div>";
     for (let i = 0; i < answer_ids.length; i++) {
         html_string +=
             "<input class='answer_part lots-input-field' type='text' id='" + answer_ids[i] + "'>" +
-            "<div class='question_part'>" +
+            "<div class='question_part inline-div'>" +
             question_parts[i + 1] +
             "</div>"
     }

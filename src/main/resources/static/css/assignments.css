@@ -78,3 +78,8 @@
 .blue-room {
     background-color: rgb(70, 122, 142);
 }
+
+.inline-div {
+    display: inline-block;
+    margin: 0 12px;
+}
