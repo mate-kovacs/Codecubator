@@ -2,7 +2,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/common_head.html :: common_head(~{::title}, ~{::script})">
     <title th:text="${#strings.capitalizeWords(roomName.replace('-', ' '))}"></title>
-    <script></script>
+    <script src="js/take_assignment.js" defer></script>
 </head>
 <body class="lots-main-page-body">
 <div th:include="fragments/navbar.html"></div>
@@ -16,7 +16,7 @@
         <div class="coding-assignments-title">
             <h2>Coding Assignments</h2>
         </div>
-        <div class="" th:each="assignment : ${assignments}" th:classappend="${assignment.getClassName() == 'QuizAssignment'} ? quiz : coding">
+        <div class="" th:each="assignment : ${assignments}" th:classappend="${assignment.getClassName() == 'QuizAssignment'} ? quiz : coding" th:id="${assignment.id}">
             <h3 class="assignment-name" th:text="${assignment.name}">Product name</h3>
             <div class="assignment-body">
                 <p class="assignment-description" th:text="${assignment.description}">Assignment description...</p>
