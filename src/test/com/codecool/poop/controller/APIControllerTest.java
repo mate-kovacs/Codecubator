@@ -11,7 +11,6 @@ import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
@@ -31,8 +30,6 @@ public class APIControllerTest {
 
     @Autowired
     WebApplicationContext wac;
-    @Autowired
-    MockHttpSession session;
     @Autowired
     private MockMvc mockMvc;
 
@@ -54,6 +51,7 @@ public class APIControllerTest {
         String password = BCrypt.hashpw("cccccccc", BCrypt.gensalt(12));
         User cili = new User("cili", password, "cili@cili.hu");
         when(userService.getUserByName("cili")).thenReturn(cili);
+
         mockMvc.perform(post("/login")
                 .param("name", "cili")
                 .param("password", "cccccccc"))
@@ -63,6 +61,7 @@ public class APIControllerTest {
     @Test
     public void login_with_wrong_username_returns_not_matching() throws Exception {
         when(userService.getUserByName("cili")).thenThrow(new NullPointerException());
+
         mockMvc.perform(post("/login")
                 .param("name", "cili")
                 .param("password", "cccccccc"))
@@ -74,6 +73,7 @@ public class APIControllerTest {
         String password = BCrypt.hashpw("cccccccc", BCrypt.gensalt(12));
         User cili = new User("cili", password, "cili@cili.hu");
         when(userService.getUserByName("cili")).thenReturn(cili);
+
         mockMvc.perform(post("/login")
                 .param("name", "cili")
                 .param("password", "aaaaaaaaaa"))
@@ -82,7 +82,6 @@ public class APIControllerTest {
 
     @Test
     public void registration_returns_false() throws Exception {
-        String password = BCrypt.hashpw("cccccccc", BCrypt.gensalt(12));
         when(userService.saveUser(any(User.class))).thenReturn(false);
 
         mockMvc.perform(post("/registration")
@@ -97,7 +96,6 @@ public class APIControllerTest {
 
     @Test
     public void registration_returns_true() throws Exception {
-        String password = BCrypt.hashpw("cccccccc", BCrypt.gensalt(12));
         when(userService.saveUser(any(User.class))).thenReturn(true);
 
         mockMvc.perform(post("/registration")
