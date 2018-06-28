@@ -49,7 +49,7 @@ quizAssignment = {
                     });
                 } else {
                     if (response.death) {
-                        fight.playUnsuccessfulAttack(function () {
+                        fight.playUnsuccessfulAttackWithDeath(function () {
                             quizAssignment.create_and_show_html_failed_assignment();
                         });
                     } else {

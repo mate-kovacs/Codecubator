@@ -50,7 +50,7 @@ function submit_answer(assignment_id, question_id, answers) {
                 });
             } else {
                 if (response.death){
-                    fight.playUnsuccessfulAttack(function () {
+                    fight.playUnsuccessfulAttackWithDeath(function () {
                         create_and_show_html_failed_assignment();
                     });
                 } else {

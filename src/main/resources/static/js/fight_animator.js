@@ -13,7 +13,6 @@ class Character {
         this.armatureDisplay = null;
     }
     moveTowardGoal(deltaTime) {
-        console.log("Moving toward my goal");
         if (this.goalPositionX < this.armatureDisplay.x) {
             this.armatureDisplay.x  = Math.max(this.armatureDisplay.x - (this.speed * deltaTime), this.goalPositionX);
         } else {
@@ -28,7 +27,8 @@ class FightAnimator extends PIXI.Container {
         this.fightEvents = Object.freeze({
             SUCCESFUL_ATTACK: Symbol("succ_atk"),
             UNSUCCESFUL_ATTACK: Symbol("unsucc_atk"),
-            GET_REKT: Symbol("get_rekt")
+            GET_REKT: Symbol("get_rekt"),
+            UNSUCCESFUL_ATTACK_DEATH: Symbol("unsucc_atk_death")
         });
 
         this.succAttackStoryLine = [
@@ -60,6 +60,28 @@ class FightAnimator extends PIXI.Container {
                 this.player.armatureDisplay.animation.play("get_damaged", 1);
             },
             this.movePlayerToStart,
+            this.moveEnemyToStart
+        ];
+
+        this.unsuccAttackDeathStoryLine = [
+            this.movePlayerNearEnemy,
+            function () {
+                this.storyPartInProgress = true;
+                this.player.armatureDisplay.animation.play("hit", 1);
+            },
+            this.moveEnemyToCounterAttack,
+            function () {
+                this.storyPartInProgress = true;
+                this.enemy.armatureDisplay.animation.play("hit", 1);
+            },
+            function () {
+                this.storyPartInProgress = true;
+                this.player.armatureDisplay.animation.play("get_damaged", 1);
+            },
+            function () {
+                this.storyPartInProgress = true;
+                this.player.armatureDisplay.animation.play("die", 1);
+            },
             this.moveEnemyToStart
         ];
 
@@ -179,6 +201,8 @@ class FightAnimator extends PIXI.Container {
             case this.fightEvents.SUCCESFUL_ATTACK:
                 if (this.storyLineCounter === this.succAttackStoryLine.length) {
                     this.eventCompleted();
+                    this.player.armatureDisplay.animation.play("idle");
+                    this.enemy.armatureDisplay.animation.play("idle");
                 } else {
                     this.storyPartInProgress = true;
                     this.succAttackStoryLine[this.storyLineCounter].call(this);
@@ -187,29 +211,40 @@ class FightAnimator extends PIXI.Container {
             case this.fightEvents.UNSUCCESFUL_ATTACK:
                 if (this.storyLineCounter === this.unsuccAttackStoryLine.length) {
                     this.eventCompleted();
+                    this.player.armatureDisplay.animation.play("idle");
+                    this.enemy.armatureDisplay.animation.play("idle");
                 } else {
                     this.storyPartInProgress = true;
                     this.unsuccAttackStoryLine[this.storyLineCounter].call(this);
                 }
                 break;
+            case this.fightEvents.UNSUCCESFUL_ATTACK_DEATH:
+                if (this.storyLineCounter === this.unsuccAttackDeathStoryLine.length) {
+                    this.eventCompleted();
+                    this.enemy.armatureDisplay.animation.play("idle");
+                } else {
+                    this.storyPartInProgress = true;
+                    this.unsuccAttackDeathStoryLine[this.storyLineCounter].call(this);
+                }
+                break;
         }
     }
 
-    /*
-    update(deltaTime) {
-        this.player.updatePosition(deltaTime);
-        this.player.updateAnimation();
-        this.enemy.updatePosition(deltaTime);
-        this.enemy.updateAnimation();
-    }*/
-
     playSuccefulAttack(callback) {
+        console.log("Called SuccesfulAttack animation");
         this.currentEvent = this.fightEvents.SUCCESFUL_ATTACK;
         this.currentCallback = callback;
     }
 
     playUnsuccessfulAttack(callback) {
+        console.log("Called UnsuccesfulAttack animation");
         this.currentEvent = this.fightEvents.UNSUCCESFUL_ATTACK;
+        this.currentCallback = callback;
+    }
+
+    playUnsuccessfulAttackWithDeath(callback) {
+        console.log("Called UnsuccesfulAttackWithDeath animation");
+        this.currentEvent = this.fightEvents.UNSUCCESFUL_ATTACK_DEATH;
         this.currentCallback = callback;
     }
 
@@ -257,8 +292,8 @@ class FightAnimator extends PIXI.Container {
         this.currentEvent = null;
         this.storyLineCounter = 0;
         this.storyPartInProgress = false;
-        this.player.armatureDisplay.animation.play("idle");
-        this.enemy.armatureDisplay.animation.play("idle");
+        //this.player.armatureDisplay.animation.play("idle");
+        //this.enemy.armatureDisplay.animation.play("idle");
         this.currentCallback();
         this.currentCallback = null;
     }
