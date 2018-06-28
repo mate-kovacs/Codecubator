@@ -108,6 +108,10 @@ public abstract class Assignment {
         this.room = room;
     }
 
+    public String getClassName() {
+        return this.getClass().getSimpleName();
+    }
+
     @Override
     public String toString() {
         return "Assignment{" +

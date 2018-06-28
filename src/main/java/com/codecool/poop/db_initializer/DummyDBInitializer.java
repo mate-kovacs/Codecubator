@@ -1,5 +1,6 @@
 package com.codecool.poop.db_initializer;
 
+import com.codecool.poop.model.Rooms;
 import com.codecool.poop.model.assignments.coding.CodingQuestion;
 import com.codecool.poop.model.assignments.quiz.QuizAnswer;
 import com.codecool.poop.service.UserService;
@@ -156,7 +157,8 @@ public class DummyDBInitializer {
                 "A series of code completion assignments that cover most of the basic SQL queries and require a little extra knowledge.",
                 rewardMap1,
                 4,
-                questions1
+                questions1,
+                Rooms.GREEN_ROOM
         );
         codingAssignmentService.addCodingAssignment(codingAssignment1);
 
@@ -200,7 +202,8 @@ public class DummyDBInitializer {
                 "A series of very simple code completion tasks. Fill in all the blanks in the Java code correctly.",
                 rewardMap2,
                 2,
-                questions2
+                questions2,
+                Rooms.BLUE_ROOM
         );
         codingAssignmentService.addCodingAssignment(codingAssignment2);
 
@@ -312,7 +315,8 @@ public class DummyDBInitializer {
                 "A series of multiple choice questions regarding deeper knowledge of the Java language and Object Oriented Programming.",
                 rewardMap1,
                 4,
-                questions1
+                questions1,
+                Rooms.RED_ROOM
         );
         quizAssignmentService.addQuizAssignment(quizAssignment1);
 
@@ -385,7 +389,8 @@ public class DummyDBInitializer {
                 "A series of very short questions regarding algorythms, web design, and touching on Operation Systems.",
                 rewardMap2,
                 3,
-                questions2
+                questions2,
+                Rooms.GREEN_ROOM
         );
         quizAssignmentService.addQuizAssignment(quizAssignment2);
 
