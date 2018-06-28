@@ -264,7 +264,7 @@ class FightAnimator extends PIXI.Container {
     }
 }
 
-let ASSETPATH = "/static/animation/";
+let ASSETPATH = "animation/";
 
 let playerChar = new Character(
     100,
