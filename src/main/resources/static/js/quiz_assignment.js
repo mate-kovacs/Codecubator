@@ -3,6 +3,7 @@ quizAssignment = {
         let assignment_id = document.getElementsByClassName("container")[0].getAttribute("data-assignment-id");
         this.get_next_question(0, assignment_id);
         this.submit_answer_listener();
+        document.getElementById("assignment-finished").style.display = "none";
     },
 
     submit_answer_listener: function () {
@@ -104,10 +105,12 @@ quizAssignment = {
     create_and_show_html_completed_assignment: function (max_points, points_achieved) {
         document.getElementById("question-title").style.display = "none";
         document.getElementById("submit-button").style.display = "none";
-        let score = document.getElementById("answer-container");
+        document.getElementById("answer-container").style.display = "none";
+        let score = document.getElementById("assignment-score");
         score.innerHTML = "You have scored " +
             points_achieved + " / " + max_points +
             " points on this assignment.";
+        document.getElementById("assignment-finished").style.display = "block";
     }
 };
 
