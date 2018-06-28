@@ -42,14 +42,19 @@ quizAssignment = {
             success: function (response) {
                 console.log(response);
                 if (response.correct_answer) {
-                    fight.playSuccefulAttack();
+                    fight.playSuccefulAttack(function () {
+                        quizAssignment.get_next_question(questionID, assignmentID);
+                    });
                 } else {
-                    fight.playUnsuccessfulAttack();
-                }
-                if (response.death) {
-                    quizAssignment.create_and_show_html_failed_assignment();
-                } else {
-                    quizAssignment.get_next_question(questionID, assignmentID);
+                    if (response.death) {
+                        fight.playUnsuccessfulAttack(function () {
+                            quizAssignment.create_and_show_html_failed_assignment();
+                        });
+                    } else {
+                        fight.playUnsuccessfulAttack(function () {
+                            quizAssignment.get_next_question(questionID, assignmentID);
+                        });
+                    }
                 }
             },
         });
