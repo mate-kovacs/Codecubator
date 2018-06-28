@@ -30,7 +30,7 @@
                 </div>
                 <div class="exp-rewards" th:each="reward : ${assignment.expRewards}" style="font-size: 1.5em">
                 <span class="exp-reward badge badge-success"
-                      th:text="'+' + ${reward.value} + ' ' + ${reward.key}"></span>
+                      th:text="'+' + ${reward.value} + ' ' + ${reward.key.toString().replace('_', ' ')}"></span>
                 </div>
             </div>
         </div>
