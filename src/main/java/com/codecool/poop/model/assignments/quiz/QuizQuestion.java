@@ -15,12 +15,15 @@ public class QuizQuestion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String questionText;
-    @ManyToMany
-    private Set<Assignment> assignments = new HashSet<>();
-    @OneToMany(mappedBy = "question")
+
+    @OneToMany(mappedBy = "question", cascade = CascadeType.PERSIST)
     private List<QuizAnswer> quizAnswers = new ArrayList<>();
 
-    protected QuizQuestion() {}
+    @ManyToMany
+    @JoinColumn(name = "assignment_id")
+    private Set<Assignment> assignments = new HashSet<>();
+
+    public QuizQuestion() {}
 
     public QuizQuestion(String questionText) {
         this.questionText = questionText;
@@ -55,16 +58,16 @@ public class QuizQuestion {
     }
 
     public void addAnswer(QuizAnswer answer) {
-        if (!quizAnswers.contains(answer)){
+//        if (!quizAnswers.contains(answer)){
             quizAnswers.add(answer);
-        }
+//        }
     }
 
-    public void addAssigment(Assignment assignment){
+    public void addAssignment(Assignment assignment){
         assignments.add(assignment);
     }
 
-    public void removeAssigment(Assignment assignment){
+    public void removeAssignment(Assignment assignment){
         assignments.remove(assignment);
     }
 

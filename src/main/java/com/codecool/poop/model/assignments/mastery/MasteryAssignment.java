@@ -6,6 +6,7 @@ import com.codecool.poop.model.assignments.Assignment;
 import com.codecool.poop.model.assignments.coding.CodingQuestion;
 import com.codecool.poop.model.assignments.quiz.QuizQuestion;
 
+import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
@@ -15,10 +16,10 @@ import java.util.*;
 @DiscriminatorValue("MASTERY")
 public class MasteryAssignment extends Assignment{
 
-    @ManyToMany(mappedBy = "assignments")
+    @ManyToMany(mappedBy = "assignments", cascade = CascadeType.PERSIST)
     Set<CodingQuestion> codingQuestions = new HashSet<>();
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "assignments", cascade = CascadeType.PERSIST)
     List<QuizQuestion> quizQuestions = new ArrayList<>();
 
     public MasteryAssignment(String name,
@@ -31,14 +32,20 @@ public class MasteryAssignment extends Assignment{
         super(name, desciption, expReward, codeCoinReward, room);
         this.codingQuestions = codingQuestions;
         this.quizQuestions = quizQuestions;
+        setQuestionReferences();
     }
 
     public MasteryAssignment(){
     }
 
+    @Override
+    public Integer getMaxPoints() {
+        return 0;
+    }
+
     private void setQuestionReferences(){
         for (QuizQuestion question: quizQuestions) {
-            question.addAssigment(this);
+            question.addAssignment(this);
         }
         for (CodingQuestion question: codingQuestions) {
             question.addAssignment(this);

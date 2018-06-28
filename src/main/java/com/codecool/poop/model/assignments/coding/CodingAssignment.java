@@ -12,7 +12,7 @@ import java.util.*;
 public class CodingAssignment extends Assignment{
 
 
-    @ManyToMany(mappedBy = "assignments")
+    @ManyToMany(mappedBy = "assignments", cascade = CascadeType.PERSIST)
     private List<CodingQuestion> questions = new ArrayList<>();
 
     public CodingAssignment(String name,
@@ -35,7 +35,8 @@ public class CodingAssignment extends Assignment{
         }
     }
 
-    public int getMaxPoints(){
+    @Override
+    public Integer getMaxPoints(){
         int points = 0;
         for (CodingQuestion question: questions) {
             points += question.getMaxPoints();

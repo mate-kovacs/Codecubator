@@ -1,11 +1,15 @@
 package com.codecool.poop.service.quiz_services;
 
+import com.codecool.poop.model.assignments.coding.CodingAssignment;
 import com.codecool.poop.model.assignments.quiz.QuizAssignment;
 import com.codecool.poop.repository.quiz_repositories.QuizAssignmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
+@Service
 public class QuizAssignmentService {
 
     @Autowired
@@ -20,6 +24,7 @@ public class QuizAssignmentService {
     }
 
     public QuizAssignment getQuizAssignmentById(Integer id) {
-        return quizAssignmentRepository.getOne(id);
+        Optional<QuizAssignment> assignment = quizAssignmentRepository.findById(id);
+        return assignment.orElse(null);
     }
 }

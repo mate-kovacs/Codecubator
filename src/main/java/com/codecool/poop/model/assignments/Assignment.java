@@ -11,7 +11,7 @@ import java.util.Map;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="assignment_type",
         discriminatorType = DiscriminatorType.STRING)
-@Table(name = "assigments")
+@Table(name = "assignments")
 public abstract class Assignment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,6 +42,8 @@ public abstract class Assignment {
         this.creationDate = LocalDateTime.now();
         this.room = room;
     }
+
+    public abstract Integer getMaxPoints();
 
     public String getName() {
         return name;
