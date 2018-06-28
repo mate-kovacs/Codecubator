@@ -11,6 +11,7 @@ import org.springframework.web.context.WebApplicationContext;
 public class SessionService {
 
     private User currentUser;
+    private int currentPoints;
 
     public User getCurrentUser() {
         return currentUser;
@@ -18,5 +19,13 @@ public class SessionService {
 
     public void setCurrentUser(User currentUser) {
         this.currentUser = currentUser;
+    }
+
+    public int getCurrentPoints() {
+        return currentPoints;
+    }
+
+    public void setCurrentPoints(int currentPoints) {
+        this.currentPoints = currentPoints;
     }
 }

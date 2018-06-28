@@ -4,6 +4,7 @@ import com.codecool.poop.model.Skills;
 import com.codecool.poop.model.assignments.Assignment;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -11,10 +12,17 @@ import java.util.Map;
 @DiscriminatorValue("QUIZ")
 public class QuizAssignment extends Assignment {
 
-    @ManyToMany (mappedBy = "assignments")
-    private List<QuizQuestion> questions;
+    @ManyToMany (mappedBy = "assignments", cascade = CascadeType.PERSIST)
+    private List<QuizQuestion> questions = new ArrayList<>();
 
-    protected QuizAssignment() {}
+    public QuizAssignment() {}
+
+    @Override
+    public Integer getMaxPoints() {
+        return questions.stream()
+                .mapToInt(QuizQuestion::getMaxPoints)
+                .sum();
+    }
 
     public QuizAssignment(String name, String description, Map<Skills, Integer> expRewards, Integer codeCoinReward, List<QuizQuestion> questions) {
         super(name, description, expRewards, codeCoinReward);
@@ -28,7 +36,7 @@ public class QuizAssignment extends Assignment {
 
     private void setQuestionReferences(){
         for (QuizQuestion question : questions){
-            question.addAssigment(this);
+            question.addAssignment(this);
         }
     }
 
@@ -36,9 +44,4 @@ public class QuizAssignment extends Assignment {
         this.questions = questions;
     }
 
-    public Integer getMaxPoint() {
-        return questions.stream()
-                .mapToInt(QuizQuestion::getMaxPoints)
-                .sum();
-    }
 }

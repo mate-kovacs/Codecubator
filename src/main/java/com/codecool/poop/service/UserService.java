@@ -32,6 +32,7 @@ public class UserService {
     public void addRewardToUser(User user, Assignment assignment) {
         addCoinRewardToUser(user, assignment);
         addSkillRewardToUser(user, assignment);
+        userRepository.save(user);
     }
 
     private void addCoinRewardToUser(User user, Assignment assignment) {

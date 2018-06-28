@@ -41,7 +41,7 @@ function submit_question_listener() {
 function submit_answer(assignment_id, question_id, answers) {
     $.ajax({
         type: "POST",
-        url: "/coding-assignment",
+        url: "/coding-answer",
         data: {
             "question_id": question_id,
             "assignment_id": assignment_id,
@@ -50,14 +50,19 @@ function submit_answer(assignment_id, question_id, answers) {
         success: function (response) {
             console.log(response);
             if (response.correct_answer) {
-                fight.playSuccefulAttack();
+                fight.playSuccefulAttack(function () {
+                    get_next_question(question_id, assignment_id);
+                });
             } else {
-                fight.playUnsuccessfulAttack();
-            }
-            if (response.death) {
-                create_and_show_html_failed_assignment();
-            } else {
-                get_next_question(question_id, assignment_id);
+                if (response.death){
+                    fight.playUnsuccessfulAttack(function () {
+                        create_and_show_html_failed_assignment();
+                    });
+                } else {
+                    fight.playUnsuccessfulAttack(function () {
+                        get_next_question(question_id, assignment_id);
+                    });
+                }
             }
         },
     });

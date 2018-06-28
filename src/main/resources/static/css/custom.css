@@ -604,3 +604,26 @@ body {
     margin-top: 40px;
 }
 
+
+
+.my-dropdown {
+    margin-left: -175px;
+    margin-top: 13px;
+
+}
+
+.user-dropdown {
+    margin-right: 20px;
+}
+
+@media (max-width: 991px) {
+    .my-dropdown {
+        width: fit-content !important;
+        margin-left: 0 !important;
+        margin-top: 0 !important;
+    }
+
+    .user-dropdown {
+        margin-left: 0px !important;
+    }
+}

@@ -3,9 +3,11 @@ package com.codecool.poop.service.quiz_services;
 import com.codecool.poop.model.assignments.quiz.QuizQuestion;
 import com.codecool.poop.repository.quiz_repositories.QuizQuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class QuizQuestionService {
 
     @Autowired
