@@ -26,6 +26,7 @@ class FightAnimator extends PIXI.Container {
         super();
         this.fightEvents = Object.freeze({
             SUCCESFUL_ATTACK: Symbol("succ_atk"),
+            SUCCESFUL_ATTACK_WIN: Symbol("succ_atk_win"),
             UNSUCCESFUL_ATTACK: Symbol("unsucc_atk"),
             GET_REKT: Symbol("get_rekt"),
             UNSUCCESFUL_ATTACK_DEATH: Symbol("unsucc_atk_death")
@@ -42,6 +43,22 @@ class FightAnimator extends PIXI.Container {
                 this.enemy.armatureDisplay.animation.play("get_damaged", 1);
             },
             this.movePlayerToStart
+        ];
+
+        this.succAttackWinStoryLine = [
+            this.movePlayerToEnemy,
+            function () {
+                this.storyPartInProgress = true;
+                this.player.armatureDisplay.animation.play("hit", 1);
+            },
+            function () {
+                this.storyPartInProgress = true;
+                this.enemy.armatureDisplay.animation.play("get_damaged", 1);
+            },
+            function () {
+                this.storyPartInProgress = true;
+                this.enemy.armatureDisplay.animation.play("die", 1);
+            }
         ];
 
         this.unsuccAttackStoryLine = [
@@ -207,6 +224,15 @@ class FightAnimator extends PIXI.Container {
                     this.succAttackStoryLine[this.storyLineCounter].call(this);
                 }
                 break;
+            case this.fightEvents.SUCCESFUL_ATTACK_WIN:
+                if (this.storyLineCounter === this.succAttackWinStoryLine.length) {
+                    this.eventCompleted();
+                    this.player.armatureDisplay.animation.play("win");
+                } else {
+                    this.storyPartInProgress = true;
+                    this.succAttackWinStoryLine[this.storyLineCounter].call(this);
+                }
+                break;
             case this.fightEvents.UNSUCCESFUL_ATTACK:
                 if (this.storyLineCounter === this.unsuccAttackStoryLine.length) {
                     this.eventCompleted();
@@ -232,6 +258,12 @@ class FightAnimator extends PIXI.Container {
     playSuccefulAttack(callback) {
         console.log("Called SuccesfulAttack animation");
         this.currentEvent = this.fightEvents.SUCCESFUL_ATTACK;
+        this.currentCallback = callback;
+    }
+
+    playSuccefulAttackAndWin(callback) {
+        console.log("Called SuccesfulAttackAndWin animation");
+        this.currentEvent = this.fightEvents.SUCCESFUL_ATTACK_WIN;
         this.currentCallback = callback;
     }
 
@@ -320,4 +352,4 @@ let enemyChar = new Character(
     "idle"
 );
 
-let fight = new FightAnimator(800, 300, playerChar, enemyChar);
+let fight = new FightAnimator(900, 300, playerChar, enemyChar);

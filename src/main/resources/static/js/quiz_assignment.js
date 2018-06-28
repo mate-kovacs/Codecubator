@@ -44,7 +44,7 @@ quizAssignment = {
             success: function (response) {
                 console.log(response);
                 if (response.correct_answer) {
-                    fight.playSuccefulAttack(function () {
+                    fight.playSuccefulAttackAndWin(function () {
                         quizAssignment.get_next_question(questionID, assignmentID);
                     });
                 } else {
