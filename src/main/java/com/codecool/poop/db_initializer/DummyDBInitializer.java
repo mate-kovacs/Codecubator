@@ -156,7 +156,66 @@ public class DummyDBInitializer {
         );
         codingAssignmentService.addCodingAssignment(codingAssignment2);
 
+        CodingQuestion question10 = new CodingQuestion("$ my_function(param1, param2)$");
+        CodingAnswer answer101 = new CodingAnswer("def", question10);
+        CodingAnswer answer102 = new CodingAnswer(":", question10);
 
+        CodingQuestion question11 = new CodingQuestion("new_list = [element $ element $ old_list $ element < 12]");
+        CodingAnswer answer111 = new CodingAnswer("for", question11);
+        CodingAnswer answer112 = new CodingAnswer("in", question11);
+        CodingAnswer answer113 = new CodingAnswer("if", question11);
+
+        CodingQuestion question12 = new CodingQuestion("counter $ counter+1 $ element==sample $ counter");
+        CodingAnswer answer121 = new CodingAnswer("=", question12);
+        CodingAnswer answer122 = new CodingAnswer("if", question12);
+        CodingAnswer answer123 = new CodingAnswer("else", question12);
+
+        List<CodingQuestion> questions3 = new ArrayList<>();
+        questions3.add(question10);
+        questions3.add(question11);
+        questions3.add(question12);
+
+        Map<Skills, Integer> rewardMap3 = new HashMap<>();
+        rewardMap3.put(Skills.PYTHON_BASIC, 15);
+        rewardMap3.put(Skills.FUNCTIONAL_PROGRAMMING, 2);
+        CodingAssignment codingAssignment3 = new CodingAssignment(
+                "Python basics",
+                "A series of simple code completion tasks in the well-known and beloved Python language. Fill in all the blanks in the Java code correctly.",
+                rewardMap3,
+                2,
+                questions3,
+                Rooms.WHITE_ROOM
+        );
+        codingAssignmentService.addCodingAssignment(codingAssignment3);
+
+        CodingQuestion question13 = new CodingQuestion("$ commit $ 'lorem ipsum dolor sit amet'");
+        CodingAnswer answer131 = new CodingAnswer("git", question13);
+        CodingAnswer answer132 = new CodingAnswer("-m", question13);
+
+        CodingQuestion question14 = new CodingQuestion("git reset $hard $^");
+        CodingAnswer answer141 = new CodingAnswer("--", question14);
+        CodingAnswer answer142 = new CodingAnswer("HEAD", question14);
+
+        CodingQuestion question15 = new CodingQuestion("git $ -b new_branch");
+        CodingAnswer answer151 = new CodingAnswer("checkout", question15);
+
+        List<CodingQuestion> questions4 = new ArrayList<>();
+        questions4.add(question13);
+        questions4.add(question14);
+        questions4.add(question15);
+
+        Map<Skills, Integer> rewardMap4 = new HashMap<>();
+        rewardMap4.put(Skills.DATA_STRUCTURES, 10);
+        rewardMap4.put(Skills.PATTERNS, 2);
+        CodingAssignment codingAssignment4 = new CodingAssignment(
+                "Git basics",
+                "A series of simple code completion tasks in which you can test how well do you remember git commands from before the times of smart IDEs.",
+                rewardMap4,
+                2,
+                questions4,
+                Rooms.GREEN_ROOM
+        );
+        codingAssignmentService.addCodingAssignment(codingAssignment4);
     }
 
     private void createQuizAssignment() {
@@ -277,5 +336,127 @@ public class DummyDBInitializer {
                 Rooms.GREEN_ROOM
         );
         quizAssignmentService.addQuizAssignment(quizAssignment2);
+
+        QuizQuestion question12 = new QuizQuestion("What is the highest number in the following list: range(12)?");
+        QuizAnswer answer121 = new QuizAnswer("11 ", false, question12);
+        QuizAnswer answer122 = new QuizAnswer("12 ", true, question12);
+        QuizAnswer answer123 = new QuizAnswer("13 ", false, question12);
+
+        QuizQuestion question13 = new QuizQuestion("How do you correctly include Math.random?");
+        QuizAnswer answer131 = new QuizAnswer("import Math.random ", false, question13);
+        QuizAnswer answer132 = new QuizAnswer("include Math.random ", false, question13);
+        QuizAnswer answer133 = new QuizAnswer("from Math import random ", true, question13);
+        QuizAnswer answer134 = new QuizAnswer("from Math include random ", false, question13);
+
+        QuizQuestion question14 = new QuizQuestion("How do you indicate the evaluation of a condition on a flowchart?");
+        QuizAnswer answer141 = new QuizAnswer("Triangle ", false, question12);
+        QuizAnswer answer142 = new QuizAnswer("Cube ", false, question12);
+        QuizAnswer answer143 = new QuizAnswer("Rectangle ", false, question12);
+        QuizAnswer answer144 = new QuizAnswer("Circle ", false, question12);
+        QuizAnswer answer145 = new QuizAnswer("Diamond ", true, question12);
+
+        QuizQuestion question15 = new QuizQuestion("Select the members of a pair programming session!");
+        QuizAnswer answer151 = new QuizAnswer("Pilot ", false, question15);
+        QuizAnswer answer152 = new QuizAnswer("Co-pilot ", false, question15);
+        QuizAnswer answer153 = new QuizAnswer("Driver ", true, question15);
+        QuizAnswer answer154 = new QuizAnswer("Navigator ", true, question15);
+        QuizAnswer answer155 = new QuizAnswer("User ", false, question15);
+        QuizAnswer answer156 = new QuizAnswer("Administrator ", false, question15);
+        QuizAnswer answer157 = new QuizAnswer("Senior ", false, question15);
+        QuizAnswer answer158 = new QuizAnswer("Junior ", false, question15);
+
+        List<QuizQuestion> questions3 = new ArrayList<>();
+        questions3.add(question12);
+        questions3.add(question13);
+        questions3.add(question14);
+        questions3.add(question15);
+
+        Map<Skills, Integer> rewardMap3 = new HashMap<>();
+        rewardMap3.put(Skills.PYTHON_BASIC, 10);
+        rewardMap3.put(Skills.ALGORITHMS, 5);
+        QuizAssignment quizAssignment3 = new QuizAssignment(
+                "Basics with Python",
+                "A series of multiple choice questions about basic concepts in Python, and some other useful stuff for beginners.",
+                rewardMap3,
+                3,
+                questions3,
+                Rooms.WHITE_ROOM
+        );
+        quizAssignmentService.addQuizAssignment(quizAssignment3);
+
+        QuizQuestion question16 = new QuizQuestion("What do you call a graph with nodes that can not be connected through edges?");
+        QuizAnswer answer161 = new QuizAnswer("Disjoint graph ", true, question16);
+        QuizAnswer answer162 = new QuizAnswer("Simple graph ", false, question16);
+        QuizAnswer answer163 = new QuizAnswer("Joint graph ", false, question16);
+        QuizAnswer answer164 = new QuizAnswer("Tree ", false, question16);
+        QuizAnswer answer165 = new QuizAnswer("Connected graph ", false, question16);
+        QuizAnswer answer166 = new QuizAnswer("Discnnected graph ", false, question16);
+
+        QuizQuestion question17 = new QuizQuestion("What do you call a graph with no loops?");
+        QuizAnswer answer171 = new QuizAnswer("Circleless graph ", false, question17);
+        QuizAnswer answer172 = new QuizAnswer("Simple graph ", false, question17);
+        QuizAnswer answer173 = new QuizAnswer("Dislooped graph ", false, question17);
+        QuizAnswer answer174 = new QuizAnswer("Tree ", false, question17);
+        QuizAnswer answer175 = new QuizAnswer("Connected graph ", false, question17);
+        QuizAnswer answer176 = new QuizAnswer("Acyclic graph ", true, question17);
+
+        QuizQuestion question18 = new QuizQuestion("What do you call an acyclic and connected graph?");
+        QuizAnswer answer181 = new QuizAnswer("Map ", false, question18);
+        QuizAnswer answer182 = new QuizAnswer("Simple graph ", false, question18);
+        QuizAnswer answer183 = new QuizAnswer("Set ", false, question18);
+        QuizAnswer answer184 = new QuizAnswer("Tree ", true, question18);
+        QuizAnswer answer185 = new QuizAnswer("Cyclic graph ", false, question18);
+        QuizAnswer answer186 = new QuizAnswer("Complete graph ", false, question18);
+
+        QuizQuestion question19 = new QuizQuestion("What do you call a path in a graph that visits each vertex exactly once?");
+        QuizAnswer answer191 = new QuizAnswer("Complete path ", false, question19);
+        QuizAnswer answer192 = new QuizAnswer("Liskov path ", false, question19);
+        QuizAnswer answer193 = new QuizAnswer("Hamilton path ", true, question19);
+
+        QuizQuestion question20 = new QuizQuestion("What is the big O complexity of finding an element on a balanced binary search tree?");
+        QuizAnswer answer201 = new QuizAnswer("O(1) ", false, question20);
+        QuizAnswer answer202 = new QuizAnswer("O(log2(N)) ", true, question20);
+        QuizAnswer answer203 = new QuizAnswer("O(N) ", false, question20);
+        QuizAnswer answer204 = new QuizAnswer("O(2N) ", false, question20);
+        QuizAnswer answer205 = new QuizAnswer("O(N^2) ", false, question20);
+
+        List<QuizQuestion> questions4 = new ArrayList<>();
+        questions4.add(question16);
+        questions4.add(question17);
+        questions4.add(question18);
+        questions4.add(question19);
+        questions4.add(question20);
+
+        Map<Skills, Integer> rewardMap4 = new HashMap<>();
+        rewardMap4.put(Skills.DATA_STRUCTURES, 20);
+        QuizAssignment quizAssignment4 = new QuizAssignment(
+                "Data structures: Graphs",
+                "A series of multiple choice questions about graphs.",
+                rewardMap4,
+                5,
+                questions4,
+                Rooms.BLUE_ROOM
+        );
+        quizAssignmentService.addQuizAssignment(quizAssignment4);
+
+        QuizQuestion question21 = new QuizQuestion("Magic?");
+        QuizAnswer answer211 = new QuizAnswer("Magic ", true, question21);
+
+        List<QuizQuestion> questions5 = new ArrayList<>();
+        questions5.add(question21);
+
+        Map<Skills, Integer> rewardMap5 = new HashMap<>();
+        rewardMap5.put(Skills.PATTERNS, 2);
+        rewardMap5.put(Skills.OBJECT_ORIENTED_PROGRAMMING, 2);
+        QuizAssignment quizAssignment5 = new QuizAssignment(
+                "Spring",
+                "The most important concepts about the Spring framework.",
+                rewardMap5,
+                1,
+                questions5,
+                Rooms.RED_ROOM
+        );
+        quizAssignmentService.addQuizAssignment(quizAssignment5);
+
     }
 }
