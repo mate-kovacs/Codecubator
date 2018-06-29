@@ -5,7 +5,7 @@ function init() {
     document.getElementById("submit_error_message").style.display = "none";
     document.getElementById("assignment-finished").style.display = "none";
     let assignment_id = document.getElementById("assignment_id").getAttribute("data-assignment_id");
-    get_next_question(0, assignment_id, false);
+    get_next_question(0, assignment_id);
 }
 
 function submit_question_listener() {
@@ -45,53 +45,43 @@ function submit_answer(assignment_id, question_id, answers) {
         success: function (response) {
             console.log(response);
             if (response.correct_answer) {
-                let success = true;
-                get_next_question(question_id, assignment_id, success);
+                fight.playSuccefulAttack(function () {
+                    get_next_question(question_id, assignment_id);
+                });
             } else {
-                let success = false;
-                if (response.death) {
+                if (response.death){
                     fight.playUnsuccessfulAttackWithDeath(function () {
                         create_and_show_html_failed_assignment();
                     });
                 } else {
-                    get_next_question(question_id, assignment_id, success);
+                    fight.playUnsuccessfulAttack(function () {
+                        get_next_question(question_id, assignment_id);
+                    });
                 }
             }
         },
     });
 }
 
-function get_next_question(question_id, assignment_id, success) {
+function get_next_question(question_id, assignment_id) {
     $.ajax({
         type: "POST",
         url: "/coding-assignment",
         data: {"question_id": question_id, "assignment_id": assignment_id},
         success: function (response) {
             if (response.points_achieved != null) {
-                let max_points = response.max_points;
-                let points_achieved = response.points_achieved;
-                fight.playSuccefulAttackAndWin(function () {
+                fight.playWin(function () {
+                    let max_points = response.max_points;
+                    let points_achieved = response.points_achieved;
                     create_and_show_html_completed_assignment(max_points, points_achieved);
-                });
+                })
             } else {
                 let coding_question_id = document.getElementById("question_id");
                 coding_question_id.setAttribute("data-question_id", response.question_id);
 
                 let question_parts = response.question_text.split("$");
                 let answer_ids = response.answer_ids;
-                if (success) {
-                    fight.playSuccefulAttack(function () {
-                        set_html_next_question(question_parts, answer_ids);
-                    });
-                } else {
-                    if (question_id === 0){
-                        set_html_next_question(question_parts, answer_ids);
-                    } else {
-                        fight.playUnsuccessfulAttack(function () {
-                            set_html_next_question(question_parts, answer_ids);
-                        });
-                    }
-                }
+                set_html_next_question(question_parts, answer_ids);
             }
         },
     });
