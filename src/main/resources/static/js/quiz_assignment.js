@@ -1,7 +1,7 @@
 quizAssignment = {
     init: function () {
         let assignment_id = document.getElementsByClassName("container")[0].getAttribute("data-assignment-id");
-        this.get_next_question(0, assignment_id);
+        this.get_next_question(0, assignment_id, false);
         this.submit_answer_listener();
         document.getElementById("assignment-finished").style.display = "none";
     },
@@ -44,25 +44,23 @@ quizAssignment = {
             success: function (response) {
                 console.log(response);
                 if (response.correct_answer) {
-                    fight.playSuccefulAttack(function () {
-                        quizAssignment.get_next_question(questionID, assignmentID);
-                    });
+                    let success = true;
+                    quizAssignment.get_next_question(questionID, assignmentID, success);
                 } else {
+                    let success = false;
                     if (response.death) {
                         fight.playUnsuccessfulAttackWithDeath(function () {
                             quizAssignment.create_and_show_html_failed_assignment();
                         });
                     } else {
-                        fight.playUnsuccessfulAttack(function () {
-                            quizAssignment.get_next_question(questionID, assignmentID);
-                        });
+                            quizAssignment.get_next_question(questionID, assignmentID, success);
                     }
                 }
             },
         });
     },
 
-    get_next_question: function (questionID, assignmentID) {
+    get_next_question: function (questionID, assignmentID, success) {
         $.ajax({
             type: "POST",
             url: "/quiz-assignment",
@@ -76,13 +74,28 @@ quizAssignment = {
                         "").style.visibility = "hidden";
                     let max_points = response.max_points;
                     let points_achieved = response.points_achieved;
-                    quizAssignment.create_and_show_html_completed_assignment(max_points, points_achieved);
+                    fight.playSuccefulAttackAndWin(function () {
+                        quizAssignment.create_and_show_html_completed_assignment(max_points, points_achieved);
+                    });
                 } else {
                     let quiz_question = document.getElementById("question-title");
                     quiz_question.setAttribute("data-question-id", response.question_id);
-                    quiz_question.innerHTML = response.question_text;
-
-                    quizAssignment.set_html_answers(response.answers);
+                    if (success){
+                        fight.playSuccefulAttack(function () {
+                            quizAssignment.set_html_answers(response.answers);
+                            quiz_question.innerHTML = response.question_text;
+                        });
+                    } else {
+                        if (questionID === 0){
+                            quizAssignment.set_html_answers(response.answers);
+                            quiz_question.innerHTML = response.question_text;
+                        } else {
+                            fight.playUnsuccessfulAttack(function () {
+                                quizAssignment.set_html_answers(response.answers);
+                                quiz_question.innerHTML = response.question_text;
+                            });
+                        }
+                    }
                 }
             }
         });
