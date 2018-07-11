@@ -23,11 +23,10 @@ public class User {
     private String email;
 
     private int codeCoins;
-    private Date lastLogin;
     private LocalDateTime registrationDate;
 
     @CollectionTable(name = "users_skills")
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @MapKeyEnumerated(EnumType.STRING)
     private Map<Skills,Integer> experiences = new HashMap<>();
 
@@ -86,14 +85,6 @@ public class User {
 
     public void setCodeCoins(int codeCoins) {
         this.codeCoins = codeCoins;
-    }
-
-    public Date getLastLogin() {
-        return lastLogin;
-    }
-
-    public void setLastLogin(Date lastLogin) {
-        this.lastLogin = lastLogin;
     }
 
     public LocalDateTime getRegistrationDate() {

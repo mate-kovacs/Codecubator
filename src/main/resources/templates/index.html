@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/common_head.html :: common_head(~{::title}, ~{::script})">
+    <title>CodeCubator</title>
+    <script src="js/index.js" defer></script>
+    <script src="js/jquery.imagemapster.min.js" defer></script>
+</head>
+<body class="lots-main-page-body">
+<div th:include="fragments/navbar.html"></div>
+<h1 id="map_page_h1">Choose your Destiny!</h1>
+<img id="map-image" src="img/map.png" usemap="#image-map"/>
+<map id="image-map" name="image-map">
+    <area id="green_room_map" target="_self" alt="Green Room" title="Green Room" href="green-room"
+          coords="483,18,826,25,826,487,639,488,637,404,582,349,431,349,431,224" shape="poly">
+    <area id="blue_room_map" target="_self" alt="Blue Room" title="Blue Room" href="blue-room"
+          coords="1252,32,1252,487,1583,485,1582,37" shape="poly">
+    <area id="white_room_map" target="_self" alt="White Room" title="White Room" href="white-room"
+          coords="430,594,486,594,486,625,788,627,788,596,840,596,840,710,888,709,888,931,364,929,363,710,430,710"
+          shape="poly">
+    <area id="red_room_map" target="_self" alt="Red Room" title="Red Room" href="red-room"
+          coords="1252,506,1252,746,1242,753,1245,930,1583,932,1582,506" shape="poly">
+</map>
+</body>
+</html>

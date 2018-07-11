@@ -1,5 +1,6 @@
 package com.codecool.poop.model.assignments.coding;
 
+import com.codecool.poop.model.Rooms;
 import com.codecool.poop.model.assignments.Assignment;
 import com.codecool.poop.model.Skills;
 
@@ -11,15 +12,16 @@ import java.util.*;
 public class CodingAssignment extends Assignment{
 
 
-    @ManyToMany(mappedBy = "assignments")
+    @ManyToMany(mappedBy = "assignments", cascade = CascadeType.PERSIST)
     private List<CodingQuestion> questions = new ArrayList<>();
 
     public CodingAssignment(String name,
                             String description,
                             Map<Skills, Integer> expRewards,
                             Integer codeCoinReward,
-                            List<CodingQuestion> questions) {
-        super(name, description, expRewards, codeCoinReward);
+                            List<CodingQuestion> questions,
+                            Rooms room) {
+        super(name, description, expRewards, codeCoinReward, room);
         this.questions = questions;
         setCodingQuestionReferences();
     }
@@ -33,7 +35,8 @@ public class CodingAssignment extends Assignment{
         }
     }
 
-    public int getMaxPoints(){
+    @Override
+    public Integer getMaxPoints(){
         int points = 0;
         for (CodingQuestion question: questions) {
             points += question.getMaxPoints();

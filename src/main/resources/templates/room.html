@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/common_head.html :: common_head(~{::title}, ~{::script})">
+    <title th:text="${#strings.capitalizeWords(roomName.replace('-', ' '))}"></title>
+    <script src="js/take_assignment.js" defer></script>
+</head>
+<body class="lots-main-page-body">
+<div th:include="fragments/navbar.html"></div>
+<div class="container">
+    <div class="lots-box assignments" th:classappend="${roomName}">
+        <h1 class="assignment-box-title" th:text="${#strings.capitalizeWords(roomName.replace('-', ' '))}">Room</h1>
+
+        <div class="quiz-assignments-title">
+            <h2>Quiz Assignments</h2>
+        </div>
+        <div class="coding-assignments-title">
+            <h2>Coding Assignments</h2>
+        </div>
+        <div class=""
+             th:id="'assignment_' + ${assignment.id}"
+             th:each="assignment : ${assignments}"
+             th:classappend="${assignment.getClassName() == 'QuizAssignment'} ? quiz : coding"
+            th:data-id="${assignment.id}">
+            <h3 class="assignment-name" th:text="${assignment.name}">Product name</h3>
+            <div class="assignment-body">
+                <p class="assignment-description" th:text="${assignment.description}">Assignment description...</p>
+                <div style="font-size: 1em">
+                    <span class="lots_price" th:text="'+' + ${assignment.codeCoinReward}">100</span>
+                    <span class="lots-currency-icon"></span>
+                </div>
+                <div class="exp-rewards" th:each="reward : ${assignment.expRewards}" style="font-size: 1.5em">
+                <span class="exp-reward badge badge-success"
+                      th:text="'+' + ${reward.value} + ' ' + ${reward.key.toString().replace('_', ' ')}"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
