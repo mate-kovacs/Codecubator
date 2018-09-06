@@ -5,9 +5,13 @@ import com.codecool.poop.model.Rooms;
 import com.codecool.poop.model.Skills;
 import com.codecool.poop.model.User;
 import com.codecool.poop.model.assignments.Assignment;
+import com.codecool.poop.model.assignments.coding.CodingAssignment;
+import com.codecool.poop.model.assignments.quiz.QuizAssignment;
 import com.codecool.poop.service.AssignmentService;
 import com.codecool.poop.service.SessionService;
 import com.codecool.poop.service.UserService;
+import com.codecool.poop.service.coding_services.CodingAssignmentService;
+import com.codecool.poop.service.quiz_services.QuizAssignmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,6 +33,12 @@ public class HTMLController {
 
     @Autowired
     private AssignmentService assignmentService;
+
+    @Autowired
+    private QuizAssignmentService quizAssignmentService;
+
+    @Autowired
+    private CodingAssignmentService codingAssignmentService;
 
     @GetMapping(value = "/login")
     public String loginPage() {
@@ -82,9 +92,12 @@ public class HTMLController {
         if (openedRoom == null) {
             return "redirect:/";
         }
-        List<Assignment> assignments = assignmentService.getAllAssignmentByRoom(openedRoom);
+//        List<Assignment> assignments = assignmentService.getAllAssignmentByRoom(openedRoom);
+        List<QuizAssignment> quizAssignments = quizAssignmentService.getQuizAssignmnetsByRoom(openedRoom);
+        List<CodingAssignment> codingAssignments = codingAssignmentService.getCodingAssignmnetsByRoom(openedRoom);
         model.addAttribute("user_name", sessionService.getCurrentUser().getUsername());
-        model.addAttribute("assignments", assignments);
+        model.addAttribute("quizAssignments", quizAssignments);
+        model.addAttribute("codingAssignments", codingAssignments);
         model.addAttribute("roomName", openedRoom.name);
         return "room";
     }

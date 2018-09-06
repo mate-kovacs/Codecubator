@@ -1,5 +1,6 @@
 package com.codecool.poop.service.quiz_services;
 
+import com.codecool.poop.model.Rooms;
 import com.codecool.poop.model.assignments.coding.CodingAssignment;
 import com.codecool.poop.model.assignments.quiz.QuizAssignment;
 import com.codecool.poop.repository.quiz_repositories.QuizAssignmentRepository;
@@ -26,5 +27,9 @@ public class QuizAssignmentService {
     public QuizAssignment getQuizAssignmentById(Integer id) {
         Optional<QuizAssignment> assignment = quizAssignmentRepository.findById(id);
         return assignment.orElse(null);
+    }
+
+    public List<QuizAssignment> getQuizAssignmnetsByRoom(Rooms room){
+        return quizAssignmentRepository.findQuizAssignmentsByRoom(room);
     }
 }
