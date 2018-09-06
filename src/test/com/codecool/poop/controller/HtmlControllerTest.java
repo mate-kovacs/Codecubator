@@ -1,6 +1,7 @@
 package com.codecool.poop.controller;
 
 import com.codecool.poop.model.User;
+import com.codecool.poop.service.AssignmentService;
 import com.codecool.poop.service.SessionService;
 import com.codecool.poop.service.UserService;
 import org.junit.Before;
@@ -39,6 +40,8 @@ public class HtmlControllerTest {
     private UserService userService;
     @MockBean
     private SessionService sessionService;
+    @MockBean
+    private AssignmentService assignmentService;
 
     @InjectMocks
     private HTMLController htmlController;
@@ -49,7 +52,7 @@ public class HtmlControllerTest {
     }
 
     @Test
-    public void registration__get_request_returns_template() throws Exception {
+    public void registration_get_request_returns_template() throws Exception {
         mockMvc.perform(get("/registration"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType("text/html;charset=UTF-8"))
